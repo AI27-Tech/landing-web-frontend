@@ -5,6 +5,7 @@
  */
 import { Antenna, BadgeCheck, Route, Shield } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 
 type Capacidad = {
   icono: ReactNode;
@@ -61,11 +62,11 @@ const capacidades: Capacidad[] = [
 
 export function CapabilityCards() {
   return (
-    <div className="flex flex-col justify-between gap-3.5 sm:gap-4 lg:col-span-5">
+    <Stagger className="flex flex-col justify-between gap-3.5 sm:gap-4 lg:col-span-5">
       {capacidades.map((cap) => (
-        <div
+        <StaggerItem
           key={cap.titulo}
-          className="group bg-surface-recessed hover:bg-surface border-outline-variant hover:border-outline flex flex-col justify-between rounded-sm border p-4 transition-all duration-200 sm:p-5"
+          className="group bg-surface-recessed hover:bg-surface border-outline-variant hover:border-outline flex flex-col justify-between rounded-sm border p-4 transition-colors duration-200 sm:p-5"
         >
           <div className="flex items-start gap-3.5">
             <div
@@ -90,8 +91,8 @@ export function CapabilityCards() {
             </span>
             <span className="text-on-surface-placeholder font-mono text-[10px]">{cap.codigo}</span>
           </div>
-        </div>
+        </StaggerItem>
       ))}
-    </div>
+    </Stagger>
   );
 }

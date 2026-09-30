@@ -94,9 +94,14 @@ discrepancia. Donde el mock es obviamente un placeholder (el `alert()` del
 formulario, el reloj con hora fija), se deja el comportamiento explícito y se
 registra como decisión abierta en el README, no se inventa una solución.
 
-Nada de librerías de animación: `framer-motion` está en la lista de
-prohibidas de `eslint.config.js`, y el motivo es que las animaciones de la
-landing son CSS y la guarda de reduced-motion ya las cubre.
+Animaciones: las decorativas de los mocks (radar, pulsos, flujo de paquetes)
+son CSS puro y las cubre la guarda de reduced-motion. Para el **movimiento de
+scroll** (reveals, stagger, parallax, contadores) se usa **`motion`**
+(motion.dev), admitido el 2026-09-30 — ver README, "Animaciones de scroll con
+Motion". Se importa desde `motion/react` y se consume solo a través de las
+primitivas de `src/components/motion/` (`Reveal`, `Stagger`, `Counter`), que
+respetan `useReducedMotion`. El paquete legacy `framer-motion` sigue prohibido
+en `eslint.config.js`.
 
 ## Changelog
 

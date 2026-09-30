@@ -15,7 +15,7 @@ import { Waypoints } from 'lucide-react';
 
 export function TacticalMap() {
   return (
-    <div className="flex flex-col lg:col-span-7">
+    <div className="flex h-full flex-col">
       <div className="group bg-surface-recessed border-outline-variant relative flex h-full min-h-[560px] flex-col justify-between overflow-hidden rounded-sm border p-5 sm:p-6">
         {/* Cabecera HUD */}
         <div className="border-outline-variant relative z-10 flex flex-wrap items-center justify-between gap-3 border-b pb-4">

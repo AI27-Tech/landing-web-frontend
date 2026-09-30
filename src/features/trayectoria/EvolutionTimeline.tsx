@@ -6,6 +6,8 @@
  * La barra horizontal animada (timeline-stream) solo se muestra en desktop,
  * igual que el mock. Su animacion la apaga la guarda de reduced-motion.
  */
+import { Stagger, StaggerItem } from '@/components/motion/Stagger';
+
 type Fase = {
   fase: string;
   categoria: string;
@@ -138,11 +140,13 @@ export function EvolutionTimeline() {
           <div className="timeline-stream h-full w-full opacity-90" />
         </div>
 
-        <div className="relative z-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+        <Stagger className="relative z-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-5">
           {fases.map((fase) => (
-            <FaseCard key={fase.fase} fase={fase} />
+            <StaggerItem key={fase.fase} className="h-full">
+              <FaseCard fase={fase} />
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@
  * tiene un badge con su calificador.
  */
 import { BadgeCheck, ShieldCheck } from 'lucide-react';
+import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 
 type Paso = {
   numero: string;
@@ -72,13 +73,14 @@ export function ReactionProtocol() {
           </div>
         </div>
 
-        {/* Stepper */}
-        <div className="relative mt-6 space-y-8">
+        {/* Stepper. La linea conectora no lleva variants, asi que el Stagger
+            solo escalona los pasos; la linea aparece de una vez. */}
+        <Stagger className="relative mt-6 space-y-8" each={0.12}>
           {/* Linea vertical conectora */}
           <div className="absolute top-4 bottom-4 left-4 w-px bg-gradient-to-b from-[#7c9df0] via-[#2d3748] to-[#6ee7b7]" />
 
           {pasos.map((paso) => (
-            <div key={paso.numero} className="group relative flex items-start gap-4">
+            <StaggerItem key={paso.numero} className="group relative flex items-start gap-4">
               <div
                 className={`bg-surface-recessed relative z-10 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded border font-mono text-xs font-bold transition-transform ${paso.numeroClase}`}
               >
@@ -97,9 +99,9 @@ export function ReactionProtocol() {
                   {paso.descripcion}
                 </p>
               </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
 
         {/* Banner de cobertura */}
         <div className="bg-surface-recessed border-outline-variant mt-8 flex items-center justify-between rounded border p-3.5 text-xs">

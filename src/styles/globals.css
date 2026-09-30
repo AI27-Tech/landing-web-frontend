@@ -334,11 +334,22 @@
  * Es una transicion, asi que la guarda de reduced-motion la acorta a ~0.
  */
 .card-tactical {
-  transition: all 0.25s ease;
+  /*
+   * Transiciona solo lo que cambia en el hover. Antes era `all`, que incluia
+   * `transform`; como Motion controla `transform` en estas mismas tarjetas
+   * (deja un estilo inline al animar la entrada), el hover-lift y Motion
+   * competian por la misma propiedad y producian un parpadeo al pasar el
+   * cursor. Ahora el lift usa la propiedad `translate` (independiente de
+   * `transform`), asi que las dos animaciones no se pisan.
+   */
+  transition:
+    translate 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 .card-tactical:hover {
   border-color: rgba(124, 157, 240, 0.4);
-  transform: translateY(-2px);
+  translate: 0 -2px;
   box-shadow:
     0 10px 25px -5px rgba(14, 17, 23, 0.8),
     0 0 15px -3px rgba(124, 157, 240, 0.08);

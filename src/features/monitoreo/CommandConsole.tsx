@@ -90,7 +90,7 @@ export function CommandConsole() {
   const hora = useLocalClock();
 
   return (
-    <div className="space-y-4 lg:col-span-7">
+    <div className="space-y-4">
       <div className="bg-surface border-outline-variant relative overflow-hidden rounded-lg border shadow-xl shadow-black/40">
         {/* Cabecera tecnica */}
         <div className="bg-surface-recessed border-outline-variant flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3 font-mono text-[11px]">

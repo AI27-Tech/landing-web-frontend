@@ -6,6 +6,8 @@
  */
 import { Check, Clock, Globe, MapPin, MonitorSmartphone, Zap } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { Counter } from '@/components/motion/Counter';
+import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 
 type Indicador = {
   cifra: ReactNode;
@@ -36,7 +38,7 @@ const indicadores: Indicador[] = [
     ),
   },
   {
-    cifra: '100%',
+    cifra: <Counter value={100} suffix="%" />,
     icono: <Globe className="h-5 w-5" />,
     iconoColor: 'text-success',
     titulo: 'Empresa mexicana',
@@ -99,11 +101,11 @@ export function TrustIndicators() {
         </span>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <Stagger className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {indicadores.map((ind) => (
-          <div
+          <StaggerItem
             key={ind.titulo}
-            className="card-tactical bg-surface border-outline-variant flex flex-col justify-between rounded border p-6"
+            className="card-tactical bg-surface border-outline-variant flex h-full flex-col justify-between rounded border p-6"
           >
             <div className="mb-4 flex items-start justify-between">
               <span className="text-on-surface font-mono text-3xl font-extrabold tracking-tight lg:text-4xl">
@@ -120,9 +122,9 @@ export function TrustIndicators() {
               <p className="text-on-surface-variant text-xs leading-relaxed">{ind.descripcion}</p>
             </div>
             <div className="border-outline-variant/50 mt-4 border-t pt-3">{ind.pie}</div>
-          </div>
+          </StaggerItem>
         ))}
-      </div>
+      </Stagger>
 
       {/* Pie de metadatos de ingenieria */}
       <div className="border-outline-variant/40 text-on-surface-variant/50 flex flex-col items-center justify-between border-t pt-4 font-mono text-xs sm:flex-row">

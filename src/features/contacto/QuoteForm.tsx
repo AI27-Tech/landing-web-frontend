@@ -75,7 +75,7 @@ export function QuoteForm() {
   }
 
   return (
-    <div className="lg:col-span-6">
+    <div>
       <div className="bg-surface border-outline-variant relative rounded border p-6 shadow-lg sm:p-7">
         {/* Encabezado de la tarjeta */}
         <div className="border-outline-variant mb-5 flex items-center justify-between border-b pb-5">

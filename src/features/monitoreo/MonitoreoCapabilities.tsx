@@ -12,6 +12,7 @@ import {
   ShieldAlert,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 
 type Capacidad = {
   icono: ReactNode;
@@ -55,11 +56,11 @@ const capacidades: Capacidad[] = [
 export function MonitoreoCapabilities() {
   return (
     <>
-      <div className="grid grid-cols-1 gap-6 pt-4 md:grid-cols-3">
+      <Stagger className="grid grid-cols-1 gap-6 pt-4 md:grid-cols-3">
         {capacidades.map((cap) => (
-          <div
+          <StaggerItem
             key={cap.titulo}
-            className="group bg-surface border-outline-variant hover:border-outline hover:bg-surface-bright/80 space-y-4 rounded-lg border p-6 transition-all duration-200"
+            className="group bg-surface border-outline-variant hover:border-outline hover:bg-surface-bright/80 flex h-full flex-col space-y-4 rounded-lg border p-6 transition-colors duration-200"
           >
             <div className="bg-surface-recessed border-outline-variant text-primary group-hover:border-primary flex h-12 w-12 items-center justify-center rounded border transition-colors">
               {cap.icono}
@@ -74,9 +75,9 @@ export function MonitoreoCapabilities() {
               {cap.pieIcono}
               <span>{cap.pie}</span>
             </div>
-          </div>
+          </StaggerItem>
         ))}
-      </div>
+      </Stagger>
 
       {/* Micro-footer / barra de metadatos */}
       <div className="border-outline-variant text-on-surface-variant flex flex-col items-center justify-between gap-4 border-t pt-6 font-mono text-[11px] sm:flex-row">

@@ -16,7 +16,7 @@ const metricas = [
 
 export function ContactPitch() {
   return (
-    <div className="flex h-full flex-col justify-between space-y-8 lg:col-span-6">
+    <div className="flex h-full flex-col justify-between space-y-8">
       <div className="space-y-5">
         <div className="bg-surface border-outline-variant text-primary inline-flex items-center gap-2.5 rounded border px-3 py-1 text-[11px] font-semibold tracking-wider uppercase">
           <span className="bg-success status-pulse h-2 w-2 rounded-full" />

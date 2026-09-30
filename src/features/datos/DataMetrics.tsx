@@ -3,11 +3,14 @@
  * el pie de seccion con los sellos de seguridad. Portado del mock Nocturne.
  */
 import { Lock } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { Counter } from '@/components/motion/Counter';
+import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 
 type Metrica = {
   etiqueta: string;
   etiquetaColor: string;
-  valor: string;
+  valor: ReactNode;
   valorColor: string;
   hoverBorde: string;
   titulo: string;
@@ -18,7 +21,7 @@ const metricas: Metrica[] = [
   {
     etiqueta: 'TELEMETRÍA ACUMULADA',
     etiquetaColor: 'text-primary',
-    valor: '1.2M+',
+    valor: <Counter value={1.2} decimals={1} suffix="M+" />,
     valorColor: 'text-on-surface',
     hoverBorde: 'hover:border-primary/50',
     titulo: 'Viajes Analizados',
@@ -28,7 +31,7 @@ const metricas: Metrica[] = [
   {
     etiqueta: 'EFECTIVIDAD COMPROBADA',
     etiquetaColor: 'text-success',
-    valor: '-92%',
+    valor: <Counter value={-92} suffix="%" />,
     valorColor: 'text-success',
     hoverBorde: 'hover:border-success/50',
     titulo: 'Reducción de Riesgo',
@@ -38,7 +41,7 @@ const metricas: Metrica[] = [
   {
     etiqueta: 'PROFUNDIDAD DE ANÁLISIS',
     etiquetaColor: 'text-primary',
-    valor: '150+',
+    valor: <Counter value={150} suffix="+" />,
     valorColor: 'text-on-surface',
     hoverBorde: 'hover:border-primary/50',
     titulo: 'Variables por Viaje',
@@ -65,11 +68,11 @@ export function DataMetrics() {
           <span className="bg-primary h-0.5 w-2" />
           <span>Impacto operativo y volumen de procesamiento</span>
         </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Stagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {metricas.map((m) => (
-            <div
+            <StaggerItem
               key={m.titulo}
-              className={`bg-surface border-outline-variant flex flex-col justify-between rounded border p-5 transition-colors duration-150 ${m.hoverBorde}`}
+              className={`bg-surface border-outline-variant flex h-full flex-col justify-between rounded border p-5 transition-colors duration-150 ${m.hoverBorde}`}
             >
               <div>
                 <div
@@ -87,9 +90,9 @@ export function DataMetrics() {
               <p className="text-on-surface-variant border-outline-variant/60 mt-2 border-t pt-3 text-xs leading-relaxed">
                 {m.descripcion}
               </p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
 
       {/* Pie de seccion */}

@@ -1,16 +1,36 @@
 /*
  * Columna izquierda del Hero: propuesta de valor. Portada del mock Nocturne.
  * Pill de estado, titular, subtitulo, botones de accion y metricas de confianza.
+ *
+ * Las cifras suben con <Counter> al cargar (el Hero esta above the fold, asi
+ * que la animacion de "entrar en vista" dispara al montar).
  */
-const metricas = [
-  { valor: '+25 Años', etiqueta: 'de experiencia', destacado: false },
-  { valor: '99.8%', etiqueta: 'Cargas seguras', destacado: true },
-  { valor: '+1.2M', etiqueta: 'Viajes monitoreados', destacado: false },
-] as const;
+import type { ReactNode } from 'react';
+import { Counter } from '@/components/motion/Counter';
+
+type Metrica = { valor: ReactNode; etiqueta: string; destacado: boolean };
+
+const metricas: Metrica[] = [
+  {
+    valor: <Counter value={25} prefix="+" suffix=" Años" />,
+    etiqueta: 'de experiencia',
+    destacado: false,
+  },
+  {
+    valor: <Counter value={99.8} decimals={1} suffix="%" />,
+    etiqueta: 'Cargas seguras',
+    destacado: true,
+  },
+  {
+    valor: <Counter value={1.2} decimals={1} prefix="+" suffix="M" />,
+    etiqueta: 'Viajes monitoreados',
+    destacado: false,
+  },
+];
 
 export function HeroPitch() {
   return (
-    <div className="flex flex-col justify-center space-y-7 lg:col-span-6">
+    <div className="flex flex-col justify-center space-y-7">
       {/* Pill de telemetria en vivo */}
       <div className="bg-surface-recessed border-outline-variant inline-flex w-fit items-center gap-2.5 rounded border px-3 py-1.5 shadow-inner">
         <span className="relative flex h-2 w-2">

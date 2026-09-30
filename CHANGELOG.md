@@ -4,6 +4,183 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:10:01 00:30
+
+**Resumen:** Se quitó el parpadeo que quedaba en las tarjetas verticales (las de capacidades apiladas). Misma raíz que el arreglo anterior —conflicto sobre `transform` con Motion— pero por otra vía: `transition-all`.
+
+**Causa:** las tarjetas de capacidades (`CapabilityCards` de Infraestructura, `DataCapabilities`, `MonitoreoCapabilities`) y las métricas de Infraestructura son `StaggerItem`, así que Motion controla su `transform`. Tenían `transition-all`, que hace que el CSS intente transicionar _todas_ las propiedades que cambian, incluida `transform`. Con eso, la transición CSS y el motor de Motion se disputaban `transform` y aparecía el parpadeo al pasar el cursor. (Las tarjetas horizontales ya se habían resuelto porque usaban `.card-tactical`, corregido en la entrada anterior.)
+
+**Arreglo:** en esas tarjetas se cambió `transition-all` por `transition-colors`, que solo transiciona `background-color`, `border-color` y `color` — justo lo que su hover cambia—, dejando `transform` enteramente a Motion.
+
+**No se tocaron:** los botones y enlaces con `active:scale-[0.99]` (usan `transform` a propósito en el `active` y no son nodos animados por Motion), ni el panel del Hero (`ControlCenterPanel`), cuyo `transform` lo aporta el `Reveal` que lo envuelve, no un `transition-all` sobre el propio div.
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan. `prettier --check` pasa.
+
+**Archivos modificados:**
+
+- `src/features/infraestructura/CapabilityCards.tsx`, `InfraMetrics.tsx`
+- `src/features/datos/DataCapabilities.tsx`
+- `src/features/monitoreo/MonitoreoCapabilities.tsx`
+- `CHANGELOG.md`
+
+## 2026:10:01 00:00
+
+**Resumen:** Se encontró la causa real del parpadeo que persistía en las tarjetas después del arreglo anterior: no era el scroll, era el **hover**. El realce al pasar el cursor competía con Motion por la misma propiedad CSS.
+
+**Causa raíz:** `.card-tactical:hover` hacía `transform: translateY(-2px)`, pero Motion controla `transform` en esas mismas tarjetas (deja un `transform` inline tras animar la entrada, que son `StaggerItem` en `TrustIndicators` y `EvolutionTimeline`). El estilo inline de Motion pisa al CSS del hover, así que el lift no se aplicaba limpio y parpadeaba al pasar el ratón.
+
+**Arreglo:**
+
+- `.card-tactical` ahora hace el lift con la propiedad `translate: 0 -2px` en vez de `transform`. `translate` es una propiedad independiente de `transform`, así que Motion (que usa `transform`) y el hover ya no compiten. La `transition` pasó de `all` a solo `translate`, `border-color` y `box-shadow`.
+- Se verificó que ninguna otra tarjeta animada use `hover:scale`/`hover:translate`; el resto de hovers son de color/borde y no tocan `transform`.
+
+**Reversión del intento anterior:** se quitó la clase `.motion-layer` (introducida a las 23:15) y su uso en las primitivas. Ponía `transform: translateZ(0)` sobre el mismo nodo que Motion anima con `transform` — el mismo tipo de conflicto que se estaba corrigiendo — y su `will-change` permanente junto a `backdrop-filter` era otro riesgo de artefacto. Motion ya compone en su propia capa mientras anima, así que la clase no aportaba. El diagnóstico correcto era el hover.
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan. `prettier --check` pasa.
+
+**Archivos modificados:**
+
+- `src/styles/globals.css`
+- `src/components/motion/Reveal.tsx`, `src/components/motion/Stagger.tsx`
+- `CHANGELOG.md`
+
+## 2026:09:30 23:15
+
+**Resumen:** Se corrigió el parpadeo de las tarjetas al hacer scroll. Tenía dos causas, ambas introducidas al aplicar las animaciones de Motion; se atacaron las dos.
+
+**Causa 1 — doble control de opacidad (la principal):** varias grillas quedaron envueltas en un `Reveal` externo mientras internamente ya eran `Stagger`. El `Reveal` animaba la opacidad del bloque y el `Stagger` animaba la de cada tarjeta, con umbrales de viewport distintos (0.2 vs 0.15). Las dos animaciones corrían sobre los mismos píxeles y competían, produciendo el parpadeo.
+
+- Se quitó el `Reveal` de los componentes que ya gestionan su entrada con `Stagger`: `EvolutionTimeline` y `TrustIndicators` (Trayectoria), `CapabilityCards` e `InfraMetrics` (Infraestructura), `ReactionProtocol` y `MonitoreoCapabilities` (Monitoreo), `DataCapabilities` y `DataMetrics` (Datos). Ahora cada elemento tiene una sola capa de animación.
+- Donde el `Reveal` aportaba el `lg:col-span-*` de una columna, ese `col-span` se devolvió a la raíz del componente (`CapabilityCards`, `ReactionProtocol`, `DataCapabilities`), para no romper los grids de dos columnas.
+- Los `Reveal` que quedan solo envuelven componentes sin `Stagger` (headers, mapa, consola, dashboard, pitch y formulario de contacto, y las dos columnas del Hero), así que ya no hay anidamiento conflictivo.
+
+**Causa 2 — promoción de capa de composición:** Motion anima `transform` y `opacity`; sin una pista de capa, el navegador promovía y despromovía la capa en cada animación, con un flash sutil, más visible en tarjetas con `backdrop-blur` o borde.
+
+- Se añadió la clase `.motion-layer` a `globals.css` (`will-change: transform, opacity` + `backface-visibility: hidden` + `translateZ(0)`) y las primitivas `Reveal` y `StaggerItem` la aplican a su elemento animado.
+
+**Nota de rendimiento:** `will-change` permanente consume algo de memoria de GPU, pero el número de elementos animados es moderado y todos animan una sola vez (`once: true`); el trade-off favorece la ausencia de parpadeo. Bajo `reduced-motion` las primitivas no animan, así que `.motion-layer` no llega a aplicarse.
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan. `prettier --check` pasa. Auditoría posterior: ningún `Reveal` envuelve ya un componente con `Stagger`.
+
+**Archivos modificados:**
+
+- `src/components/motion/Reveal.tsx`, `src/components/motion/Stagger.tsx`
+- `src/styles/globals.css`
+- `src/features/trayectoria/Trayectoria.tsx`
+- `src/features/infraestructura/Infraestructura.tsx`, `CapabilityCards.tsx`
+- `src/features/monitoreo/Monitoreo.tsx`, `ReactionProtocol.tsx`
+- `src/features/datos/Datos.tsx`, `DataCapabilities.tsx`
+- `CHANGELOG.md`
+
+## 2026:09:30 22:30
+
+**Resumen:** Se unificó el padding horizontal de toda la página. Las secciones usaban tres padrones distintos (`px-6`, `px-6 sm:px-8`, `px-4 sm:px-6 lg:px-8`), así que el borde del contenido no caía en la misma línea vertical de una sección a otra. Ahora todo se alinea con el header y el footer.
+
+**Cambios:**
+
+- Todos los contenedores `max-w-7xl` de la página usan un único `px-6`, el mismo que ya usaban `SiteHeader` y `SiteFooter` (el marco fijo que el usuario siempre tiene a la vista).
+  - `Trayectoria`: `px-6 sm:px-8` → `px-6`.
+  - `Infraestructura` y `Monitoreo`: `px-4 sm:px-6 lg:px-8` → `px-6`.
+- `Datos` y `Contacto` tenían el padding en el `<section>` en lugar del contenedor, lo que descentraba el `max-w-7xl`. Se movió el padding al contenedor (`px-6`) y se dejó el `<section>` sin padding horizontal, homogéneo con las demás secciones.
+- Los `px-6` internos de paneles (banda de estado y strip de telemetría de Contacto) no se tocaron: son padding de componente, no del marco de página.
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan. `prettier --check` pasa. Auditoría posterior: los ocho contenedores `max-w-7xl` (seis secciones + header + footer) comparten `px-6`.
+
+**Archivos modificados:**
+
+- `src/features/trayectoria/Trayectoria.tsx`
+- `src/features/infraestructura/Infraestructura.tsx`
+- `src/features/monitoreo/Monitoreo.tsx`
+- `src/features/datos/Datos.tsx`
+- `src/features/contacto/Contacto.tsx`
+- `CHANGELOG.md`
+
+## 2026:09:30 22:00
+
+**Resumen:** La barra superior ahora resalta el enlace de la sección que se está viendo (scroll-spy). Antes el enlace activo estaba fijo en "Monitoreo"; ahora cambia con el scroll.
+
+**Cambios:**
+
+- Se creó el hook `src/components/useScrollSpy.ts`: observa los `<section id>` con `IntersectionObserver` (API nativa, sin dependencias nuevas) y devuelve el id de la sección que domina el viewport. El `rootMargin` (`-64px 0px -55% 0px`) compensa la cabecera fija de 4rem y hace que el resaltado cambie cuando el título de la siguiente sección cruza el tercio superior de la pantalla.
+- `SiteHeader` usa el hook: el `activo` hardcodeado se reemplazó por la comparación del id devuelto contra el `href` de cada enlace. Se añadió `aria-current` al enlace activo para accesibilidad.
+- El scroll-spy cubre los cuatro enlaces de la navbar (`nosotros`, `infraestructura`, `monitoreo`, `datos`). El Hero no tiene enlace en la barra, así que al inicio (arriba del todo) ningún enlace queda resaltado, que es lo correcto. No es una animación: no lo afecta `reduced-motion`.
+
+**Pendiente que este cambio no aborda:** la navegación móvil sigue oculta (`hidden md:flex`) sin menú hamburguesa; y la marca "AI27" apunta a `#` (salto al top). Quedan como mejoras aparte.
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan. `prettier --check` pasa.
+
+**Archivos modificados:**
+
+- `src/components/useScrollSpy.ts`
+- `src/components/SiteHeader.tsx`
+- `CHANGELOG.md`
+
+## 2026:09:30 21:30
+
+**Resumen:** Se corrigió una omisión de la entrada anterior: las cifras del Hero no animaban con `Counter`. Al aplicar los contadores por sección se cubrió Trayectoria, Infraestructura y Datos, pero el Hero quedó fuera. Ahora sus cifras suben igual que las del resto.
+
+**Cambios:**
+
+- `HeroPitch`: las tres métricas de confianza usan `Counter` — `+25 Años` (prefijo `+`, sufijo ` Años`), `99.8%` (un decimal, sufijo `%`) y `+1.2M` (prefijo `+`, un decimal, sufijo `M`).
+- `ControlCenterPanel`: los cuatro KPIs del panel usan `Counter` — `4,892`, `99.84%` (dos decimales), `342` y `18ms`. Encajan con el marco de "telemetría en vivo" del panel (reloj corriendo, badge pulsando).
+- Como el Hero está above the fold, la animación de "entrar en vista" del `Counter` dispara al montar la página, que es el efecto buscado.
+- Sin cambios de comportamiento con `reduced-motion`: `Counter` ya renderiza el valor final estático en ese caso.
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan. `prettier --check` pasa.
+
+**Archivos modificados:**
+
+- `src/features/hero/HeroPitch.tsx`
+- `src/features/hero/ControlCenterPanel.tsx`
+- `CHANGELOG.md`
+
+## 2026:09:30 21:00
+
+**Resumen:** Se añadieron animaciones de scroll a toda la landing con **Motion** (motion.dev). Fue una decisión de arquitectura explícita: el scaffold prohibía las librerías de animación, y esa prohibición se levantó a propósito —documentada aquí, en el README, en `AGENTS.md` y en el `eslint.config.js`— para dar un movimiento más marcado y moderno que el CSS nativo no orquesta con la misma finura. El paquete legacy `framer-motion` sigue prohibido.
+
+**Decisión de dependencia:**
+
+- Se instaló `motion@13.4.6` (versión exacta) como dependencia.
+- `eslint.config.js`: el mensaje de `framer-motion` ahora redirige a `motion/react`, y la cabecera de `forbiddenPackages` documenta la excepción vigente. `framer-motion` sigue vetado para no mezclar dos APIs.
+- README (tabla de stack + nueva sección "Animaciones de scroll con Motion") y `AGENTS.md` recogen la decisión y sus cuatro reglas: importar desde `motion/react`, respetar `reduced-motion`, dejar las animaciones decorativas de los mocks en CSS, y consumir Motion solo a través de las primitivas.
+
+**Primitivas nuevas (`src/components/motion/`):**
+
+- `Reveal`: revela su contenido al entrar en el viewport, con desplazamiento direccional (`up`/`down`/`left`/`right`/`none`) y un spring.
+- `Stagger` + `StaggerItem`: revelan a los hijos en cascada; para grillas y listas.
+- `Counter`: anima una cifra numérica de 0 a su valor al entrar en vista (formato es-MX). Solo se usa en cifras numéricas; los valores mixtos ("24/7/365", "< 2 seg", "Nacional") quedan como texto.
+- Las tres respetan `reduced-motion` vía `useReducedMotion`: si el usuario pide menos movimiento, renderizan el estado final estático. Esto convive con la guarda global de CSS, que sigue apagando las animaciones decorativas.
+
+**Aplicación por sección:**
+
+- **Hero:** el pitch entra desde la izquierda y el panel de control desde la derecha, secuenciados.
+- **Trayectoria:** header, timeline y bloque de indicadores revelan; las fases y las tarjetas de confianza entran en cascada; la cifra "100%" sube con `Counter`.
+- **Infraestructura:** mapa (izquierda) y capacidades (derecha) revelan; las cuatro capacidades y las métricas escalonan; "+120" y "24,000 km" animan con `Counter`.
+- **Monitoreo:** consola (izquierda) y protocolo (derecha) revelan; los cuatro pasos del stepper y las tres capacidades escalonan.
+- **Datos:** capacidades (izquierda) y dashboard (derecha) revelan; las capacidades escalonan; los KPIs "14,820" y "48" y las métricas "1.2M+", "-92%", "150+" animan con `Counter`.
+- **Contacto:** el pitch y el formulario entran desde lados opuestos.
+- **Footer institucional:** las cuatro columnas entran en cascada.
+
+Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la raíz de cada componente al `Reveal` que lo envuelve.
+
+**Costo aceptado:** el bundle JS pasó de ~85 KB a ~131 KB gzip. Es el tradeoff que la prohibición original buscaba evitar; se asume a cambio del movimiento pedido.
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan. `prettier --check` pasa. Con `prefers-reduced-motion: reduce` no hay reveals, cascadas ni contadores: se ve el contenido en su estado final.
+
+**Archivos modificados:**
+
+- `package.json`, `pnpm-lock.yaml`
+- `eslint.config.js`, `README.md`, `AGENTS.md`
+- `src/components/motion/Reveal.tsx`, `src/components/motion/Stagger.tsx`, `src/components/motion/Counter.tsx`
+- `src/components/SiteFooter.tsx`
+- `src/features/hero/Hero.tsx`, `HeroPitch.tsx`, `ControlCenterPanel.tsx`
+- `src/features/trayectoria/Trayectoria.tsx`, `EvolutionTimeline.tsx`, `TrustIndicators.tsx`
+- `src/features/infraestructura/Infraestructura.tsx`, `TacticalMap.tsx`, `CapabilityCards.tsx`, `InfraMetrics.tsx`
+- `src/features/monitoreo/Monitoreo.tsx`, `CommandConsole.tsx`, `ReactionProtocol.tsx`, `MonitoreoCapabilities.tsx`
+- `src/features/datos/Datos.tsx`, `DataCapabilities.tsx`, `AnalyticsDashboard.tsx`, `DataMetrics.tsx`
+- `src/features/contacto/Contacto.tsx`, `ContactPitch.tsx`, `QuoteForm.tsx`
+- `CHANGELOG.md`
+
 ## 2026:09:30 19:30
 
 **Resumen:** Se portó la sexta y última sección de la landing —Contacto, cotización y footer institucional— desde el mock Nocturne, con lo que las seis secciones del diseño ya están en la página. El footer institucional completo reemplaza el footer mínimo que el scaffold traía del mock del Hero.

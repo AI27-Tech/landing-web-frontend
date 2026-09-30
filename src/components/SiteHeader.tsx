@@ -4,15 +4,24 @@
  *
  * El color se nombra por rol (bg-background, text-on-surface-variant, ...),
  * nunca por valor: los tokens viven en src/styles/tokens.css.
+ *
+ * El enlace activo ya no es fijo: un scroll-spy (useScrollSpy) resalta el de la
+ * seccion que se esta viendo. El id de cada seccion se deriva del href.
  */
+import { useScrollSpy } from '@/components/useScrollSpy';
+
 const enlaces = [
-  { etiqueta: 'Nosotros', href: '#nosotros', activo: false },
-  { etiqueta: 'Infraestructura', href: '#infraestructura', activo: false },
-  { etiqueta: 'Monitoreo', href: '#monitoreo', activo: true },
-  { etiqueta: 'Datos', href: '#datos', activo: false },
+  { etiqueta: 'Nosotros', href: '#nosotros' },
+  { etiqueta: 'Infraestructura', href: '#infraestructura' },
+  { etiqueta: 'Monitoreo', href: '#monitoreo' },
+  { etiqueta: 'Datos', href: '#datos' },
 ] as const;
 
+const ids = enlaces.map((enlace) => enlace.href.slice(1));
+
 export function SiteHeader() {
+  const activo = useScrollSpy(ids);
+
   return (
     <header className="bg-background/80 border-outline-variant fixed top-0 left-0 z-50 w-full border-b shadow-sm backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
@@ -31,21 +40,23 @@ export function SiteHeader() {
 
         {/* Navegacion por anclas */}
         <nav className="hidden items-center gap-8 text-[13px] tracking-wide uppercase md:flex">
-          {enlaces.map(({ etiqueta, href, activo }) =>
-            activo ? (
-              <a key={href} className="text-primary font-semibold" href={href}>
-                {etiqueta}
-              </a>
-            ) : (
+          {enlaces.map(({ etiqueta, href }) => {
+            const esActivo = href.slice(1) === activo;
+            return (
               <a
                 key={href}
-                className="text-on-surface-variant hover:text-on-surface transition-colors duration-150"
                 href={href}
+                aria-current={esActivo ? 'true' : undefined}
+                className={
+                  esActivo
+                    ? 'text-primary font-semibold'
+                    : 'text-on-surface-variant hover:text-on-surface transition-colors duration-150'
+                }
               >
                 {etiqueta}
               </a>
-            ),
-          )}
+            );
+          })}
         </nav>
 
         {/* Accion principal */}

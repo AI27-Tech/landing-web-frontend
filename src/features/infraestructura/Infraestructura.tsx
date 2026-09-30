@@ -5,6 +5,7 @@
  *
  * El id "infraestructura" es el destino del ancla de la barra superior.
  */
+import { Reveal } from '@/components/motion/Reveal';
 import { CapabilityCards } from '@/features/infraestructura/CapabilityCards';
 import { InfraHeader } from '@/features/infraestructura/InfraHeader';
 import { InfraMetrics } from '@/features/infraestructura/InfraMetrics';
@@ -21,11 +22,18 @@ export function Infraestructura() {
       <div className="bg-primary/5 pointer-events-none absolute top-0 left-1/4 h-[600px] w-[600px] rounded-full blur-[140px]" />
       <div className="bg-success/5 pointer-events-none absolute right-1/4 bottom-10 h-[500px] w-[500px] rounded-full blur-[120px]" />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <InfraHeader />
+      <div className="relative mx-auto max-w-7xl px-6">
+        <Reveal>
+          <InfraHeader />
+        </Reveal>
 
         <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-8">
-          <TacticalMap />
+          <Reveal from="left" className="lg:col-span-7">
+            <TacticalMap />
+          </Reveal>
+          {/* CapabilityCards gestiona su entrada con Stagger; su col-span vive
+              en el propio componente. No se envuelve en Reveal para no solapar
+              dos animaciones de opacidad (parpadeo). */}
           <CapabilityCards />
         </div>
 

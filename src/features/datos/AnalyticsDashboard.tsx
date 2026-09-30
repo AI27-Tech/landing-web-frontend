@@ -22,6 +22,7 @@ import {
   Truck,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { Counter } from '@/components/motion/Counter';
 
 type Kpi = {
   etiqueta: string;
@@ -35,7 +36,7 @@ const kpis: Kpi[] = [
   {
     etiqueta: 'Total Viajes',
     icono: <Truck className="text-primary h-4 w-4" />,
-    valor: '14,820',
+    valor: <Counter value={14820} />,
     valorColor: 'text-on-surface',
     pie: (
       <span className="text-success flex items-center font-mono text-[11px]">
@@ -47,7 +48,7 @@ const kpis: Kpi[] = [
   {
     etiqueta: 'Incidentes Prevenidos',
     icono: <Shield className="text-success h-4 w-4" />,
-    valor: '48',
+    valor: <Counter value={48} />,
     valorColor: 'text-success',
     pie: (
       <span className="text-success flex items-center font-mono text-[11px]">
@@ -117,7 +118,7 @@ const viajes: Viaje[] = [
 
 export function AnalyticsDashboard() {
   return (
-    <div className="lg:col-span-7">
+    <div>
       <div className="bg-surface border-outline-variant flex flex-col overflow-hidden rounded-lg border shadow-2xl">
         {/* Barra de consola */}
         <div className="bg-surface-recessed border-outline-variant flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3">

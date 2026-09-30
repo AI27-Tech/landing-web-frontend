@@ -7,6 +7,7 @@
  * superior y del Hero.
  */
 import { BadgeCheck } from 'lucide-react';
+import { Reveal } from '@/components/motion/Reveal';
 import { ContactPitch } from '@/features/contacto/ContactPitch';
 import { QuoteForm } from '@/features/contacto/QuoteForm';
 
@@ -20,7 +21,7 @@ export function Contacto() {
       <div className="bg-primary/10 pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[720px] w-[720px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[140px]" />
       <div className="bg-success/5 pointer-events-none absolute top-1/4 right-10 -z-10 h-[360px] w-[360px] rounded-full blur-[100px]" />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-6">
         <div className="bg-surface-recessed border-outline-variant relative overflow-hidden rounded border shadow-2xl backdrop-blur-sm">
           {/* Banda de estado superior */}
           <div className="border-outline-variant bg-background/60 text-on-surface-variant flex flex-wrap items-center justify-between border-b px-6 py-2.5 text-[11px] tracking-wider uppercase">
@@ -39,8 +40,12 @@ export function Contacto() {
 
           {/* Dos columnas */}
           <div className="grid grid-cols-1 items-start gap-8 p-6 sm:p-8 lg:grid-cols-12 lg:gap-12 lg:p-12">
-            <ContactPitch />
-            <QuoteForm />
+            <Reveal from="left" className="lg:col-span-6">
+              <ContactPitch />
+            </Reveal>
+            <Reveal from="right" delay={0.12} className="lg:col-span-6">
+              <QuoteForm />
+            </Reveal>
           </div>
 
           {/* Strip de telemetria inferior */}

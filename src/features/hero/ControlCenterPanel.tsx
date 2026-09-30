@@ -17,6 +17,7 @@ import {
   Terminal,
   Truck,
 } from 'lucide-react';
+import { Counter } from '@/components/motion/Counter';
 import { useSystemClock } from '@/features/hero/useSystemClock';
 
 /* El visualizador de ruta: CDMX -> unidad en transito -> QRO -> MTY. */
@@ -96,7 +97,7 @@ type Kpi = {
   etiqueta: string;
   nota: string;
   notaColor: string;
-  valor: string;
+  valor: React.ReactNode;
   valorColor: string;
   icono: React.ReactNode;
 };
@@ -106,7 +107,7 @@ const kpis: Kpi[] = [
     etiqueta: 'Unidades en Tránsito',
     nota: '+12% vs ayer',
     notaColor: 'text-success',
-    valor: '4,892',
+    valor: <Counter value={4892} />,
     valorColor: 'text-on-surface',
     icono: <RadioTower className="text-primary h-4 w-4" />,
   },
@@ -114,7 +115,7 @@ const kpis: Kpi[] = [
     etiqueta: 'Prevención Predictiva',
     nota: 'Neuronal',
     notaColor: 'text-primary',
-    valor: '99.84%',
+    valor: <Counter value={99.84} decimals={2} suffix="%" />,
     valorColor: 'text-success',
     icono: <BadgeCheck className="text-success h-4 w-4" />,
   },
@@ -122,7 +123,7 @@ const kpis: Kpi[] = [
     etiqueta: 'Alertas Neutralizadas',
     nota: 'Turno Activo',
     notaColor: 'text-warning',
-    valor: '342',
+    valor: <Counter value={342} />,
     valorColor: 'text-on-surface',
     icono: <span className="text-on-surface-variant text-[11px]">hoy</span>,
   },
@@ -130,7 +131,7 @@ const kpis: Kpi[] = [
     etiqueta: 'Latencia Satelital',
     nota: 'Óptima',
     notaColor: 'text-success',
-    valor: '18ms',
+    valor: <Counter value={18} suffix="ms" />,
     valorColor: 'text-primary',
     icono: <Gauge className="text-on-surface-variant h-4 w-4" />,
   },
@@ -211,7 +212,7 @@ export function ControlCenterPanel() {
   const hora = useSystemClock();
 
   return (
-    <div className="lg:col-span-6">
+    <div>
       <div className="bg-surface border-outline-variant hover:border-outline relative overflow-hidden rounded border p-5 shadow-2xl transition-all duration-200">
         {/* Barrido de radar atmosferico */}
         <div className="animate-radar-line pointer-events-none absolute inset-x-0 h-10 bg-gradient-to-b from-transparent via-[#7c9df0]/10 to-transparent" />

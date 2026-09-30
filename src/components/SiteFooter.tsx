@@ -16,6 +16,7 @@
  * placeholders literales del mock: datos pendientes de definir, no se inventan.
  */
 import { Mail, MapPin, PhoneCall } from 'lucide-react';
+import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 
 const plataforma = [
   'Centro de Monitoreo C4',
@@ -50,10 +51,10 @@ export function SiteFooter() {
         <span>NODE STATUS: SYNCHRONIZED</span>
       </div>
 
-      {/* Grid principal */}
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 pb-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+      {/* Grid principal (las columnas entran en cascada al hacer scroll). */}
+      <Stagger className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 pb-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
         {/* Marca y mision */}
-        <div className="space-y-4 pr-0 lg:col-span-5 lg:pr-8">
+        <StaggerItem className="space-y-4 pr-0 lg:col-span-5 lg:pr-8">
           <div className="text-on-surface flex items-center gap-1.5 text-2xl font-bold tracking-tight">
             <span className="bg-primary inline-block h-3 w-3 rounded-sm" />
             AI27
@@ -69,10 +70,10 @@ export function SiteFooter() {
               Todos los servicios y cabinas C4 operativos
             </span>
           </div>
-        </div>
+        </StaggerItem>
 
         {/* Plataforma & Red */}
-        <div className="space-y-3 lg:col-span-2">
+        <StaggerItem className="space-y-3 lg:col-span-2">
           <h3 className="text-on-surface text-xs font-semibold tracking-wider uppercase">
             Plataforma &amp; Red
           </h3>
@@ -85,10 +86,10 @@ export function SiteFooter() {
               </li>
             ))}
           </ul>
-        </div>
+        </StaggerItem>
 
         {/* Compania */}
-        <div className="space-y-3 lg:col-span-2">
+        <StaggerItem className="space-y-3 lg:col-span-2">
           <h3 className="text-on-surface text-xs font-semibold tracking-wider uppercase">
             Compañía
           </h3>
@@ -101,10 +102,10 @@ export function SiteFooter() {
               </li>
             ))}
           </ul>
-        </div>
+        </StaggerItem>
 
         {/* Atencion inmediata */}
-        <div className="space-y-3 lg:col-span-3">
+        <StaggerItem className="space-y-3 lg:col-span-3">
           <h3 className="text-on-surface text-xs font-semibold tracking-wider uppercase">
             Atención Inmediata
           </h3>
@@ -161,8 +162,8 @@ export function SiteFooter() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </StaggerItem>
+      </Stagger>
 
       {/* Sub-footer: copyright + enlaces legales */}
       <div className="border-outline-variant border-t pt-8">

@@ -5,6 +5,7 @@
  */
 import { BadgeCheck, BrainCircuit, ChartColumn, RadioTower, Route } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 
 type Capacidad = {
   icono: ReactNode;
@@ -66,11 +67,11 @@ const capacidades: Capacidad[] = [
 
 export function DataCapabilities() {
   return (
-    <div className="flex flex-col gap-4 lg:col-span-5">
+    <Stagger className="flex flex-col gap-4 lg:col-span-5">
       {capacidades.map((cap) => (
-        <div
+        <StaggerItem
           key={cap.titulo}
-          className={`group bg-surface hover:bg-surface-bright border-outline-variant relative rounded-lg border p-5 shadow-sm transition-all duration-200 ${cap.hoverBorde}`}
+          className={`group bg-surface hover:bg-surface-bright border-outline-variant relative rounded-lg border p-5 shadow-sm transition-colors duration-200 ${cap.hoverBorde}`}
         >
           <div className="flex items-start gap-4">
             <div
@@ -96,10 +97,10 @@ export function DataCapabilities() {
               </p>
             </div>
           </div>
-        </div>
+        </StaggerItem>
       ))}
 
-      {/* Micro-badge de integracion */}
+      {/* Micro-badge de integracion (sin variants: aparece sin escalonar). */}
       <div className="bg-surface-recessed/80 border-outline-variant/60 text-on-surface-variant mt-1 flex items-center justify-between rounded border px-3 py-2 font-mono text-[11px]">
         <span className="flex items-center gap-1.5">
           <BadgeCheck className="text-success h-3.5 w-3.5" />
@@ -107,6 +108,6 @@ export function DataCapabilities() {
         </span>
         <span className="text-primary">REST / gRPC</span>
       </div>
-    </div>
+    </Stagger>
   );
 }
