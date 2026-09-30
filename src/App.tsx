@@ -8,6 +8,7 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
 import { Hero } from '@/features/hero/Hero';
 import { Infraestructura } from '@/features/infraestructura/Infraestructura';
+import { Monitoreo } from '@/features/monitoreo/Monitoreo';
 import { Trayectoria } from '@/features/trayectoria/Trayectoria';
 
 export function App() {
@@ -18,6 +19,7 @@ export function App() {
         <Hero />
         <Trayectoria />
         <Infraestructura />
+        <Monitoreo />
       </main>
       <SiteFooter />
     </div>

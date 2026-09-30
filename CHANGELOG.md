@@ -4,6 +4,32 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:09:30 16:30
+
+**Resumen:** Se portó la cuarta sección de la landing —Centro de monitoreo y grupo de reacción— desde el mock Nocturne. Se agregó dentro del `<main>` tras Infraestructura, con `id="monitoreo"` para que enganche con el ancla "Monitoreo" de la barra superior (el enlace que ya estaba marcado como activo).
+
+**Cambios:**
+
+- Se añadió a `src/styles/globals.css` la clase `animate-radar-beam` para el escáner C4, que reutiliza el keyframe `radar-rotate` a 4s (más rápido que el radar del mapa de Infraestructura, a 16s). El fondo de la sección reutiliza `.bg-engineering-grid-faint`, ya que la `tactical-grid` del mock (0.035 a 38px) es indistinguible de esa rejilla.
+- Se creó `src/features/monitoreo/` con la sección completa: el hook `useLocalClock` (reloj de cabina en vivo en hora local, con sufijo CST), `MonitoreoHeader` (badge operativo, titular con gradiente y párrafo), `CommandConsole` (consola de comando C4 con cabecera y reloj, tres KPIs de telemetría, log de eventos, mini escáner de radar y barra de estado), `ReactionProtocol` (stepper vertical de cuatro pasos con la línea conectora en gradiente y el banner de cobertura), `MonitoreoCapabilities` (tres tarjetas institucionales y el micro-footer) y el ensamblador `Monitoreo`.
+- Se añadió `<Monitoreo />` a `App.tsx`, después de `Infraestructura`.
+- Se mapearon los Material Symbols del mock a iconos de `lucide-react`: `schedule`→`Clock`, `satellite_alt`→`Satellite`, `local_shipping`→`Truck`, `flip_camera_ios`→`ScanEye`, `hub`→`Waypoints`, `receipt_long`→`ScrollText`, `radar`→`Radar`, `security`→`ShieldCheck`, `verified_user`/`verified`→`BadgeCheck`, `desktop_windows`→`Monitor`, `local_police`→`ShieldAlert`, `corporate_fare`→`Building2`, `check_circle`→`CircleCheck`, `sync_alt`→`ArrowRightLeft`.
+- La regla `.scanlines-overlay` del mock no se portó: estaba declarada pero no aplicada en ningún elemento del marcado.
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan. Los archivos de esta entrega pasan `prettier --check`.
+
+**Archivos modificados:**
+
+- `src/App.tsx`
+- `src/features/monitoreo/Monitoreo.tsx`
+- `src/features/monitoreo/MonitoreoHeader.tsx`
+- `src/features/monitoreo/CommandConsole.tsx`
+- `src/features/monitoreo/ReactionProtocol.tsx`
+- `src/features/monitoreo/MonitoreoCapabilities.tsx`
+- `src/features/monitoreo/useLocalClock.ts`
+- `src/styles/globals.css`
+- `CHANGELOG.md`
+
 ## 2026:09:30 15:00
 
 **Resumen:** Se portó la tercera sección de la landing —Infraestructura y red operativa nacional— desde el mock Nocturne. Se agregó como hermana del Hero y Trayectoria dentro del `<main>`, con `id="infraestructura"` para que enganche con el ancla de la barra superior.

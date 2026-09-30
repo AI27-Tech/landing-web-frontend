@@ -385,3 +385,14 @@
   animation: node-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   transform-origin: center;
 }
+
+/*
+ * ── Seccion Centro de monitoreo (docs/mock/.../centro_de_monitoreo) ───────
+ * El fondo reutiliza .bg-engineering-grid-faint (rejilla tenue de Trayectoria).
+ * El escaner C4 gira mas rapido que el radar del mapa (4s vs 16s), asi que es
+ * una animacion propia.
+ */
+.animate-radar-beam {
+  animation: radar-rotate 4s linear infinite;
+  transform-origin: center center;
+}
