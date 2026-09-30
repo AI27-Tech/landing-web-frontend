@@ -1,0 +1,63 @@
+# Despliegue de la landing a Firebase Hosting.
+#
+# Se dispara al hacer push a la rama principal (lan-wf-m). Primero corre las
+# verificaciones del repo (typecheck, lint, build); solo si pasan, publica el
+# contenido de dist/ en Firebase Hosting.
+#
+# Requisito: el secreto de repositorio FIREBASE_SERVICE_ACCOUNT debe contener el
+# JSON de una cuenta de servicio de Firebase con permiso de Hosting. Se genera
+# en la consola de Firebase (Configuracion del proyecto > Cuentas de servicio >
+# Generar nueva clave privada) y se pega en:
+#   GitHub > Settings > Secrets and variables > Actions > New repository secret.
+#
+# Project ID de Firebase: ai27-landing-page
+
+name: Deploy landing a Firebase Hosting
+
+on:
+  push:
+    branches:
+      - lan-wf-m
+
+# Evita despliegues solapados: si llega un push nuevo, cancela el anterior.
+concurrency:
+  group: firebase-hosting-lan-wf-m
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Instalar pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12.3.4
+
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Verificar tipos
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Build
+        run: pnpm build
+
+      - name: Desplegar a Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: ai27-landing-page
+          channelId: live
