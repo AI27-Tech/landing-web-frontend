@@ -7,6 +7,7 @@
 import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
 import { Hero } from '@/features/hero/Hero';
+import { Trayectoria } from '@/features/trayectoria/Trayectoria';
 
 export function App() {
   return (
@@ -14,6 +15,7 @@ export function App() {
       <SiteHeader />
       <main className="flex flex-grow flex-col">
         <Hero />
+        <Trayectoria />
       </main>
       <SiteFooter />
     </div>

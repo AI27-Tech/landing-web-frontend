@@ -4,6 +4,30 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:09:30 13:30
+
+**Resumen:** Se portó la segunda sección de la landing —Trayectoria y cobertura nacional ("Quiénes somos")— desde el mock Nocturne. Se agregó como hermana del Hero dentro del `<main>`, con `id="nosotros"` para que enganche con el ancla de la barra superior.
+
+**Cambios:**
+
+- Se añadieron a `src/styles/globals.css` los patrones y animaciones propios de la sección: `.bg-engineering-grid-faint` (rejilla más tenue que la del Hero, 0.035), el keyframe `tactical-pulse` con su clase `animate-tactical-pulse` (halo del nodo de la fase activa), el keyframe `data-flow` con la clase `timeline-stream` (barrido continuo de la barra del timeline) y `.card-tactical` (realce al hover: elevación, borde periwinkle y sombra). Todas quedan bajo la guarda de `prefers-reduced-motion` que ya existía.
+- Se creó `src/features/trayectoria/` con la sección completa: `TrayectoriaHeader` (tag "Quiénes somos", titular con gradiente periwinkle→esmeralda, narrativa de evolución y chip de arquitectura de custodia), `EvolutionTimeline` (línea cronológica de cuatro fases con la Fase IV destacada y la barra animada solo en desktop), `TrustIndicators` (cuatro tarjetas de indicadores institucionales y el pie de metadatos) y el ensamblador `Trayectoria`.
+- Se añadió `<Trayectoria />` a `App.tsx`, después del `Hero`.
+- Se mapearon los SVG genéricos del mock a iconos de `lucide-react`: reloj→`Clock`, escudo/soberanía→`Globe`, rayo→`Zap`, pin→`MapPin`, check→`Check`, monitor→`MonitorSmartphone`, y el escudo del chip→`ShieldCheck`.
+- Donde el mock definió una superficie propia (`#161B22`) que no existe literal en los tokens, se usó el rol equivalente `bg-surface-recessed` (`#161b24`), siguiendo la regla de que ante una discrepancia gana el token.
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan. Los archivos de esta entrega pasan `prettier --check`.
+
+**Archivos modificados:**
+
+- `src/App.tsx`
+- `src/features/trayectoria/Trayectoria.tsx`
+- `src/features/trayectoria/TrayectoriaHeader.tsx`
+- `src/features/trayectoria/EvolutionTimeline.tsx`
+- `src/features/trayectoria/TrustIndicators.tsx`
+- `src/styles/globals.css`
+- `CHANGELOG.md`
+
 ## 2026:09:30 12:00
 
 **Resumen:** Se portó la primera sección real de la landing —el Hero (variante táctica: radar y red de telemetría)— desde el mock Nocturne a React 19 + Tailwind 4. Se retiró el marcador de posición de `App.tsx` y se estrenaron las carpetas de convención `src/components/` (compartido entre secciones) y `src/features/hero/` (propio de la sección).

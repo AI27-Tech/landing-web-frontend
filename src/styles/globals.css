@@ -280,3 +280,66 @@
     transform: rotate(360deg);
   }
 }
+
+/*
+ * ── Seccion Trayectoria (docs/mock/.../trayectoria) ───────────────────────
+ * Rejilla mas tenue que la del Hero (0.035 vs 0.08/0.16): es un fondo de
+ * seccion, no el lienzo tactico principal.
+ */
+.bg-engineering-grid-faint {
+  background-size: 36px 36px;
+  background-image:
+    linear-gradient(to right, rgba(124, 157, 240, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(124, 157, 240, 0.035) 1px, transparent 1px);
+}
+
+/* Pulso tactico: halo que late alrededor del nodo de la fase activa. */
+@keyframes tactical-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(110, 231, 183, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(110, 231, 183, 0);
+  }
+}
+.animate-tactical-pulse {
+  animation: tactical-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Flujo de datos: barrido continuo sobre la barra del timeline. */
+@keyframes data-flow {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.timeline-stream {
+  background: linear-gradient(
+    90deg,
+    rgba(45, 55, 72, 0.6) 0%,
+    #7c9df0 35%,
+    #6ee7b7 50%,
+    #7c9df0 65%,
+    rgba(45, 55, 72, 0.6) 100%
+  );
+  background-size: 200% 100%;
+  animation: data-flow 8s linear infinite;
+}
+
+/*
+ * Tarjeta tactica con realce al hover (elevacion + borde periwinkle + sombra).
+ * Es una transicion, asi que la guarda de reduced-motion la acorta a ~0.
+ */
+.card-tactical {
+  transition: all 0.25s ease;
+}
+.card-tactical:hover {
+  border-color: rgba(124, 157, 240, 0.4);
+  transform: translateY(-2px);
+  box-shadow:
+    0 10px 25px -5px rgba(14, 17, 23, 0.8),
+    0 0 15px -3px rgba(124, 157, 240, 0.08);
+}
