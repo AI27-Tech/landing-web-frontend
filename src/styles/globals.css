@@ -343,3 +343,45 @@
     0 10px 25px -5px rgba(14, 17, 23, 0.8),
     0 0 15px -3px rgba(124, 157, 240, 0.08);
 }
+
+/*
+ * ── Seccion Infraestructura (docs/mock/.../infraestructura) ───────────────
+ * Rejilla gris de precision (0.22) para el fondo de la seccion; distinta de
+ * las periwinkle del Hero y de Trayectoria.
+ */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image:
+    linear-gradient(to right, rgba(45, 55, 72, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(45, 55, 72, 0.22) 1px, transparent 1px);
+}
+
+/* Barrido de radar que gira detras del mapa (rotacion completa, lento). */
+@keyframes radar-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.animate-radar-rotate {
+  animation: radar-rotate 16s linear infinite;
+}
+
+/* Pulso de nodo del mapa: halo que crece y se atenua (opacity + scale). */
+@keyframes node-pulse {
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.4);
+  }
+}
+.animate-node-pulse {
+  animation: node-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  transform-origin: center;
+}

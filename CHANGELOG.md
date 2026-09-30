@@ -4,6 +4,31 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:09:30 15:00
+
+**Resumen:** Se portó la tercera sección de la landing —Infraestructura y red operativa nacional— desde el mock Nocturne. Se agregó como hermana del Hero y Trayectoria dentro del `<main>`, con `id="infraestructura"` para que enganche con el ancla de la barra superior.
+
+**Cambios:**
+
+- Se añadieron a `src/styles/globals.css` los patrones y animaciones propios de la sección: `.bg-grid-pattern` (rejilla gris de precisión, 0.22), el keyframe `radar-rotate` con su clase `animate-radar-rotate` (barrido que gira detrás del mapa) y el keyframe `node-pulse` con `animate-node-pulse` (halo de los nodos del mapa). El barrido se nombró distinto del `radar-sweep` del Hero para no colisionar. Todo queda bajo la guarda de `prefers-reduced-motion`.
+- Se creó `src/features/infraestructura/` con la sección completa: `InfraHeader` (badge, titular y párrafo), `TacticalMap` (panel con cabecera HUD, mapa SVG de México con corredores troncales, nodos etiquetados, checkpoints, HUDs flotantes y leyenda), `CapabilityCards` (cuatro capacidades fundamentales), `InfraMetrics` (fila de cuatro métricas y pie de metadatos) y el ensamblador `Infraestructura`.
+- Se añadió `<Infraestructura />` a `App.tsx`, después de `Trayectoria`.
+- Se mapearon los Material Symbols del mock a iconos de `lucide-react`: `alt_route`→`Route`, `verified_user`→`BadgeCheck`, `cell_tower`→`Antenna`, `shield`→`Shield`, `hub`→`Waypoints`.
+- Discrepancias mock/token registradas: el chip "Enlace activo" y el punto del pie usan `success` (`#6ee7b7`) en lugar del `#10B981` del mock, que no es un token; el landmass continental del mapa conserva el `#181f2a` del mock (tono de un SVG, sin rol equivalente y no expresable como utilidad).
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan. Los archivos de esta entrega pasan `prettier --check`.
+
+**Archivos modificados:**
+
+- `src/App.tsx`
+- `src/features/infraestructura/Infraestructura.tsx`
+- `src/features/infraestructura/InfraHeader.tsx`
+- `src/features/infraestructura/TacticalMap.tsx`
+- `src/features/infraestructura/CapabilityCards.tsx`
+- `src/features/infraestructura/InfraMetrics.tsx`
+- `src/styles/globals.css`
+- `CHANGELOG.md`
+
 ## 2026:09:30 13:30
 
 **Resumen:** Se portó la segunda sección de la landing —Trayectoria y cobertura nacional ("Quiénes somos")— desde el mock Nocturne. Se agregó como hermana del Hero dentro del `<main>`, con `id="nosotros"` para que enganche con el ancla de la barra superior.

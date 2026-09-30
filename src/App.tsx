@@ -7,6 +7,7 @@
 import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
 import { Hero } from '@/features/hero/Hero';
+import { Infraestructura } from '@/features/infraestructura/Infraestructura';
 import { Trayectoria } from '@/features/trayectoria/Trayectoria';
 
 export function App() {
@@ -16,6 +17,7 @@ export function App() {
       <main className="flex flex-grow flex-col">
         <Hero />
         <Trayectoria />
+        <Infraestructura />
       </main>
       <SiteFooter />
     </div>
