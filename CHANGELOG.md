@@ -4,6 +4,36 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:09:30 19:30
+
+**Resumen:** Se portó la sexta y última sección de la landing —Contacto, cotización y footer institucional— desde el mock Nocturne, con lo que las seis secciones del diseño ya están en la página. El footer institucional completo reemplaza el footer mínimo que el scaffold traía del mock del Hero.
+
+**Cambios:**
+
+- Se añadió a `src/styles/globals.css` el keyframe `pulse-emerald` con su clase `.status-pulse` (indicadores de "operación activa"). El fondo de la sección reutiliza `.bg-grid-pattern`. Queda bajo la guarda de `prefers-reduced-motion`.
+- Se creó `src/features/contacto/` con el panel de contacto: `ContactPitch` (propuesta de valor, métricas de servicio y acciones de contacto directo), `QuoteForm` (formulario de cotización con campos, dos selectores y nota legal) y el ensamblador `Contacto` (banda de estado, dos columnas y strip de telemetría), con `id="cotizar"` — el destino del botón "Cotizar servicio" de la barra superior y del Hero.
+- Se reescribió `src/components/SiteFooter.tsx` con el footer institucional completo del mock de Contacto (coordenadas técnicas, cuatro columnas —marca, plataforma, compañía, atención— y sub-footer legal). Es el footer definitivo del sitio; sustituye al footer reducido que el Hero duplicaba.
+- Se añadió `<Contacto />` a `App.tsx`, después de `Datos`.
+- Se mapearon los Material Symbols del mock a iconos de `lucide-react`: `support_agent`→`Headset`, `call`→`Phone`, `arrow_forward`→`ArrowRight`, `lock`→`Lock`, `verified`→`BadgeCheck`, `phone_in_talk`→`PhoneCall`, `mail`→`Mail`, `location_on`→`MapPin`.
+
+**Decisiones y correcciones registradas:**
+
+- **Formulario de cotización (decisión abierta del README):** el mock envía con `event.preventDefault()` + `alert()` porque no hay backend. Se conservó ese comportamiento como placeholder **explícito** en el handler `manejarEnvio` de `QuoteForm`; no se inventó endpoint, servicio de formularios ni `mailto`. Cuando se decida el destino, ese handler es el único punto que cambia.
+- **Defecto del mock corregido:** el sub-footer del mock repetía el texto de copyright en el lugar de los enlaces legales. Se restituyeron los cuatro enlaces (Privacidad, Términos, Seguridad, Compliance) que la landing ya declaraba.
+- **Datos de contacto:** el teléfono y la dirección vienen del mock como placeholders literales (`[teléfono de contacto]`, `[dirección]`); se conservan como datos pendientes de definir, no se inventan. Los correos de ventas sí venían con valor real en el mock y se conservaron.
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan. Los archivos de esta entrega pasan `prettier --check`.
+
+**Archivos modificados:**
+
+- `src/App.tsx`
+- `src/components/SiteFooter.tsx`
+- `src/features/contacto/Contacto.tsx`
+- `src/features/contacto/ContactPitch.tsx`
+- `src/features/contacto/QuoteForm.tsx`
+- `src/styles/globals.css`
+- `CHANGELOG.md`
+
 ## 2026:09:30 18:00
 
 **Resumen:** Se portó la quinta sección de la landing —Datos e inteligencia artificial— desde el mock Nocturne. Se agregó dentro del `<main>` tras Monitoreo, con `id="datos"` para que enganche con el ancla "Datos" de la barra superior.

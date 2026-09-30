@@ -409,3 +409,23 @@
     rgba(14, 17, 23, 0) 70%
   );
 }
+
+/*
+ * ── Seccion Contacto (docs/mock/.../contacto_cotizacion) ──────────────────
+ * El fondo reutiliza .bg-grid-pattern (0.22/0.25 gris). Este pulso marca los
+ * indicadores de "operacion activa" (opacity + scale). Lo apaga reduced-motion.
+ */
+@keyframes pulse-emerald {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.15);
+  }
+}
+.status-pulse {
+  animation: pulse-emerald 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

@@ -122,7 +122,7 @@ Todas las demás siguen GitHub Flow: `feat/hero`, `fix/anchors-nav`, `chore/toke
 
 ## Decisiones abiertas
 
-- **A dónde va el formulario de cotización.** El mock hace `event.preventDefault()` y un `alert()`. No hay backend. Hay que decidir entre un endpoint propio, un servicio de formularios, o `mailto:`. Hoy no hay nada.
+- **A dónde va el formulario de cotización.** Sigue sin resolverse. El formulario ya está portado en `src/features/contacto/QuoteForm.tsx`, y su handler `manejarEnvio` conserva el comportamiento del mock —`event.preventDefault()` y un `alert()`— como placeholder explícito. No hay backend. Hay que decidir entre un endpoint propio, un servicio de formularios, o `mailto:`. Cuando se decida, ese handler es el único punto que cambia.
 - **`og:image` / `twitter:image`.** Está en el `TODO` de `index.html`. Necesita el recorte real de la marca, no una captura del mock.
 - **Contenido editable.** Hoy el copy vive en los mocks y al portarlo ira a los componentes. Si el copy va a cambiar seguido, la alternativa es un módulo `src/content/` con los textos separados del marcado. No se ha decidido.
 - **Si entran subpáginas** (Privacidad, Términos, Seguridad, Compliance — los cuatro enlaces del footer), hay que instalar TanStack Router. La decisión actual de no usar router es válida solo mientras sea una sola página.

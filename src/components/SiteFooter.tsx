@@ -1,11 +1,38 @@
 /*
- * Pie institucional de la landing. Portado del footer del mock Nocturne
- * (docs/mock/landing-nocturne/, compartido por las seis secciones).
+ * Footer institucional de la landing. Portado del footer completo del mock de
+ * Contacto (docs/mock/.../contacto_cotizacion), que es el footer definitivo del
+ * sitio: coordenadas tecnicas, cuatro columnas (marca, plataforma, compania,
+ * atencion) y sub-footer legal.
  *
- * Los cuatro enlaces legales (Privacidad, Terminos, Seguridad, Compliance)
- * apuntan a anclas por ahora. Si se convierten en subpaginas reales, eso
- * exige instalar router y se registra en el README (decision abierta).
+ * Reemplaza el footer minimo que el scaffold traia del mock del Hero. Ese Hero
+ * duplicaba un footer reducido en cada seccion; este es el institucional real.
+ *
+ * Correccion respecto al mock: el sub-footer del mock repetia el texto de
+ * copyright en el lugar de los enlaces legales (un defecto del generador). Aqui
+ * se restituyen los cuatro enlaces legales (Privacidad, Terminos, Seguridad,
+ * Compliance) que la landing ya declaraba.
+ *
+ * Datos de contacto entre corchetes ([telefono de contacto], [direccion]) son
+ * placeholders literales del mock: datos pendientes de definir, no se inventan.
  */
+import { Mail, MapPin, PhoneCall } from 'lucide-react';
+
+const plataforma = [
+  'Centro de Monitoreo C4',
+  'Grupo de Reacción Propio',
+  'Corredores de Seguridad',
+  'Datos e IA Predictiva',
+  'Integración API / TMS',
+];
+
+const compania = [
+  'Quiénes Somos',
+  '25 Años de Trayectoria',
+  'Casos de Éxito',
+  'Cobertura Nacional',
+  'Sala de Prensa',
+];
+
 const enlacesLegales = [
   { etiqueta: 'Privacidad', href: '#privacidad' },
   { etiqueta: 'Términos y Condiciones', href: '#terminos' },
@@ -15,30 +42,152 @@ const enlacesLegales = [
 
 export function SiteFooter() {
   return (
-    <footer className="bg-background border-outline-variant w-full border-t">
-      <div className="text-on-surface-variant mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-8 text-[13px] md:flex-row">
-        {/* Marca y aviso de derechos */}
-        <div className="flex flex-col items-center gap-2 text-center sm:flex-row sm:text-left">
-          <span className="text-on-surface text-lg font-bold">AI27</span>
-          <span className="text-outline-variant hidden sm:inline">|</span>
-          <p>
-            © 2025 AI27. Todos los derechos reservados. Seguridad e Inteligencia Predictiva en
-            Tránsito de Carga.
+    <footer className="bg-background border-outline-variant text-on-surface-variant relative z-10 w-full border-t pt-14 pb-8">
+      {/* Coordenadas tecnicas */}
+      <div className="border-outline-variant/60 text-on-surface-variant/60 mx-auto mb-8 flex max-w-7xl flex-wrap items-center justify-between border-b px-6 pb-4 font-mono text-[10px] tracking-widest uppercase">
+        <span>AI27 // INTELLIGENCE SYSTEM NETWORK</span>
+        <span className="hidden sm:inline">GEO-FENCE LAT 19.4326° N, LONG 99.1332° W</span>
+        <span>NODE STATUS: SYNCHRONIZED</span>
+      </div>
+
+      {/* Grid principal */}
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 pb-12 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+        {/* Marca y mision */}
+        <div className="space-y-4 pr-0 lg:col-span-5 lg:pr-8">
+          <div className="text-on-surface flex items-center gap-1.5 text-2xl font-bold tracking-tight">
+            <span className="bg-primary inline-block h-3 w-3 rounded-sm" />
+            AI27
+          </div>
+          <p className="text-on-surface-variant max-w-md text-[13px] leading-relaxed">
+            Seguridad e inteligencia de datos para el transporte de carga en México. Más de 25 años
+            anticipando el riesgo en ruta con telemetría en tiempo real y capacidad de reacción
+            inmediata en autopistas federales.
           </p>
+          <div className="bg-surface-recessed border-outline-variant text-on-surface inline-flex items-center gap-2 rounded border px-3 py-1.5 text-xs">
+            <span className="bg-success status-pulse h-2 w-2 rounded-full" />
+            <span className="text-[12px] font-medium">
+              Todos los servicios y cabinas C4 operativos
+            </span>
+          </div>
         </div>
 
-        {/* Enlaces legales */}
-        <nav className="flex items-center gap-6">
-          {enlacesLegales.map(({ etiqueta, href }) => (
-            <a
-              key={href}
-              className="text-on-surface-variant hover:text-primary transition-colors duration-150"
-              href={href}
-            >
-              {etiqueta}
-            </a>
-          ))}
-        </nav>
+        {/* Plataforma & Red */}
+        <div className="space-y-3 lg:col-span-2">
+          <h3 className="text-on-surface text-xs font-semibold tracking-wider uppercase">
+            Plataforma &amp; Red
+          </h3>
+          <ul className="space-y-2 text-[13px]">
+            {plataforma.map((item) => (
+              <li key={item}>
+                <a className="hover:text-primary transition-colors duration-150" href="#">
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Compania */}
+        <div className="space-y-3 lg:col-span-2">
+          <h3 className="text-on-surface text-xs font-semibold tracking-wider uppercase">
+            Compañía
+          </h3>
+          <ul className="space-y-2 text-[13px]">
+            {compania.map((item) => (
+              <li key={item}>
+                <a className="hover:text-primary transition-colors duration-150" href="#">
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Atencion inmediata */}
+        <div className="space-y-3 lg:col-span-3">
+          <h3 className="text-on-surface text-xs font-semibold tracking-wider uppercase">
+            Atención Inmediata
+          </h3>
+          <div className="space-y-2.5 text-[13px]">
+            <div className="flex items-start gap-2.5">
+              <PhoneCall className="text-primary mt-0.5 h-[17px] w-[17px] shrink-0" />
+              <div>
+                <span className="text-on-surface-variant block text-[11px] tracking-wider uppercase">
+                  Línea C4 Nacional 24/7:
+                </span>
+                {/* TODO: numero real cuando se defina el dato de contacto. */}
+                <a
+                  className="text-on-surface hover:text-primary font-semibold transition-colors"
+                  href="#"
+                >
+                  [teléfono de contacto]
+                </a>
+              </div>
+            </div>
+            <div className="flex items-start gap-2.5">
+              <Mail className="text-primary mt-0.5 h-[17px] w-[17px] shrink-0" />
+              <div className="space-y-1">
+                <span className="text-on-surface-variant block text-[11px] tracking-wider uppercase">
+                  Correos de contacto:
+                </span>
+                <div className="text-on-surface-variant text-xs">
+                  Ventas:{' '}
+                  <a
+                    className="text-on-surface hover:text-primary transition-colors"
+                    href="mailto:cmatus@ai27.com"
+                  >
+                    cmatus@ai27.com
+                  </a>
+                </div>
+                <div className="text-on-surface-variant text-xs">
+                  Atención comercial:{' '}
+                  <a
+                    className="text-on-surface hover:text-primary transition-colors"
+                    href="mailto:esamper@ai27.com"
+                  >
+                    esamper@ai27.com
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-start gap-2.5">
+              <MapPin className="text-primary mt-0.5 h-[17px] w-[17px] shrink-0" />
+              <div>
+                <span className="text-on-surface-variant block text-[11px] tracking-wider uppercase">
+                  Matriz de Operaciones:
+                </span>
+                {/* TODO: direccion real cuando se defina el dato de contacto. */}
+                <span className="text-on-surface-variant text-xs">[dirección]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Sub-footer: copyright + enlaces legales */}
+      <div className="border-outline-variant border-t pt-8">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 md:flex-row">
+          <div className="text-on-surface-variant text-center text-[13px] md:text-left">
+            © 2026 AI27. Todos los derechos reservados.
+          </div>
+          <nav className="flex flex-wrap items-center justify-center gap-5 text-[13px]">
+            {enlacesLegales.map(({ etiqueta, href }) => (
+              <a
+                key={href}
+                className="hover:text-primary transition-colors duration-150"
+                href={href}
+              >
+                {etiqueta}
+              </a>
+            ))}
+          </nav>
+        </div>
+
+        {/* Micro badge de seguridad inferior */}
+        <div className="border-outline-variant/30 text-on-surface-variant/60 mx-auto mt-4 flex max-w-7xl flex-wrap items-center justify-between border-t px-6 pt-3 font-mono text-[10px] uppercase">
+          <span>AI27 // DESPLIEGUE TÁCTICO &amp; PROTOCOLO LOGÍSTICO // ENCRIPTACIÓN AES-256</span>
+          <span>CENTRO DE ATENCIÓN A EMERGENCIAS ACTIVO</span>
+        </div>
       </div>
     </footer>
   );
