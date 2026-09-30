@@ -11,6 +11,11 @@ import reactRefresh from 'eslint-plugin-react-refresh';
  *
  * Si alguna vez hace falta una, se quita de aqui en el mismo commit que la
  * justifica — nunca por goteo.
+ *
+ * Excepcion vigente (2026-09-30): `motion` (motion.dev) SI se permite, para las
+ * animaciones de scroll marcadas de la landing. Sigue respetando
+ * prefers-reduced-motion (via useReducedMotion). El paquete legacy
+ * `framer-motion` sigue prohibido para no mezclar dos APIs. Ver README y DEC.
  */
 const forbiddenPackages = {
   paths: [
@@ -36,9 +41,14 @@ const forbiddenPackages = {
       message: 'La landing no hace fetch de datos de servidor: el contenido es estatico.',
     },
     {
+      // El paquete legacy `framer-motion` sigue prohibido: su sucesor es
+      // `motion` (motion.dev), que SI se permite en este repo desde el
+      // 2026-09-30 para las animaciones de scroll de la landing. Ver README
+      // ("Animaciones de scroll con Motion") y CHANGELOG. Importar el paquete
+      // viejo mezclaria dos APIs; usar siempre `motion/react`.
       name: 'framer-motion',
       message:
-        'Sin librerias de animacion: las animaciones de los mocks son CSS puro, y prefers-reduced-motion las apaga.',
+        'Usa `motion` (motion.dev), no el paquete legacy `framer-motion`. Importa desde `motion/react`.',
     },
     {
       name: 'next-auth',
