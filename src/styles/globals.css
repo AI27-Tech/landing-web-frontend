@@ -396,3 +396,16 @@
   animation: radar-rotate 4s linear infinite;
   transform-origin: center center;
 }
+
+/*
+ * ── Seccion Datos e IA (docs/mock/.../datos_e_inteligencia_artificial) ────
+ * El fondo reutiliza .bg-grid-pattern (0.25 gris) de Infraestructura; este
+ * resplandor radial se le superpone en la esquina superior derecha.
+ */
+.bg-radar-glow {
+  background: radial-gradient(
+    circle at 75% 20%,
+    rgba(124, 157, 240, 0.08) 0%,
+    rgba(14, 17, 23, 0) 70%
+  );
+}

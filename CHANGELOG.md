@@ -4,6 +4,31 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:09:30 18:00
+
+**Resumen:** Se portó la quinta sección de la landing —Datos e inteligencia artificial— desde el mock Nocturne. Se agregó dentro del `<main>` tras Monitoreo, con `id="datos"` para que enganche con el ancla "Datos" de la barra superior.
+
+**Cambios:**
+
+- Se añadió a `src/styles/globals.css` la clase `.bg-radar-glow` (resplandor radial en la esquina superior derecha). El fondo de rejilla de la sección reutiliza `.bg-grid-pattern` (0.25) de Infraestructura.
+- Se creó `src/features/datos/` con la sección completa: `DatosHeader` (tag, titular con gradiente y párrafo), `DataCapabilities` (cuatro tarjetas de capacidad con realce por color y micro-badge de integración), `AnalyticsDashboard` (mockup del "Client Intelligence Hub" con barra de consola, tres KPIs, gráfico SVG de tendencia de riesgo con tooltip anclado y lista de viajes bajo vigilancia), `DataMetrics` (fila de cuatro métricas de valor de datos y pie de sección con sellos de seguridad) y el ensamblador `Datos`.
+- Se añadió `<Datos />` a `App.tsx`, después de `Monitoreo`.
+- Se mapearon los Material Symbols del mock a iconos de `lucide-react`: `sensors`→`RadioTower`, `neurology`→`BrainCircuit`, `analytics`→`ChartColumn`, `route`/`alt_route`→`Route`, `verified_user`→`BadgeCheck`, `terminal`→`Terminal`, `calendar_today`→`Calendar`, `arrow_drop_down`→`ChevronDown`, `file_download`→`Download`, `local_shipping`→`Truck`, `trending_up`→`TrendingUp`, `shield`→`Shield`, `check_circle`→`CircleCheck`, `speed`→`Gauge`, `check`→`Check`, `lock`→`Lock`.
+- El dashboard es un mockup estático de UI: las cifras son ilustrativas y no consumen datos, coherente con el alcance del sitio (sin backend). El gráfico SVG conserva los valores hex del mock, por la misma razón que los demás gráficos (un atributo de SVG no puede leer una utilidad de Tailwind).
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan. Los archivos de esta entrega pasan `prettier --check`.
+
+**Archivos modificados:**
+
+- `src/App.tsx`
+- `src/features/datos/Datos.tsx`
+- `src/features/datos/DatosHeader.tsx`
+- `src/features/datos/DataCapabilities.tsx`
+- `src/features/datos/AnalyticsDashboard.tsx`
+- `src/features/datos/DataMetrics.tsx`
+- `src/styles/globals.css`
+- `CHANGELOG.md`
+
 ## 2026:09:30 16:30
 
 **Resumen:** Se portó la cuarta sección de la landing —Centro de monitoreo y grupo de reacción— desde el mock Nocturne. Se agregó dentro del `<main>` tras Infraestructura, con `id="monitoreo"` para que enganche con el ancla "Monitoreo" de la barra superior (el enlace que ya estaba marcado como activo).
