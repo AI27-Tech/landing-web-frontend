@@ -174,3 +174,269 @@
     scroll-behavior: auto !important;
   }
 }
+
+/*
+ * ============================================================================
+ *  ANIMACIONES Y PATRONES DEL HERO — portados de docs/mock/landing-nocturne/
+ * ============================================================================
+ *
+ *  Son CSS puro, por decision de arquitectura (nada de framer-motion, ver
+ *  eslint.config.js). Todas quedan cubiertas por la guarda de reduced-motion
+ *  de arriba: al declararse como `animation`/`transition`, la guarda las
+ *  neutraliza sin que cada componente tenga que repetir la regla.
+ *
+ *  Los patrones de rejilla usan el token de borde (#2d3748 / #7c9df0) por
+ *  valor porque un `background-image` con `linear-gradient` no puede leer una
+ *  utilidad de Tailwind; es la unica excepcion a "color por rol", y la misma
+ *  que ya hacen los mocks. El resto del color se nombra por rol en el JSX.
+ */
+
+/* Rejilla tecnica de fondo (radar-grid del mock). */
+.bg-radar-grid {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(45, 55, 72, 0.25) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(45, 55, 72, 0.25) 1px, transparent 1px);
+}
+
+/* Rejilla milimetrica de ingenieria (fondo del Hero, doble frecuencia). */
+.bg-engineering-grid {
+  background-size:
+    36px 36px,
+    36px 36px,
+    180px 180px,
+    180px 180px;
+  background-image:
+    linear-gradient(to right, rgba(124, 157, 240, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(124, 157, 240, 0.08) 1px, transparent 1px),
+    linear-gradient(to right, rgba(124, 157, 240, 0.16) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(124, 157, 240, 0.16) 1px, transparent 1px);
+}
+
+/* Barrido de radar: banda que baja sobre el panel del Centro de Control. */
+@keyframes radar-sweep {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.15;
+  }
+  100% {
+    transform: translateY(1000%);
+    opacity: 0;
+  }
+}
+.animate-radar-line {
+  animation: radar-sweep 8s linear infinite;
+}
+
+/* Pulso de ondas: halos que crecen y se desvanecen sobre nodos activos. */
+@keyframes ping-slow {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+.animate-ping-slow {
+  animation: ping-slow 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Flujo de paquetes de telemetria sobre las aristas de la red. */
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+.animate-dash-flow {
+  stroke-dasharray: 4, 8;
+  animation: dash-flow 3s linear infinite;
+}
+
+/* Pulso de nodos: brillo de los halos de las ciudades. */
+@keyframes pulse-node {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.15);
+  }
+}
+.animate-node-glow {
+  animation: pulse-node 4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Barrido conico del radar tactico del fondo. */
+.animate-radar-sweep-conic {
+  animation: spin 12s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*
+ * ── Seccion Trayectoria (docs/mock/.../trayectoria) ───────────────────────
+ * Rejilla mas tenue que la del Hero (0.035 vs 0.08/0.16): es un fondo de
+ * seccion, no el lienzo tactico principal.
+ */
+.bg-engineering-grid-faint {
+  background-size: 36px 36px;
+  background-image:
+    linear-gradient(to right, rgba(124, 157, 240, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(124, 157, 240, 0.035) 1px, transparent 1px);
+}
+
+/* Pulso tactico: halo que late alrededor del nodo de la fase activa. */
+@keyframes tactical-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(110, 231, 183, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(110, 231, 183, 0);
+  }
+}
+.animate-tactical-pulse {
+  animation: tactical-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Flujo de datos: barrido continuo sobre la barra del timeline. */
+@keyframes data-flow {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.timeline-stream {
+  background: linear-gradient(
+    90deg,
+    rgba(45, 55, 72, 0.6) 0%,
+    #7c9df0 35%,
+    #6ee7b7 50%,
+    #7c9df0 65%,
+    rgba(45, 55, 72, 0.6) 100%
+  );
+  background-size: 200% 100%;
+  animation: data-flow 8s linear infinite;
+}
+
+/*
+ * Tarjeta tactica con realce al hover (elevacion + borde periwinkle + sombra).
+ * Es una transicion, asi que la guarda de reduced-motion la acorta a ~0.
+ */
+.card-tactical {
+  /*
+   * Transiciona solo lo que cambia en el hover. Antes era `all`, que incluia
+   * `transform`; como Motion controla `transform` en estas mismas tarjetas
+   * (deja un estilo inline al animar la entrada), el hover-lift y Motion
+   * competian por la misma propiedad y producian un parpadeo al pasar el
+   * cursor. Ahora el lift usa la propiedad `translate` (independiente de
+   * `transform`), asi que las dos animaciones no se pisan.
+   */
+  transition:
+    translate 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.card-tactical:hover {
+  border-color: rgba(124, 157, 240, 0.4);
+  translate: 0 -2px;
+  box-shadow:
+    0 10px 25px -5px rgba(14, 17, 23, 0.8),
+    0 0 15px -3px rgba(124, 157, 240, 0.08);
+}
+
+/*
+ * ── Seccion Infraestructura (docs/mock/.../infraestructura) ───────────────
+ * Rejilla gris de precision (0.22) para el fondo de la seccion; distinta de
+ * las periwinkle del Hero y de Trayectoria.
+ */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image:
+    linear-gradient(to right, rgba(45, 55, 72, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(45, 55, 72, 0.22) 1px, transparent 1px);
+}
+
+/* Barrido de radar que gira detras del mapa (rotacion completa, lento). */
+@keyframes radar-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.animate-radar-rotate {
+  animation: radar-rotate 16s linear infinite;
+}
+
+/* Pulso de nodo del mapa: halo que crece y se atenua (opacity + scale). */
+@keyframes node-pulse {
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.4);
+  }
+}
+.animate-node-pulse {
+  animation: node-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  transform-origin: center;
+}
+
+/*
+ * ── Seccion Centro de monitoreo (docs/mock/.../centro_de_monitoreo) ───────
+ * El fondo reutiliza .bg-engineering-grid-faint (rejilla tenue de Trayectoria).
+ * El escaner C4 gira mas rapido que el radar del mapa (4s vs 16s), asi que es
+ * una animacion propia.
+ */
+.animate-radar-beam {
+  animation: radar-rotate 4s linear infinite;
+  transform-origin: center center;
+}
+
+/*
+ * ── Seccion Datos e IA (docs/mock/.../datos_e_inteligencia_artificial) ────
+ * El fondo reutiliza .bg-grid-pattern (0.25 gris) de Infraestructura; este
+ * resplandor radial se le superpone en la esquina superior derecha.
+ */
+.bg-radar-glow {
+  background: radial-gradient(
+    circle at 75% 20%,
+    rgba(124, 157, 240, 0.08) 0%,
+    rgba(14, 17, 23, 0) 70%
+  );
+}
+
+/*
+ * ── Seccion Contacto (docs/mock/.../contacto_cotizacion) ──────────────────
+ * El fondo reutiliza .bg-grid-pattern (0.22/0.25 gris). Este pulso marca los
+ * indicadores de "operacion activa" (opacity + scale). Lo apaga reduced-motion.
+ */
+@keyframes pulse-emerald {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.15);
+  }
+}
+.status-pulse {
+  animation: pulse-emerald 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
