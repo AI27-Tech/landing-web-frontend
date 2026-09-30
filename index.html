@@ -1,0 +1,43 @@
+<!doctype html>
+<!--
+  data-theme fija el tema oscuro de los tokens. La landing es dark-only por diseno
+  de marca (ver la cabecera de src/styles/tokens.css), asi que este atributo esta
+  aqui como declaracion explicita de esa decision, no como punto de partida para
+  un toggle: tokens.css solo define el tema oscuro.
+-->
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+
+    <title>AI27 · Inteligencia Predictiva y Seguridad en Tránsito de Carga</title>
+    <meta
+      name="description"
+      content="Más de 25 años asegurando la cadena logística de México. Anticipamos riesgos, predecimos rutas críticas y neutralizamos amenazas antes de que ocurran."
+    />
+
+    <!--
+      Open Graph: la landing es la primera pantalla que ve un cliente, y casi
+      siempre llega compartida en un chat. Sin esto se comparte un preview vacio.
+    -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="AI27" />
+    <meta property="og:locale" content="es_MX" />
+    <meta
+      property="og:title"
+      content="AI27 · Inteligencia Predictiva y Seguridad en Tránsito de Carga"
+    />
+    <meta
+      property="og:description"
+      content="Más de 25 años asegurando la cadena logística de México. Anticipamos riesgos, predecimos rutas críticas y neutralizamos amenazas antes de que ocurran."
+    />
+    <!-- TODO: definir og:image / twitter:image con el recorte real de la marca. -->
+
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

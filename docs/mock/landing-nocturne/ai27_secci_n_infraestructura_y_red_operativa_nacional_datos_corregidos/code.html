@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI27 — Infraestructura y Red Operativa Nacional</title>
+<!-- Inter Google Font -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            tactical: {
+              bg: "#0E1117",
+              card: "#161B22",
+              surface: "#1C222E",
+              raised: "#242B3A",
+              border: "#2D3748",
+              strong: "#374151",
+              accent: "#7C9DF0",
+              emerald: "#6EE7B7",
+              emeraldDark: "#10B981",
+              text: "#E2E8F0",
+              muted: "#94A3B8",
+              subtle: "#64748B"
+            }
+          },
+          borderRadius: {
+            DEFAULT: "0.125rem",
+            "sm": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          fontFamily: {
+            headline: ["Inter", "sans-serif"],
+            display: ["Inter", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            label: ["Inter", "sans-serif"],
+            mono: ["'JetBrains Mono'", "monospace"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    
+    /* Engineering Precision Grid Background */
+    .bg-grid-pattern {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(45, 55, 72, 0.22) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(45, 55, 72, 0.22) 1px, transparent 1px);
+    }
+
+    /* Subdued Radar Sweep Animation */
+    @keyframes radar-sweep {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    .animate-radar {
+      animation: radar-sweep 16s linear infinite;
+    }
+
+    /* Pulse Glow Keyframe */
+    @keyframes tactical-pulse {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(1.4); }
+    }
+    .animate-node-pulse {
+      animation: tactical-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    /* Tabular numeric alignment */
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body class="bg-[#0E1117] text-[#E2E8F0] font-body antialiased selection:bg-[#7C9DF0]/30 selection:text-[#E2E8F0] min-h-screen">
+<!-- ========================================================================= -->
+<!-- SECCIÓN INTERIOR: INFRAESTRUCTURA // AI27 NOCTURNE OPERATIONS             -->
+<!-- Sin barra de navegación (header) por ser componente interior de landing  -->
+<!-- ========================================================================= -->
+<section class="relative w-full overflow-hidden bg-[#0E1117] py-20 lg:py-28 border-t border-[#2D3748]">
+<!-- Background Technical Grid & Radial Gradients -->
+<div class="absolute inset-0 bg-grid-pattern pointer-events-none opacity-40"></div>
+<div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#7C9DF0]/5 rounded-full blur-[140px] pointer-events-none"></div>
+<div class="absolute bottom-10 right-1/4 w-[500px] h-[500px] bg-[#6EE7B7]/5 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- ========================================== -->
+<!-- 1. ENCABEZADO DE SECCIÓN                   -->
+<!-- ========================================== -->
+<div class="flex flex-col items-start mb-14 lg:mb-16">
+<!-- Technical Label / Badge -->
+<div class="inline-flex items-center gap-2.5 px-3 py-1 rounded-sm bg-[#161B22] border border-[#2D3748] mb-5">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#7C9DF0] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-[#7C9DF0]"></span>
+</span>
+<span class="font-mono text-[11px] font-semibold tracking-wider text-[#7C9DF0] uppercase">
+            INFRAESTRUCTURA // RED OPERATIVA NACIONAL
+          </span>
+</div>
+<!-- Section Main Title -->
+<h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#E2E8F0] max-w-4xl leading-[1.15]">
+          Una red de seguridad desplegada en todo el país
+        </h2>
+<!-- Descriptive Paragraph -->
+<p class="font-body text-[#94A3B8] text-base sm:text-lg max-w-3xl mt-5 leading-relaxed">
+          AI27 ha construido una sólida infraestructura de seguridad integrada: corredores troncales, puntos de control y estaciones de verificación continua a lo largo del territorio nacional, operando en estrecha coordinación y enlace directo con autoridades federales, estatales y municipales.
+        </p>
+</div>
+<!-- ========================================== -->
+<!-- 2. LAYOUT PRINCIPAL: 2 COLUMNAS            -->
+<!-- ========================================== -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+<!-- COLUMNA IZQUIERDA: PANEL TÁCTICO MAPA DE MÉXICO (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col">
+<div class="bg-[#161B22] border border-[#2D3748] rounded-sm p-5 sm:p-6 relative flex flex-col justify-between h-full min-h-[560px] overflow-hidden group">
+<!-- Tactical HUD Header -->
+<div class="relative z-10 flex flex-wrap items-center justify-between gap-3 border-b border-[#2D3748] pb-4">
+<div class="flex items-center space-x-3">
+<span class="flex h-2.5 w-2.5 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#6EE7B7] opacity-60"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#6EE7B7]"></span>
+</span>
+<span class="font-mono text-xs uppercase font-semibold tracking-wider text-[#E2E8F0]">
+                  RADAR DE CORREDORES TRONCALES
+                </span>
+</div>
+<div class="flex items-center gap-3">
+<div class="px-2 py-0.5 rounded-sm bg-[#10B981]/15 border border-[#10B981]/30">
+<span class="font-mono text-[10px] font-semibold text-[#6EE7B7] tracking-wider uppercase">
+                    ENLACE ACTIVO
+                  </span>
+</div>
+<div class="font-mono text-[11px] text-[#64748B] tabular-nums hidden sm:inline-block">
+                  23.6345° N, 102.5528° W
+                </div>
+</div>
+</div>
+<!-- Visual Geographic Vectorial Centerpiece -->
+<div class="relative flex-1 flex items-center justify-center py-6 select-none">
+<!-- Subtle Radar Sweep Effect Behind Map -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+<div class="w-[360px] h-[360px] sm:w-[440px] sm:h-[440px] rounded-full border border-[#2D3748] relative flex items-center justify-center">
+<div class="w-[240px] h-[240px] rounded-full border border-[#2D3748]/60"></div>
+<div class="w-[120px] h-[120px] rounded-full border border-[#2D3748]/40"></div>
+<div class="absolute inset-0 rounded-full bg-gradient-to-tr from-[#7C9DF0]/0 via-[#7C9DF0]/5 to-[#7C9DF0]/20 animate-radar origin-center"></div>
+</div>
+</div>
+<!-- SVG Map of Mexico & Tactical Routes -->
+<svg class="w-full h-auto max-h-[420px] drop-shadow-2xl relative z-10" fill="none" viewbox="0 0 960 620" xmlns="http://www.w3.org/2000/svg">
+<!-- Defs for glow filters and gradients -->
+<defs>
+<filter height="140%" id="glow-periwinkle" width="140%" x="-20%" y="-20%">
+<fegaussianblur result="blur" stddeviation="3"></fegaussianblur>
+<femerge>
+<femergenode in="blur"></femergenode>
+<femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+<filter height="140%" id="glow-emerald" width="140%" x="-20%" y="-20%">
+<fegaussianblur result="blur" stddeviation="3.5"></fegaussianblur>
+<femerge>
+<femergenode in="blur"></femergenode>
+<femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+<lineargradient id="routeGrad1" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#7C9DF0"></stop>
+<stop offset="100%" stop-color="#6EE7B7"></stop>
+</lineargradient>
+</defs>
+<!-- Mexico Landmass Silhouette (Tactical Slate Facets) -->
+<!-- Baja California -->
+<path d="M78 62 L132 128 L170 196 L195 248 L220 310 L204 330 L180 270 L146 210 L108 140 L68 76 Z" fill="#1C222E" stroke="#2D3748" stroke-linejoin="round" stroke-width="1.5"></path>
+<path d="M222 318 L244 374 L258 418 L242 414 L226 360 Z" fill="#1C222E" stroke="#2D3748" stroke-width="1.2"></path>
+<!-- Continental Mexico -->
+<path d="M210 92 L310 94 L378 126 L468 120 L532 168 L608 174 L662 258 L636 294 L590 286 L530 338 L544 380 L618 398 L690 410 L742 432 L788 438 L834 402 L888 386 L912 414 L894 456 L830 464 L796 502 L748 518 L686 480 L622 474 L554 498 L474 482 L426 448 L374 406 L320 334 L266 250 L234 162 Z" fill="#181F2A" stroke="#2D3748" stroke-linejoin="round" stroke-width="1.8"></path>
+<!-- Yucatan Peninsula Base -->
+<path d="M788 438 L840 398 L896 384 L916 414 L884 452 L830 460 Z" fill="#1C222E" stroke="#2D3748" stroke-width="1.2"></path>
+<!-- Internal Regional Division Dashes -->
+<path d="M378 126 L380 240 L450 310" stroke="#242E3D" stroke-dasharray="3 3" stroke-width="1"></path>
+<path d="M532 168 L530 260 L480 340" stroke="#242E3D" stroke-dasharray="3 3" stroke-width="1"></path>
+<path d="M608 174 L576 270 L580 380" stroke="#242E3D" stroke-dasharray="3 3" stroke-width="1"></path>
+<!-- TACTICAL HIGHWAY TRUNK LINES (CORREDORES PRIMARIOS) -->
+<!-- 1. Corredor Centro - NAFTA (CDMX -> QRO -> SLP -> MTY -> Nuevo Laredo) -->
+<path d="M544 380 L526 352 L518 304 L576 242 L606 182" filter="url(#glow-periwinkle)" stroke="#7C9DF0" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<path d="M544 380 L526 352 L518 304 L576 242 L606 182" opacity="0.8" stroke="#FFFFFF" stroke-dasharray="6 4" stroke-linecap="round" stroke-width="1"></path>
+<!-- 2. Corredor Pacífico & Bajío (CDMX -> Toluca -> GDL -> Manzanillo / Mazatlán) -->
+<path d="M544 380 L470 366 L422 360 L388 400" filter="url(#glow-emerald)" stroke="#6EE7B7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<path d="M470 366 L410 312 L350 246" opacity="0.7" stroke="#7C9DF0" stroke-dasharray="4 3" stroke-linecap="round" stroke-width="2"></path>
+<!-- 3. Corredor Golfo & Sureste (CDMX -> Puebla -> Veracruz -> Villahermosa) -->
+<path d="M544 380 L582 392 L640 404 L716 432 L788 440" filter="url(#glow-periwinkle)" stroke="url(#routeGrad1)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<!-- 4. Enlace Norte Centro (SLP -> Saltillo -> Torreón -> Cd. Juárez) -->
+<path d="M518 304 L490 248 L460 210 L378 128" opacity="0.85" stroke="#7C9DF0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<!-- 5. Corredor Noroeste (Guadalajara -> Tepic -> Hermosillo -> Nogales / Tijuana) -->
+<path d="M470 366 L350 246 L278 174 L170 120 L84 66" opacity="0.65" stroke="#7C9DF0" stroke-dasharray="5 4" stroke-linecap="round" stroke-width="1.8"></path>
+<!-- STRATEGIC CHECKPOINTS & NODES (COORDINATES) -->
+<!-- CDMX Central Hub (544, 380) -->
+<g transform="translate(544, 380)">
+<circle class="animate-node-pulse" fill="#7C9DF0" opacity="0.2" r="12"></circle>
+<circle fill="#161B22" r="6" stroke="#7C9DF0" stroke-width="2"></circle>
+<circle fill="#6EE7B7" r="2.5"></circle>
+<!-- Micro Label -->
+<text fill="#E2E8F0" font-family="'JetBrains Mono'" font-size="10" font-weight="600" letter-spacing="0.05em" x="10" y="4">CDMX [C5/HQ]</text>
+</g>
+<!-- Querétaro (526, 352) -->
+<g transform="translate(526, 352)">
+<circle fill="#7C9DF0" opacity="0.25" r="9"></circle>
+<circle fill="#7C9DF0" r="4"></circle>
+<text fill="#94A3B8" font-family="'JetBrains Mono'" font-size="9" x="8" y="-4">QRO</text>
+</g>
+<!-- San Luis Potosí (518, 304) -->
+<g transform="translate(518, 304)">
+<circle fill="#6EE7B7" opacity="0.2" r="8"></circle>
+<circle fill="#6EE7B7" r="4"></circle>
+<text fill="#94A3B8" font-family="'JetBrains Mono'" font-size="9" x="8" y="3">SLP</text>
+</g>
+<!-- Monterrey (576, 242) -->
+<g transform="translate(576, 242)">
+<circle class="animate-node-pulse" fill="#7C9DF0" opacity="0.2" r="10"></circle>
+<circle fill="#161B22" r="5" stroke="#7C9DF0" stroke-width="1.8"></circle>
+<circle fill="#7C9DF0" r="2"></circle>
+<text fill="#E2E8F0" font-family="'JetBrains Mono'" font-size="9.5" font-weight="600" x="10" y="3">MTY</text>
+</g>
+<!-- Nuevo Laredo (606, 182) -->
+<g transform="translate(606, 182)">
+<circle class="animate-node-pulse" fill="#6EE7B7" opacity="0.3" r="9"></circle>
+<circle fill="#6EE7B7" r="4.5"></circle>
+<text fill="#6EE7B7" font-family="'JetBrains Mono'" font-size="9.5" font-weight="600" x="9" y="3">N. LAREDO</text>
+</g>
+<!-- Guadalajara (470, 366) -->
+<g transform="translate(470, 366)">
+<circle fill="#7C9DF0" opacity="0.2" r="9"></circle>
+<circle fill="#161B22" r="4.5" stroke="#7C9DF0" stroke-width="1.8"></circle>
+<circle fill="#7C9DF0" r="2"></circle>
+<text fill="#E2E8F0" font-family="'JetBrains Mono'" font-size="9" x="-32" y="14">GDL</text>
+</g>
+<!-- Manzanillo (388, 400) -->
+<g transform="translate(388, 400)">
+<circle fill="#6EE7B7" opacity="0.2" r="6"></circle>
+<circle fill="#6EE7B7" r="3.5"></circle>
+<text fill="#94A3B8" font-family="'JetBrains Mono'" font-size="8.5" x="-58" y="4">PTO. MZLO</text>
+</g>
+<!-- Puebla (582, 392) -->
+<g transform="translate(582, 392)">
+<circle fill="#7C9DF0" r="3.5"></circle>
+<text fill="#94A3B8" font-family="'JetBrains Mono'" font-size="8.5" x="7" y="10">PUE</text>
+</g>
+<!-- Veracruz (640, 404) -->
+<g transform="translate(640, 404)">
+<circle fill="#6EE7B7" opacity="0.3" r="5"></circle>
+<circle fill="#6EE7B7" r="3.5"></circle>
+<text fill="#94A3B8" font-family="'JetBrains Mono'" font-size="8.5" x="8" y="2">VER</text>
+</g>
+<!-- Ciudad Juárez (378, 128) -->
+<g transform="translate(378, 128)">
+<circle fill="#7C9DF0" r="4"></circle>
+<text fill="#94A3B8" font-family="'JetBrains Mono'" font-size="9" x="8" y="3">CD. JUÁREZ</text>
+</g>
+<!-- Tijuana (84, 66) -->
+<g transform="translate(84, 66)">
+<circle fill="#7C9DF0" r="4"></circle>
+<text fill="#94A3B8" font-family="'JetBrains Mono'" font-size="9" x="8" y="3">TIJUANA</text>
+</g>
+<!-- Checkpoints Intermedios (Pequeños rombos de verificación) -->
+<g transform="translate(535, 366)">
+<polygon fill="#6EE7B7" points="0,-3 3,0 0,3 -3,0"></polygon>
+</g>
+<g transform="translate(550, 270)">
+<polygon fill="#6EE7B7" points="0,-3 3,0 0,3 -3,0"></polygon>
+</g>
+<g transform="translate(591, 212)">
+<polygon fill="#6EE7B7" points="0,-3 3,0 0,3 -3,0"></polygon>
+</g>
+<g transform="translate(608, 398)">
+<polygon fill="#6EE7B7" points="0,-3 3,0 0,3 -3,0"></polygon>
+</g>
+<g transform="translate(444, 363)">
+<polygon fill="#6EE7B7" points="0,-3 3,0 0,3 -3,0"></polygon>
+</g>
+</svg>
+<!-- OVERLAID FLOATING TACTICAL HUDS -->
+<!-- HUD 1: Corredor NAFTA -->
+<div class="absolute top-10 right-4 sm:right-6 bg-[#0E1117]/90 border border-[#2D3748] rounded-sm px-2.5 py-1.5 backdrop-blur shadow-lg hidden sm:flex items-center space-x-2">
+<span class="w-1.5 h-1.5 rounded-full bg-[#7C9DF0]"></span>
+<span class="font-mono text-[10px] text-[#E2E8F0] tracking-tight">CORREDOR NAFTA: VIGILADO</span>
+</div>
+<!-- HUD 2: Checkpoint Km 148 -->
+<div class="absolute bottom-16 left-4 sm:left-6 bg-[#0E1117]/90 border border-[#2D3748] rounded-sm px-2.5 py-1.5 backdrop-blur shadow-lg flex items-center space-x-2">
+<span class="w-1.5 h-1.5 rounded-full bg-[#6EE7B7]"></span>
+<span class="font-mono text-[10px] text-[#E2E8F0] tracking-tight">CHECKPOINT KM 148: DESPEJADO</span>
+</div>
+<!-- HUD 3: Conexión C4/C5 -->
+<div class="absolute bottom-28 right-4 sm:right-10 bg-[#0E1117]/90 border border-[#2D3748] rounded-sm px-2.5 py-1.5 backdrop-blur shadow-lg hidden md:flex items-center space-x-2">
+<span class="material-symbols-outlined text-xs text-[#7C9DF0]">hub</span>
+<span class="font-mono text-[10px] text-[#E2E8F0] tracking-tight">CONEXIÓN C4/C5: SINCRONIZADA</span>
+</div>
+</div>
+<!-- Tactical Legend (Footer of Left Column) -->
+<div class="relative z-10 border-t border-[#2D3748] pt-3.5 mt-2 flex flex-wrap items-center justify-between gap-y-2 gap-x-4 text-[11px] font-mono text-[#94A3B8]">
+<div class="flex items-center space-x-2">
+<span class="w-3 h-1 bg-[#7C9DF0] rounded-sm inline-block shadow-[0_0_6px_#7C9DF0]"></span>
+<span>Ruta troncal primaria</span>
+</div>
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-[#6EE7B7] inline-block shadow-[0_0_6px_#6EE7B7]"></span>
+<span>Punto de verificación activo</span>
+</div>
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-sm border border-[#7C9DF0]/60 bg-[#7C9DF0]/20 inline-block"></span>
+<span>Zona de cobertura inmediata</span>
+</div>
+</div>
+</div>
+</div>
+<!-- COLUMNA DERECHA: 4 CAPACIDADES FUNDAMENTALES (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col justify-between gap-3.5 sm:gap-4">
+<!-- Capacidad 1: Corredores de seguridad -->
+<div class="bg-[#161B22] hover:bg-[#1C222E] border border-[#2D3748] hover:border-[#374151] rounded-sm p-4 sm:p-5 transition-all duration-200 flex flex-col justify-between group">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-start gap-3.5">
+<div class="w-9 h-9 rounded-sm bg-[#1C222E] group-hover:bg-[#242B3A] border border-[#2D3748] flex items-center justify-center text-[#7C9DF0] shrink-0 transition-colors">
+<span class="material-symbols-outlined text-[20px]">alt_route</span>
+</div>
+<div>
+<h3 class="font-headline text-base font-semibold text-[#E2E8F0] tracking-tight">
+                    Corredores de seguridad
+                  </h3>
+<p class="font-body text-[#94A3B8] text-[13px] leading-relaxed mt-1.5">
+                    Rutas troncales monitoreadas permanentemente con protocolos de control preventivo y cobertura reactiva en los principales ejes logísticos de México.
+                  </p>
+</div>
+</div>
+</div>
+<div class="mt-3.5 pt-2.5 border-t border-[#2D3748]/70 flex items-center justify-between">
+<span class="font-mono text-[10px] tracking-wider uppercase text-[#7C9DF0] font-semibold">
+                CUSTODIA TRONCAL ACTIVA
+              </span>
+<span class="font-mono text-[10px] text-[#64748B]">TR-EJE-01</span>
+</div>
+</div>
+<!-- Capacidad 2: Puntos de control y verificación -->
+<div class="bg-[#161B22] hover:bg-[#1C222E] border border-[#2D3748] hover:border-[#374151] rounded-sm p-4 sm:p-5 transition-all duration-200 flex flex-col justify-between group">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-start gap-3.5">
+<div class="w-9 h-9 rounded-sm bg-[#1C222E] group-hover:bg-[#242B3A] border border-[#2D3748] flex items-center justify-center text-[#6EE7B7] shrink-0 transition-colors">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+</div>
+<div>
+<h3 class="font-headline text-base font-semibold text-[#E2E8F0] tracking-tight">
+                    Puntos de control y verificación
+                  </h3>
+<p class="font-body text-[#94A3B8] text-[13px] leading-relaxed mt-1.5">
+                    Puntos estratégicos para la validación física, inspección de sellos e integridad operativa en zonas críticas y libramientos.
+                  </p>
+</div>
+</div>
+</div>
+<div class="mt-3.5 pt-2.5 border-t border-[#2D3748]/70 flex items-center justify-between">
+<span class="font-mono text-[10px] tracking-wider uppercase text-[#6EE7B7] font-semibold">
+                CHECKPOINTS GEORREFERENCIADOS
+              </span>
+<span class="font-mono text-[10px] text-[#64748B]">SEC-GEO-VAL</span>
+</div>
+</div>
+<!-- Capacidad 3: Coordinación con autoridades -->
+<div class="bg-[#161B22] hover:bg-[#1C222E] border border-[#2D3748] hover:border-[#374151] rounded-sm p-4 sm:p-5 transition-all duration-200 flex flex-col justify-between group">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-start gap-3.5">
+<div class="w-9 h-9 rounded-sm bg-[#1C222E] group-hover:bg-[#242B3A] border border-[#2D3748] flex items-center justify-center text-[#7C9DF0] shrink-0 transition-colors">
+<span class="material-symbols-outlined text-[20px]">cell_tower</span>
+</div>
+<div>
+<h3 class="font-headline text-base font-semibold text-[#E2E8F0] tracking-tight">
+                    Coordinación con autoridades
+                  </h3>
+<p class="font-body text-[#94A3B8] text-[13px] leading-relaxed mt-1.5">
+                    Enlace operativo y de telemetría en tiempo real con mandos federales (Guardia Nacional), corporaciones estatales y dependencias municipales.
+                  </p>
+</div>
+</div>
+</div>
+<div class="mt-3.5 pt-2.5 border-t border-[#2D3748]/70 flex items-center justify-between">
+<span class="font-mono text-[10px] tracking-wider uppercase text-[#7C9DF0] font-semibold">
+                PROTOCOLOS C4 / C5 DIRECTOS
+              </span>
+<span class="font-mono text-[10px] text-[#64748B]">ENLACE-FED-GN</span>
+</div>
+</div>
+<!-- Capacidad 4: Centro de monitoreo y grupo de reacción propios -->
+<div class="bg-[#161B22] hover:bg-[#1C222E] border border-[#2D3748] hover:border-[#374151] rounded-sm p-4 sm:p-5 transition-all duration-200 flex flex-col justify-between group">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-start gap-3.5">
+<div class="w-9 h-9 rounded-sm bg-[#1C222E] group-hover:bg-[#242B3A] border border-[#2D3748] flex items-center justify-center text-[#6EE7B7] shrink-0 transition-colors">
+<span class="material-symbols-outlined text-[20px]">shield</span>
+</div>
+<div>
+<h3 class="font-headline text-base font-semibold text-[#E2E8F0] tracking-tight">
+                    Centro de monitoreo y grupo de reacción propios
+                  </h3>
+<p class="font-body text-[#94A3B8] text-[13px] leading-relaxed mt-1.5">
+                    Instalaciones de comando redundantes operando 24/7 con cuadrillas terrestres de reacción táctica preparadas para respuesta inmediata en tramo.
+                  </p>
+</div>
+</div>
+</div>
+<div class="mt-3.5 pt-2.5 border-t border-[#2D3748]/70 flex items-center justify-between">
+<span class="font-mono text-[10px] tracking-wider uppercase text-[#6EE7B7] font-semibold">
+                DISPONIBILIDAD OPERATIVA 24/7
+              </span>
+<span class="font-mono text-[10px] text-[#64748B]">RED-COMANDO</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ========================================== -->
+<!-- 3. FILA INFERIOR: MÉTRICAS Y TELEMETRÍA    -->
+<!-- ========================================== -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 sm:mt-10">
+<!-- Tarjeta 1: Puntos de control -->
+<div class="bg-[#1C222E] border border-[#2D3748] hover:border-[#374151] rounded-sm p-5 relative transition-all duration-150 flex flex-col justify-between">
+<div>
+<div class="font-mono text-2xl sm:text-3xl lg:text-4xl font-bold text-[#E2E8F0] tracking-tight tabular-nums">
+              +120
+            </div>
+<div class="font-mono text-[11px] uppercase font-semibold text-[#7C9DF0] tracking-wider mt-1">
+              Puntos de control
+            </div>
+</div>
+<p class="font-body text-[#94A3B8] text-xs leading-relaxed mt-3 pt-3 border-t border-[#2D3748]/80">
+            Ubicaciones estratégicas activas en carreteras federales y libramientos (datos ilustrativos de red).
+          </p>
+</div>
+<!-- Tarjeta 2: Corredores monitoreados -->
+<div class="bg-[#1C222E] border border-[#2D3748] hover:border-[#374151] rounded-sm p-5 relative transition-all duration-150 flex flex-col justify-between">
+<div>
+<div class="font-mono text-2xl sm:text-3xl lg:text-4xl font-bold text-[#E2E8F0] tracking-tight tabular-nums">
+              24,000 km
+            </div>
+<div class="font-mono text-[11px] uppercase font-semibold text-[#6EE7B7] tracking-wider mt-1">
+              Corredores monitoreados
+            </div>
+</div>
+<p class="font-body text-[#94A3B8] text-xs leading-relaxed mt-3 pt-3 border-t border-[#2D3748]/80">
+            Ejes troncales logísticos asegurados bajo cobertura algorítmica y física.
+          </p>
+</div>
+<!-- Tarjeta 3: Cobertura geográfica -->
+<div class="bg-[#1C222E] border border-[#2D3748] hover:border-[#374151] rounded-sm p-5 relative transition-all duration-150 flex flex-col justify-between">
+<div>
+<div class="font-mono text-2xl sm:text-3xl lg:text-4xl font-bold text-[#E2E8F0] tracking-tight uppercase">
+              Nacional
+            </div>
+<div class="font-mono text-[11px] uppercase font-semibold text-[#7C9DF0] tracking-wider mt-1">
+              Cobertura geográfica
+            </div>
+</div>
+<p class="font-body text-[#94A3B8] text-xs leading-relaxed mt-3 pt-3 border-t border-[#2D3748]/80">cobertura nacional en los principales corredores y aduanas</p>
+</div>
+<!-- Tarjeta 4: Operación y reacción -->
+<div class="bg-[#1C222E] border border-[#2D3748] hover:border-[#374151] rounded-sm p-5 relative transition-all duration-150 flex flex-col justify-between">
+<div>
+<div class="font-mono text-2xl sm:text-3xl lg:text-4xl font-bold text-[#E2E8F0] tracking-tight tabular-nums">
+              24/7/365
+            </div>
+<div class="font-mono text-[11px] uppercase font-semibold text-[#6EE7B7] tracking-wider mt-1">
+              Operación y reacción
+            </div>
+</div>
+<p class="font-body text-[#94A3B8] text-xs leading-relaxed mt-3 pt-3 border-t border-[#2D3748]/80">
+            Supervisión ininterrumpida desde C4 con unidades de custodia y reacción en campo.
+          </p>
+</div>
+</div>
+<!-- ========================================== -->
+<!-- 4. SUBTLE TECHNICAL FOOTPRINT METADATA     -->
+<!-- ========================================== -->
+<div class="mt-12 pt-6 border-t border-[#2D3748]/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+<div class="font-mono text-[11px] text-[#64748B] tracking-wide">
+          AI27 // ARQUITECTURA DE INFRAESTRUCTURA Y DESPLIEGUE TÁCTICO // PROTOCOLO NACIONAL AUDITABLE
+        </div>
+<div class="flex items-center space-x-2">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-[#10B981]"></span>
+<span class="font-mono text-[10px] text-[#94A3B8] uppercase tracking-wider">
+            TELEMETRÍA EN LÍNEA · LATENCIA RED: 28MS
+          </span>
+</div>
+</div>
+</div>
+</section>
+</body></html>

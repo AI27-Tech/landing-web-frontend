@@ -1,0 +1,21 @@
+# allowBuilds: vacio a proposito. La landing no usa msw, asi que no hay ningun
+# postinstall que copien un worker. Si alguna vez entra una dependencia con
+# script de build, se permitira aqui y con un comentario que explique por que.
+allowBuilds: {}
+
+# pnpm 12 descarta por defecto los paquetes publicados hace menos de un dia.
+# Estas versiones se fijaron para calcar las de pf-web-frontend-client, asi que
+# hay que exentarlas o `pnpm install` falla por razon de reloj y no de version.
+minimumReleaseAgeExclude:
+  - '@typescript-eslint/eslint-plugin@8.70.0'
+  - '@typescript-eslint/parser@8.70.0'
+  - '@typescript-eslint/project-service@8.70.0'
+  - '@typescript-eslint/scope-manager@8.70.0'
+  - '@typescript-eslint/tsconfig-utils@8.70.0'
+  - '@typescript-eslint/type-utils@8.70.0'
+  - '@typescript-eslint/types@8.70.0'
+  - '@typescript-eslint/typescript-estree@8.70.0'
+  - '@typescript-eslint/utils@8.70.0'
+  - '@typescript-eslint/visitor-keys@8.70.0'
+  - typescript-eslint@8.70.0
+  - lucide-react@1.43.0

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI27 | Inteligencia Predictiva y Seguridad en Tránsito de Carga</title>
+<!-- Inter font family from Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration verbatim per Design System -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {},
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {},
+          "fontFamily": {
+            "headline": [
+              "Inter"
+            ],
+            "display": [
+              "Inter"
+            ],
+            "body": [
+              "Inter"
+            ],
+            "label": [
+              "Inter"
+            ]
+          },
+          "fontSize": {}
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0E1117;
+      color: #E2E8F0;
+    }
+    
+    .tabular-numbers {
+      font-variant-numeric: tabular-nums;
+    }
+    
+    /* Technical Grid Pattern */
+    .bg-radar-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(45, 55, 72, 0.25) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(45, 55, 72, 0.25) 1px, transparent 1px);
+    }
+
+    /* Radar scanline animation */
+    @keyframes radar-sweep {
+      0% { transform: translateY(-100%); opacity: 0; }
+      50% { opacity: 0.15; }
+      100% { transform: translateY(1000%); opacity: 0; }
+    }
+    .radar-line {
+      animation: radar-sweep 8s linear infinite;
+    }
+
+    /* Pulse wave effect */
+    @keyframes ping-slow {
+      75%, 100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+    .animate-ping-slow {
+      animation: ping-slow 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+
+    /* Telemetry network pulses & packet flow */
+    @keyframes dash-flow {
+      to {
+        stroke-dashoffset: -40;
+      }
+    }
+    .animate-dash-flow {
+      stroke-dasharray: 4, 8;
+      animation: dash-flow 3s linear infinite;
+    }
+
+    @keyframes pulse-node {
+      0%, 100% { opacity: 0.35; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.15); }
+    }
+    .animate-node-glow {
+      animation: pulse-node 4s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    @keyframes packet-move {
+      0% { offset-distance: 0%; opacity: 0; }
+      15% { opacity: 1; }
+      85% { opacity: 1; }
+      100% { offset-distance: 100%; opacity: 0; }
+    }
+  </style>
+</head>
+<body class="bg-[#0E1117] text-[#E2E8F0] selection:bg-[#7C9DF0]/30 selection:text-[#E2E8F0] min-h-screen flex flex-col antialiased relative overflow-x-hidden">
+<!-- TOP APP BAR (from Shared Components JSON: TopNavBar) -->
+<header class="fixed top-0 left-0 w-full z-50 bg-[#0E1117]/80 backdrop-blur-md dark:bg-[#0E1117]/80 border-b border-[#2D3748] dark:border-[#2D3748] shadow-sm">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-6 h-16">
+<!-- Brand & Badge -->
+<div class="flex items-center gap-3">
+<a class="font-headline text-xl font-bold tracking-tight text-[#E2E8F0] dark:text-[#E2E8F0] flex items-center gap-2" href="#">
+<span>AI27</span>
+<span class="inline-flex items-center text-[10px] uppercase font-semibold tracking-wider px-2 py-0.5 rounded bg-[#1C222E] border border-[#2D3748] text-[#7C9DF0]">
+            +25 años de liderazgo
+          </span>
+</a>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center gap-8 font-headline text-[13px] tracking-wide uppercase">
+<a class="text-[#94A3B8] hover:text-[#E2E8F0] transition-colors duration-150" href="#nosotros">Nosotros</a>
+<a class="text-[#94A3B8] hover:text-[#E2E8F0] transition-colors duration-150" href="#infraestructura">Infraestructura</a>
+<a class="text-[#7C9DF0] font-semibold" href="#monitoreo">Monitoreo</a>
+<a class="text-[#94A3B8] hover:text-[#E2E8F0] transition-colors duration-150" href="#datos">Datos</a>
+</nav>
+<!-- Trailing Primary Action -->
+<div class="flex items-center gap-3">
+<a class="inline-flex items-center justify-center font-headline text-[13px] tracking-wide uppercase font-semibold px-4 py-2 rounded bg-[#7C9DF0] text-[#0E1117] hover:bg-[#8eaaf5] transition-all duration-150 active:scale-[0.99] shadow-sm" href="#cotizar">
+          Cotizar servicio
+        </a>
+</div>
+</div>
+</header>
+<!-- MAIN CANVAS / HERO SECTION -->
+<main class="flex-grow pt-28 pb-16 relative z-10 flex items-center">
+<!-- VARIANTE 1: Red de Telemetría Satelital y Nodos Logísticos de México (SVG y CSS interactivo/animado detrás del contenido) -->
+<div class="absolute inset-0 z-0 pointer-events-none overflow-hidden select-none"><!-- Millimetric Engineering Grid Pattern -->
+<div class="absolute inset-0 pointer-events-none opacity-80" style="background-size: 36px 36px, 180px 180px; background-image: linear-gradient(to right, rgba(124, 157, 240, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(124, 157, 240, 0.08) 1px, transparent 1px), linear-gradient(to right, rgba(124, 157, 240, 0.16) 1px, transparent 1px), linear-gradient(to bottom, rgba(124, 157, 240, 0.16) 1px, transparent 1px);"></div>
+<!-- Tactical Military Radar Concentric Rings & Crosshair Sweep -->
+<div class="absolute top-1/2 left-[30%] -translate-x-1/2 -translate-y-1/2 w-[720px] h-[720px] pointer-events-none select-none opacity-50">
+<!-- Concentric Rings -->
+<div class="absolute inset-0 rounded-full border border-[#7C9DF0]/20"></div>
+<div class="absolute inset-[90px] rounded-full border border-[#7C9DF0]/25"></div>
+<div class="absolute inset-[180px] rounded-full border border-[#7C9DF0]/25 border-dashed"></div>
+<div class="absolute inset-[270px] rounded-full border border-[#7C9DF0]/30"></div>
+<div class="absolute inset-[330px] rounded-full border border-[#6EE7B7]/40"></div>
+<!-- Crosshairs -->
+<div class="absolute top-0 bottom-0 left-1/2 w-[1px] bg-gradient-to-b from-transparent via-[#7C9DF0]/30 to-transparent -translate-x-1/2"></div>
+<div class="absolute left-0 right-0 top-1/2 h-[1px] bg-gradient-to-r from-transparent via-[#7C9DF0]/30 to-transparent -translate-y-1/2"></div>
+<!-- Conic Sweep Animation -->
+<div class="absolute inset-[90px] rounded-full pointer-events-none animate-spin" style="animation-duration: 12s; background: conic-gradient(from 0deg, rgba(124, 157, 240, 0.18) 0deg, rgba(124, 157, 240, 0.04) 45deg, transparent 90deg, transparent 360deg);"></div>
+</div>
+<!-- Geodesic Coordinates & Telemetry Markers -->
+<div class="absolute top-24 left-8 text-[9px] font-mono text-[#7C9DF0]/60 select-none pointer-events-none hidden sm:flex flex-col gap-1 tracking-wider">
+<span>+ GRID: 23°38'N 101°58'W</span>
+<span>+ AZIMUTH: 342.6° MIL-STD</span>
+<span class="text-[#6EE7B7]/70">CALIBRATED: LEO-SAT 0.08ms | ZONE: CORREDOR-CENTRAL</span>
+</div>
+<div class="absolute top-24 right-8 text-[9px] font-mono text-[#94A3B8]/40 select-none pointer-events-none hidden lg:block text-right tracking-widest">
+<div>ENC: AES-256-GCM / FREQ 14.2 GHz</div>
+<div>SURVEILLANCE: ACTIVE REAL-TIME</div>
+</div>
+<!-- Mexico Strategic Transport Network & Telemetry Constellation SVG -->
+<svg class="absolute inset-0 w-full h-full object-cover opacity-90 pointer-events-none select-none" fill="none" preserveaspectratio="xMidYMid slice" viewbox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="link-emerald-periwinkle" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#6EE7B7" stop-opacity="0.65"></stop>
+<stop offset="50%" stop-color="#7C9DF0" stop-opacity="0.35"></stop>
+<stop offset="100%" stop-color="#7C9DF0" stop-opacity="0.55"></stop>
+</lineargradient>
+<radialgradient cx="50%" cy="50%" id="node-halo-blue" r="50%">
+<stop offset="0%" stop-color="#7C9DF0" stop-opacity="0.6"></stop>
+<stop offset="50%" stop-color="#7C9DF0" stop-opacity="0.15"></stop>
+<stop offset="100%" stop-color="#7C9DF0" stop-opacity="0"></stop>
+</radialgradient>
+<radialgradient cx="50%" cy="50%" id="node-halo-green" r="50%">
+<stop offset="0%" stop-color="#6EE7B7" stop-opacity="0.7"></stop>
+<stop offset="40%" stop-color="#6EE7B7" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#6EE7B7" stop-opacity="0"></stop>
+</radialgradient>
+<filter height="160%" id="tactical-glow" width="160%" x="-30%" y="-30%">
+<fegaussianblur result="blur" stddeviation="3.5"></fegaussianblur>
+<fecomposite in="SourceGraphic" in2="blur" operator="over"></fecomposite>
+</filter>
+</defs>
+<!-- Base Static Arterial Corridors -->
+<path d="M160 180 L390 210" stroke="#7C9DF0" stroke-opacity="0.25" stroke-width="1.2"></path>
+<path d="M390 210 L640 330" stroke="url(#link-emerald-periwinkle)" stroke-width="1.4"></path>
+<path d="M640 330 L560 490" filter="url(#tactical-glow)" stroke="#7C9DF0" stroke-opacity="0.45" stroke-width="1.8"></path>
+<path d="M560 490 L430 510" stroke="#7C9DF0" stroke-opacity="0.35" stroke-width="1.2"></path>
+<path d="M430 510 L360 580" stroke="#7C9DF0" stroke-opacity="0.3" stroke-width="1.2"></path>
+<path d="M560 490 L610 580" filter="url(#tactical-glow)" stroke="#7C9DF0" stroke-opacity="0.55" stroke-width="1.8"></path>
+<path d="M610 580 L750 620" stroke="url(#link-emerald-periwinkle)" stroke-width="1.4"></path>
+<path d="M430 510 L610 580" stroke="#7C9DF0" stroke-opacity="0.25" stroke-width="1"></path>
+<path d="M640 330 L750 620" stroke="#2D3748" stroke-opacity="0.4" stroke-width="1"></path>
+<!-- Animated Telemetry Vector Packet Flow -->
+<path class="animate-dash-flow" d="M390 210 L640 330" stroke="#6EE7B7" stroke-opacity="0.8" stroke-width="1.6"></path>
+<path class="animate-dash-flow" d="M640 330 L560 490" stroke="#7C9DF0" stroke-opacity="0.9" stroke-width="1.8"></path>
+<path class="animate-dash-flow" d="M560 490 L610 580" stroke="#6EE7B7" stroke-opacity="0.95" stroke-width="2"></path>
+<path class="animate-dash-flow" d="M610 580 L750 620" stroke="#7C9DF0" stroke-opacity="0.75" stroke-width="1.4"></path>
+<!-- Tijuana Hub -->
+<circle class="animate-node-glow" cx="160" cy="180" fill="url(#node-halo-blue)" r="40"></circle>
+<circle cx="160" cy="180" fill="#7C9DF0" fill-opacity="0.8" r="3.5"></circle>
+<text fill="#94A3B8" fill-opacity="0.6" font-family="monospace" font-size="9" letter-spacing="1" x="172" y="184">TIJ_HUB [32.51° N]</text>
+<!-- Ciudad Juárez Gateway -->
+<circle class="animate-node-glow" cx="390" cy="210" fill="url(#node-halo-blue)" r="35" style="animation-delay: 1.4s;"></circle>
+<circle cx="390" cy="210" fill="#7C9DF0" fill-opacity="0.75" r="3.5"></circle>
+<text fill="#94A3B8" fill-opacity="0.55" font-family="monospace" font-size="9" letter-spacing="1" x="402" y="214">CJS_PORT [31.69° N]</text>
+<!-- Monterrey Hub (MTY - Active Critical Node) -->
+<circle class="animate-node-glow" cx="640" cy="330" fill="url(#node-halo-green)" r="55" style="animation-delay: 0.7s;"></circle>
+<circle class="animate-ping-slow" cx="640" cy="330" r="16" stroke="#6EE7B7" stroke-opacity="0.4" stroke-width="1"></circle>
+<circle cx="640" cy="330" fill="#6EE7B7" filter="url(#tactical-glow)" r="5"></circle>
+<text fill="#E2E8F0" fill-opacity="0.85" font-family="monospace" font-size="10" font-weight="600" letter-spacing="1" x="654" y="334">MTY_CORREDOR [25.68° N]</text>
+<!-- Bajío / Querétaro (QRO_NODE) -->
+<circle class="animate-node-glow" cx="560" cy="490" fill="url(#node-halo-blue)" r="50" style="animation-delay: 2.1s;"></circle>
+<circle class="animate-ping-slow" cx="560" cy="490" r="12" stroke="#7C9DF0" stroke-opacity="0.35" stroke-width="1"></circle>
+<circle cx="560" cy="490" fill="#7C9DF0" filter="url(#tactical-glow)" r="4.5"></circle>
+<text fill="#94A3B8" fill-opacity="0.75" font-family="monospace" font-size="9.5" font-weight="500" letter-spacing="1" x="574" y="494">QRO_NODE [20.58° N]</text>
+<!-- Guadalajara Western Hub (GDL) -->
+<circle class="animate-node-glow" cx="430" cy="510" fill="url(#node-halo-blue)" r="40" style="animation-delay: 1.2s;"></circle>
+<circle cx="430" cy="510" fill="#7C9DF0" fill-opacity="0.8" r="4"></circle>
+<text fill="#94A3B8" fill-opacity="0.6" font-family="monospace" font-size="9" letter-spacing="1" x="350" y="525">GDL_LOG [20.65° N]</text>
+<!-- Manzanillo Pacific Port -->
+<circle class="animate-node-glow" cx="360" cy="580" fill="url(#node-halo-blue)" r="40" style="animation-delay: 1.8s;"></circle>
+<circle cx="360" cy="580" fill="#7C9DF0" fill-opacity="0.75" r="3.5"></circle>
+<text fill="#94A3B8" fill-opacity="0.55" font-family="monospace" font-size="9" letter-spacing="1" x="265" y="594">ZLO_PACIFIC [19.05° N]</text>
+<!-- Ciudad de México Central Core (CDMX) -->
+<circle class="animate-node-glow" cx="610" cy="580" fill="url(#node-halo-green)" r="70"></circle>
+<circle class="animate-ping-slow" cx="610" cy="580" r="22" stroke="#6EE7B7" stroke-opacity="0.45" stroke-width="1.2"></circle>
+<circle cx="610" cy="580" fill="#6EE7B7" filter="url(#tactical-glow)" r="5.5"></circle>
+<text fill="#E2E8F0" fill-opacity="0.9" font-family="monospace" font-size="10.5" font-weight="600" letter-spacing="1" x="626" y="584">CDMX_CENTRAL [19.43° N]</text>
+<!-- Veracruz Intermodal Gulf Terminal -->
+<circle class="animate-node-glow" cx="750" cy="620" fill="url(#node-halo-blue)" r="40" style="animation-delay: 2.6s;"></circle>
+<circle cx="750" cy="620" fill="#7C9DF0" fill-opacity="0.7" r="3.5"></circle>
+<text fill="#94A3B8" fill-opacity="0.55" font-family="monospace" font-size="9" letter-spacing="1" x="762" y="624">VER_GULF [19.17° N]</text>
+<!-- Satellite Downlinks & LEO Constellation Vectors -->
+<g transform="translate(880, 160)">
+<polygon fill="#7C9DF0" opacity="0.85" points="0,-4 4,0 0,4 -4,0"></polygon>
+<line opacity="0.7" stroke="#7C9DF0" stroke-width="0.75" x1="-12" x2="12" y1="0" y2="0"></line>
+<path d="M0 4 L-240 170" stroke="#7C9DF0" stroke-dasharray="2,4" stroke-opacity="0.25" stroke-width="0.8"></path>
+<text fill="#7C9DF0" font-family="monospace" font-size="8" opacity="0.6" x="14" y="3">SAT-LEO_04 [AZ 48°]</text>
+</g>
+<g transform="translate(280, 120)">
+<polygon fill="#6EE7B7" opacity="0.85" points="0,-4 4,0 0,4 -4,0"></polygon>
+<line opacity="0.7" stroke="#6EE7B7" stroke-width="0.75" x1="-12" x2="12" y1="0" y2="0"></line>
+<path d="M0 4 L110 90" stroke="#6EE7B7" stroke-dasharray="2,4" stroke-opacity="0.25" stroke-width="0.8"></path>
+<text fill="#6EE7B7" font-family="monospace" font-size="8" opacity="0.6" x="14" y="3">SAT-LEO_09 [AZ 112°]</text>
+</g>
+</svg>
+<!-- Tactical Radial Contrast Vignette to Guarantee 100% Text & Panel Legibility -->
+<div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 35% 45%, rgba(14, 17, 23, 0.72) 0%, rgba(14, 17, 23, 0.92) 80%, #0E1117 100%);"></div></div>
+<div class="max-w-7xl mx-auto px-6 w-full relative z-20">
+<!-- 2-COLUMN HERO LAYOUT -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+<!-- LEFT COLUMN: Value Proposition & Strategic Messaging -->
+<div class="lg:col-span-6 flex flex-col justify-center space-y-7">
+<!-- Live Telemetry Status Pill -->
+<div class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded bg-[#161B24] border border-[#2D3748] w-fit shadow-inner">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping-slow absolute inline-flex h-full w-full rounded-full bg-[#7C9DF0] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-[#7C9DF0]"></span>
+</span>
+<span class="font-headline text-[11px] font-semibold uppercase tracking-wider text-[#94A3B8]">
+              Inteligencia Predictiva &amp; Telemetría Satelital
+            </span>
+</div>
+<!-- Main Hero Headline -->
+<h1 class="font-headline text-3xl sm:text-4xl lg:text-[42px] leading-[1.18] font-bold tracking-tight text-[#E2E8F0]">
+            Protegemos tu carga con <span class="text-[#7C9DF0]">Inteligencia Artificial</span> y datos en tiempo real
+          </h1>
+<!-- Descriptive Subtitle -->
+<p class="font-body text-[14px] sm:text-[15px] leading-relaxed text-[#94A3B8] max-w-xl">
+            Más de 25 años asegurando la cadena logística de México. Hoy anticipamos riesgos, predecimos rutas críticas y neutralizamos amenazas antes de que ocurran.
+          </p>
+<!-- Interactive Action Buttons -->
+<div class="flex flex-wrap items-center gap-4 pt-1">
+<a class="inline-flex items-center justify-center font-headline text-[13px] tracking-wide uppercase font-semibold px-6 py-3 rounded bg-[#7C9DF0] text-[#0E1117] hover:bg-[#8eaaf5] transition-all duration-150 active:scale-[0.99] shadow-sm shadow-[#7C9DF0]/20" href="#cotizar">
+              Cotizar servicio
+            </a>
+<a class="inline-flex items-center justify-center font-headline text-[13px] tracking-wide uppercase font-medium px-6 py-3 rounded bg-[#1C222E] border border-[#2D3748] text-[#E2E8F0] hover:border-[#374151] hover:bg-[#242B3A] transition-all duration-150 active:scale-[0.99]" href="#conocer-mas">
+              Conocer más
+            </a>
+</div>
+<!-- Trust / Operational Verification Metrics -->
+<div class="pt-6 border-t border-[#2D3748] grid grid-cols-3 gap-4">
+<div class="flex flex-col">
+<span class="font-headline text-xl sm:text-2xl font-bold tracking-tight text-[#E2E8F0] tabular-numbers">+25 Años</span>
+<span class="font-body text-[12px] text-[#94A3B8] mt-0.5">de experiencia</span>
+</div>
+<div class="flex flex-col border-l border-[#2D3748] pl-4">
+<span class="font-headline text-xl sm:text-2xl font-bold tracking-tight text-[#6EE7B7] tabular-numbers">99.8%</span>
+<span class="font-body text-[12px] text-[#94A3B8] mt-0.5">Cargas seguras</span>
+</div>
+<div class="flex flex-col border-l border-[#2D3748] pl-4">
+<span class="font-headline text-xl sm:text-2xl font-bold tracking-tight text-[#E2E8F0] tabular-numbers">+1.2M</span>
+<span class="font-body text-[12px] text-[#94A3B8] mt-0.5">Viajes monitoreados</span>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Nocturne Operations Telemetry Center Panel -->
+<div class="lg:col-span-6">
+<div class="relative rounded bg-[#1C222E] border border-[#2D3748] shadow-2xl p-5 overflow-hidden transition-all duration-200 hover:border-[#374151]">
+<!-- Atmospheric Radar Scan Overlay -->
+<div class="absolute inset-x-0 h-10 bg-gradient-to-b from-transparent via-[#7C9DF0]/10 to-transparent radar-line pointer-events-none"></div>
+<!-- Panel Header & Operations Bar -->
+<div class="flex flex-wrap items-center justify-between pb-4 border-b border-[#2D3748] gap-2">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[#7C9DF0] text-[20px]">security</span>
+<div>
+<h2 class="font-headline text-[13px] font-semibold uppercase tracking-wider text-[#E2E8F0]">
+                    Centro de Control AI27
+                  </h2>
+<p class="font-body text-[11px] text-[#94A3B8]">Telemetría en Vivo &amp; Predicción Neural</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#161B24] border border-[#2D3748] text-[10px] font-bold uppercase tracking-wider text-[#6EE7B7]">
+<span class="h-1.5 w-1.5 rounded-full bg-[#6EE7B7] animate-pulse"></span>
+                  SISTEMA ACTIVO
+                </span>
+<span class="font-headline text-[11px] text-[#94A3B8] tabular-numbers bg-[#161B24] px-2 py-0.5 rounded border border-[#2D3748]" id="system-time">
+                  21:42:09 UTC
+                </span>
+</div>
+</div>
+<!-- Tactical Route Visualizer Canvas -->
+<div class="mt-4 p-3.5 rounded bg-[#161B24] border border-[#2D3748] relative">
+<div class="flex items-center justify-between text-[11px] mb-2 font-headline uppercase font-semibold text-[#94A3B8]">
+<span class="flex items-center gap-1.5 text-[#E2E8F0]">
+<span class="material-symbols-outlined text-[14px] text-[#7C9DF0]">alt_route</span>
+                  Corredor Estratégico Bajío - Norte
+                </span>
+<span class="text-[#6EE7B7] bg-[#6EE7B7]/10 px-2 py-0.5 rounded border border-[#6EE7B7]/30 text-[10px]">
+                  Riesgo: 0.02% (Bajo)
+                </span>
+</div>
+<!-- Vector Route Schematic -->
+<div class="relative h-28 w-full flex items-center justify-between px-3 sm:px-6 my-2 bg-[#0E1117]/60 rounded border border-[#2D3748]/60 overflow-hidden">
+<!-- Grid background subtle in visualizer -->
+<div class="absolute inset-0 bg-radar-grid opacity-20 pointer-events-none"></div>
+<!-- Connecting route path lines -->
+<div class="absolute left-10 right-10 top-1/2 -translate-y-1/2 h-0.5 bg-[#2D3748]"></div>
+<div class="absolute left-10 w-2/3 top-1/2 -translate-y-1/2 h-0.5 bg-gradient-to-r from-[#6EE7B7] via-[#7C9DF0] to-[#7C9DF0]"></div>
+<!-- Node 1: CDMX Logistics Hub -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-3.5 h-3.5 rounded-full bg-[#1C222E] border-2 border-[#7C9DF0] flex items-center justify-center">
+<div class="w-1.5 h-1.5 rounded-full bg-[#7C9DF0]"></div>
+</div>
+<span class="font-headline text-[10px] font-bold text-[#E2E8F0] mt-1.5">CDMX</span>
+<span class="font-body text-[9px] text-[#94A3B8] tabular-numbers">DEP 04:10</span>
+</div>
+<!-- Active Telemetry Unit in transit -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="relative">
+<span class="animate-ping-slow absolute inline-flex h-full w-full rounded-full bg-[#6EE7B7] opacity-60"></span>
+<div class="w-4 h-4 rounded-full bg-[#6EE7B7] text-[#0E1117] flex items-center justify-center shadow-lg shadow-[#6EE7B7]/30">
+<span class="material-symbols-outlined text-[10px]" style="font-variation-settings: 'FILL' 1;">local_shipping</span>
+</div>
+</div>
+<span class="font-headline text-[10px] font-semibold text-[#6EE7B7] mt-1 tabular-numbers">UNIT-849</span>
+<span class="font-body text-[9px] text-[#94A3B8] tabular-numbers">82 km/h</span>
+</div>
+<!-- Node 2: Querétaro Checkpoint -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-3 h-3 rounded-full bg-[#1C222E] border border-[#2D3748] flex items-center justify-center">
+<div class="w-1 h-1 rounded-full bg-[#94A3B8]"></div>
+</div>
+<span class="font-headline text-[10px] text-[#94A3B8] mt-1.5">QRO</span>
+<span class="font-body text-[9px] text-[#94A3B8]">SAFE OK</span>
+</div>
+<!-- Node 3: MTY Destination Terminal -->
+<div class="relative z-10 flex flex-col items-center">
+<div class="w-3.5 h-3.5 rounded-full bg-[#1C222E] border-2 border-[#374151] flex items-center justify-center">
+<div class="w-1.5 h-1.5 rounded-full bg-[#374151]"></div>
+</div>
+<span class="font-headline text-[10px] font-bold text-[#E2E8F0] mt-1.5">MTY Hub</span>
+<span class="font-body text-[9px] text-[#94A3B8] tabular-numbers">ETA 14:30</span>
+</div>
+</div>
+<!-- Micro telemetry details bar -->
+<div class="flex items-center justify-between text-[11px] text-[#94A3B8] pt-1 px-1">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-[#7C9DF0]">satellite_alt</span>
+                  Constelación LEO 8/8
+                </span>
+<span class="tabular-numbers">Protocolo AES-256 enlazado</span>
+</div>
+</div>
+<!-- Real-Time Operational KPI Grid (Bento style) -->
+<div class="grid grid-cols-2 gap-3 mt-4">
+<!-- Metric 1 -->
+<div class="p-3 rounded bg-[#161B24] border border-[#2D3748] hover:border-[#374151] transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-headline text-[10px] uppercase font-semibold tracking-wider text-[#94A3B8]">Unidades en Tránsito</span>
+<span class="text-[#6EE7B7] text-[10px] font-semibold tabular-numbers">+12% vs ayer</span>
+</div>
+<div class="mt-1.5 flex items-baseline gap-2">
+<span class="font-headline text-2xl font-bold tracking-tight text-[#E2E8F0] tabular-numbers">4,892</span>
+<span class="material-symbols-outlined text-[16px] text-[#7C9DF0]">sensors</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="p-3 rounded bg-[#161B24] border border-[#2D3748] hover:border-[#374151] transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-headline text-[10px] uppercase font-semibold tracking-wider text-[#94A3B8]">Prevención Predictiva</span>
+<span class="text-[#7C9DF0] text-[10px] font-semibold uppercase">Neuronal</span>
+</div>
+<div class="mt-1.5 flex items-baseline gap-2">
+<span class="font-headline text-2xl font-bold tracking-tight text-[#6EE7B7] tabular-numbers">99.84%</span>
+<span class="material-symbols-outlined text-[16px] text-[#6EE7B7]">verified_user</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="p-3 rounded bg-[#161B24] border border-[#2D3748] hover:border-[#374151] transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-headline text-[10px] uppercase font-semibold tracking-wider text-[#94A3B8]">Alertas Neutralizadas</span>
+<span class="text-[#FCD34D] text-[10px] font-semibold tabular-numbers">Turno Activo</span>
+</div>
+<div class="mt-1.5 flex items-baseline gap-2">
+<span class="font-headline text-2xl font-bold tracking-tight text-[#E2E8F0] tabular-numbers">342</span>
+<span class="font-body text-[11px] text-[#94A3B8]">hoy</span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="p-3 rounded bg-[#161B24] border border-[#2D3748] hover:border-[#374151] transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-headline text-[10px] uppercase font-semibold tracking-wider text-[#94A3B8]">Latencia Satelital</span>
+<span class="text-[#6EE7B7] text-[10px] font-semibold">Óptima</span>
+</div>
+<div class="mt-1.5 flex items-baseline gap-2">
+<span class="font-headline text-2xl font-bold tracking-tight text-[#7C9DF0] tabular-numbers">18ms</span>
+<span class="material-symbols-outlined text-[16px] text-[#94A3B8]">speed</span>
+</div>
+</div>
+</div>
+<!-- Mini Live Event Log Stream -->
+<div class="mt-4 pt-3 border-t border-[#2D3748]">
+<div class="flex items-center justify-between text-[11px] font-headline uppercase font-semibold text-[#94A3B8] mb-2">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-[#7C9DF0]">terminal</span>
+                  Registro Automatizado de Incidentes
+                </span>
+<span class="text-[10px] text-[#6EE7B7] tabular-numbers">Sincronizado</span>
+</div>
+<div class="space-y-1.5 font-body text-[11px]">
+<div class="flex items-center justify-between px-2 py-1 rounded bg-[#161B24]/80 border border-[#2D3748]/50">
+<div class="flex items-center gap-2">
+<span class="text-[#6EE7B7] font-semibold">OK</span>
+<span class="text-[#D1D5DB]">Check-in satelital confirmado KM 148 Autopista 57D</span>
+</div>
+<span class="text-[#94A3B8] tabular-numbers text-[10px]">21:41:58</span>
+</div>
+<div class="flex items-center justify-between px-2 py-1 rounded bg-[#161B24]/80 border border-[#2D3748]/50">
+<div class="flex items-center gap-2">
+<span class="text-[#7C9DF0] font-semibold">IA</span>
+<span class="text-[#D1D5DB]">Desvío predictivo ejecutado por congestión de riesgo</span>
+</div>
+<span class="text-[#94A3B8] tabular-numbers text-[10px]">21:40:12</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- WEB FOOTER (from Shared Components JSON: Footer) -->
+<footer class="w-full bg-[#0E1117] dark:bg-[#0E1117] border-t border-[#2D3748] dark:border-[#2D3748]">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto px-6 py-8 gap-4 font-body text-[13px] text-[#94A3B8]">
+<!-- Brand & Copyright Statement verbatim -->
+<div class="flex flex-col sm:flex-row items-center gap-2 text-center sm:text-left">
+<span class="font-headline text-lg font-bold text-[#E2E8F0] dark:text-[#E2E8F0]">AI27</span>
+<span class="hidden sm:inline text-[#2D3748]">|</span>
+<p>© 2025 AI27. Todos los derechos reservados. Seguridad e Inteligencia Predictiva en Tránsito de Carga.</p>
+</div>
+<!-- Footer Policy Links verbatim -->
+<nav class="flex items-center gap-6">
+<a class="text-[#94A3B8] hover:text-[#7C9DF0] transition-colors duration-150" href="#privacidad">Privacidad</a>
+<a class="text-[#94A3B8] hover:text-[#7C9DF0] transition-colors duration-150" href="#terminos">Términos y Condiciones</a>
+<a class="text-[#94A3B8] hover:text-[#7C9DF0] transition-colors duration-150" href="#seguridad">Seguridad</a>
+<a class="text-[#94A3B8] hover:text-[#7C9DF0] transition-colors duration-150" href="#compliance">Compliance</a>
+</nav>
+</div>
+</footer>
+<!-- Micro-script for live telemetry clock -->
+<script>
+    function updateClock() {
+      const el = document.getElementById('system-time');
+      if (el) {
+        const now = new Date();
+        const hrs = String(now.getUTCHours()).padStart(2, '0');
+        const mins = String(now.getUTCMinutes()).padStart(2, '0');
+        const secs = String(now.getUTCSeconds()).padStart(2, '0');
+        el.textContent = `${hrs}:${mins}:${secs} UTC`;
+      }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body></html>

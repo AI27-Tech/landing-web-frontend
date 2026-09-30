@@ -1,0 +1,262 @@
+/**
+ * ============================================================================
+ *  DESIGN TOKENS DE LA LANDING — ESPEJO DE @ai27-tech/ui
+ * ============================================================================
+ *
+ *  Origen:  @ai27-tech/ui 0.2.0-beta.6
+ *           pf-library-frontend-components/src/styles/tokens.css
+ *  Copiado: 2026-09-29
+ *
+ *  QUE ES
+ *  La paleta Nocturne de la landing: superficies pizarra sin negro absoluto,
+ *  primary periwinkle apagado (#7c9df0), secondary navy-slate desaturado, y
+ *  senales de estado (esmeralda / ambar / coral) de baja saturacion afinadas
+ *  para lectura sostenida en baja luz. El sistema es dark-first y aqui la
+ *  landing lo es de forma total.
+ *
+ *  ── Theming ──────────────────────────────────────────────────────────────
+ *  Solo oscuro. `index.html` fija `data-theme="dark"`. El bloque `[data-theme="dark"]`
+ *  del origen se elimino por ser identico al `:root` oscuro que ya esta aqui;
+ *  anadirlo de nuevo solo serviria si algun dia hay un toggle de tema.
+ *
+ *  POR QUE ESTA COPIA Y NO LA DEPENDENCIA
+ *  La landing es un repo agnostico a la plataforma: no es un microservicio ni
+ *  un subsistema, no habla con ningun backend de la plataforma y no usa ningun
+ *  componente de la libreria — solo su color. Consumir @ai27-tech/ui exigiria
+ *  un token de GitHub Packages (registry `restricted`) solo para leer una
+ *  paleta, y ataria un sitio publico a la plataforma que se supone que no
+ *  conoce.
+ *
+ *  COMO SE MANTIENE EN SINCRONIA
+ *  1. Si la libreria cambia un token, ese cambio llega aqui en el mismo
+ *     commit que llega a `lan-wf-m`. Este archivo no se actualiza "despues".
+ *  2. No editar valores a mano por conveniencia. Si un valor no sirve, se
+ *     ajusta en la libreria primero y esta copia se vuelve a bajar.
+ *  3. Un `diff` contra el origen solo debe mostrar las diferencias
+ *     intencionales listadas abajo.
+ *
+ *  DIFERENCIAS INTENCIONALES CON EL ORIGEN
+ *  - Se elimino el tema claro: el bloque `@media (prefers-color-scheme: light)`
+ *     sobre `:root:not([data-theme])` y el selector `[data-theme="light"]`.
+ *     Los seis mocks de `docs/mock/landing-nocturne/` son oscuros y no hay un
+ *     diseno claro aprobado; conservarlo seria codigo sin diseno que lo
+ *     respalde, y un tema que nadie revisa se desincroniza solo.
+ *  - Se elimino el bloque `[data-theme="dark"]`, identico al `:root` oscuro.
+ *  - Se conservaron los tokens estructurales de componentes (navbar, sidebar,
+ *     modal, panel) aunque la landing todavia no los use: son parte de la copia
+ *     fiel y hacen que el diff contra el origen siga siendo legible.
+ *
+ *  Cualquier app puede sobreescribir un token suelto, por ejemplo:
+ *    :root { --ui-color-primary: #8ba7f8; }
+ */
+
+/* ── Structural tokens (theme-independent) ───────────────────────────────── */
+:root {
+  /* Radius — low-curvature, structured profile (4px base per "Shapes") */
+  --ui-radius: 0.25rem;
+  --ui-radius-sm: 0.125rem;
+  --ui-radius-lg: 0.5rem;
+  --ui-radius-xl: 0.75rem;
+  --ui-radius-full: 9999px;
+
+  /* Spacing scale (4px baseline grid) */
+  --ui-space-1: 0.25rem; /* space-xs */
+  --ui-space-2: 0.5rem;  /* space-sm */
+  --ui-space-3: 0.75rem; /* space-md / gutter-sm */
+  --ui-space-4: 1rem;    /* space-lg / gutter / margin-sm */
+  --ui-space-5: 1.5rem;  /* gutter-lg / margin */
+  --ui-space-6: 2rem;    /* space-xl / margin-lg */
+
+  /* Dense table padding (operational tables) */
+  --ui-table-cell-y: 0.375rem;
+  --ui-table-cell-x: 0.625rem;
+
+  /* Typography — Inter, tabular figures for telemetry */
+  --ui-font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --ui-font-feature-numeric: "tnum", "cv05";
+
+  /* Base line-height (unitless, inherited) */
+  --ui-line-height: 1.4;
+
+  /* Font sizes (compact aliases used across components) */
+  --ui-font-size-sm: 0.75rem;    /* 12px body-sm */
+  --ui-font-size-md: 0.8125rem;  /* 13px body-md */
+  --ui-font-size-lg: 0.9375rem;  /* 15px title-md */
+
+  /* ── Type scale — size / line-height / weight / tracking ────────────────
+     Use these for consistent headings, labels and telemetry readouts. */
+  --ui-text-display-lg-size: 2rem;      /* 32px */
+  --ui-text-display-lg-line: 2.5rem;    /* 40px */
+  --ui-text-display-lg-weight: 700;
+  --ui-text-display-lg-tracking: -0.02em;
+
+  --ui-text-headline-lg-size: 1.5rem;   /* 24px */
+  --ui-text-headline-lg-line: 2rem;     /* 32px */
+  --ui-text-headline-lg-weight: 600;
+  --ui-text-headline-lg-tracking: -0.015em;
+
+  --ui-text-headline-sm-size: 1.125rem; /* 18px */
+  --ui-text-headline-sm-line: 1.5rem;   /* 24px */
+  --ui-text-headline-sm-weight: 600;
+  --ui-text-headline-sm-tracking: -0.01em;
+
+  --ui-text-title-md-size: 0.9375rem;   /* 15px */
+  --ui-text-title-md-line: 1.25rem;     /* 20px */
+  --ui-text-title-md-weight: 600;
+  --ui-text-title-md-tracking: 0em;
+
+  --ui-text-body-md-size: 0.8125rem;    /* 13px */
+  --ui-text-body-md-line: 1.125rem;     /* 18px */
+  --ui-text-body-md-weight: 400;
+
+  --ui-text-body-sm-size: 0.75rem;      /* 12px */
+  --ui-text-body-sm-line: 1rem;         /* 16px */
+  --ui-text-body-sm-weight: 400;
+
+  --ui-text-label-md-size: 0.6875rem;   /* 11px */
+  --ui-text-label-md-line: 0.875rem;    /* 14px */
+  --ui-text-label-md-weight: 600;
+  --ui-text-label-md-tracking: 0.05em;
+
+  --ui-text-label-sm-size: 0.625rem;    /* 10px */
+  --ui-text-label-sm-line: 0.75rem;     /* 12px */
+  --ui-text-label-sm-weight: 600;
+  --ui-text-label-sm-tracking: 0.06em;
+
+  --ui-text-telemetry-lg-size: 1.125rem; /* 18px */
+  --ui-text-telemetry-lg-line: 1.375rem; /* 22px */
+  --ui-text-telemetry-lg-weight: 700;
+  --ui-text-telemetry-lg-tracking: -0.03em;
+
+  --ui-text-telemetry-sm-size: 0.75rem;  /* 12px */
+  --ui-text-telemetry-sm-line: 0.875rem; /* 14px */
+  --ui-text-telemetry-sm-weight: 500;
+  --ui-text-telemetry-sm-tracking: 0.02em;
+
+  /* ── Additional typography tokens (used across components) ───────────────
+     Font sizes for specific use cases that weren't in the initial scale. */
+  --ui-font-size-xs: 0.625rem;   /* 10px — label-sm equivalent */
+  --ui-font-size-xl: 1.125rem;   /* 18px — telemetry-lg equivalent */
+
+  /* Z-index */
+  --ui-z-modal: 1000;
+
+  /* ── Component-specific sizing tokens ──────────────────────────────────
+     Used for consistent dimensions across component families. */
+  --ui-navbar-height: 3.5rem;                  /* 56px — Navbar + Sidebar header */
+  --ui-sidebar-width: 15rem;                   /* 240px — Sidebar expanded */
+  --ui-sidebar-width-collapsed: 4rem;          /* 64px — Sidebar icon-only */
+  --ui-modal-width-sm: 24rem;                  /* 384px */
+  --ui-modal-width-md: 32rem;                  /* 512px */
+  --ui-modal-width-lg: 48rem;                  /* 768px */
+  --ui-surface-panel-width: 20rem;             /* 320px — MessagePanel, Visor */
+  --ui-surface-panel-width-sm: 18rem;          /* 288px — Alternate narrow */
+
+  /* ── Border dimensions ────────────────────────────────────────────────
+     Used for visual separation and emphasis. */
+  --ui-border-width: 1px;
+  --ui-border-width-strong: 4px;               /* Accent borders (e.g., Toast left) */
+
+  /* ── State opacity ─────────────────────────────────────────────────────
+     Consistent disabled and loading states. */
+  --ui-opacity-disabled: 0.55;                 /* For disabled interactive elements */
+  --ui-opacity-hover-muted: 0.12;              /* Overlay tint (12% of color) */
+  --ui-opacity-active-muted: 0.22;             /* Overlay tint (22% of color) */
+
+  /* ── Motion ──────────────────────────────────────────────────────────────
+     Durations tuned per interaction weight, plus modern easing curves. */
+  --ui-duration-fast: 120ms;   /* micro-interactions: hover, focus */
+  --ui-duration-base: 200ms;   /* most state changes */
+  --ui-duration-slow: 320ms;   /* overlays, panels entering */
+
+  /* Easing curves */
+  --ui-ease-standard: cubic-bezier(0.2, 0, 0, 1);    /* smooth ease-out */
+  --ui-ease-emphasized: cubic-bezier(0.3, 0, 0, 1);  /* stronger entrance */
+  --ui-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* subtle overshoot */
+
+  /* Default transition used across components (hover/focus/color/etc.). */
+  --ui-transition: var(--ui-duration-fast) var(--ui-ease-standard);
+}
+
+/* ── Dark theme colors — Nocturne (unico tema de la landing) ──────────────
+   Nota de sync: en el origen este bloque se continua con un tema claro derivado
+   (`prefers-color-scheme: light` y `[data-theme="light"]`) y con un bloque
+   `[data-theme="dark"]` identico a este. Los tres se eliminaron; ver la
+   cabecera del archivo. Si la landing gana un tema claro aprobado, se copian
+   de aqui. */
+:root {
+  color-scheme: dark;
+
+  /* Brand — Muted Periwinkle. Dark slate text on the fill for crisp contrast. */
+  --ui-color-primary: #7c9df0;
+  --ui-color-primary-hover: #8ba7f8;
+  --ui-color-primary-active: #6b8ee6;
+
+  /* Neutral / secondary — desaturated navy slate (containers, troughs). */
+  --ui-color-secondary: #2c3a58;
+  --ui-color-secondary-hover: #36466b;
+  --ui-color-secondary-active: #3e4e73;
+
+  /* Danger / Critical — softened coral. */
+  --ui-color-danger: #fca5a5;
+  --ui-color-danger-hover: #f98a8a;
+  --ui-color-danger-active: #f56f6f;
+
+  /* Foreground on colored surfaces. */
+  --ui-color-on-primary: #0e1117;    /* bold slate text on periwinkle */
+  --ui-color-on-secondary: #e2e8f0;
+  --ui-color-on-danger: #381a20;
+
+  /* Feedback — low-saturation spectral anchors. */
+  --ui-color-success: #6ee7b7;
+  --ui-color-warning: #fcd34d;
+  --ui-color-info: #7c9df0;
+
+  /* Status container fills (~12%) + hairline borders (~25%). */
+  --ui-color-success-container: rgba(110, 231, 183, 0.12);
+  --ui-color-success-border: rgba(110, 231, 183, 0.25);
+  --ui-color-warning-container: rgba(252, 211, 77, 0.12);
+  --ui-color-warning-border: rgba(252, 211, 77, 0.25);
+  --ui-color-danger-container: rgba(252, 165, 165, 0.12);
+  --ui-color-danger-border: rgba(252, 165, 165, 0.25);
+
+  /* Surfaces — tonal slate elevation ramp (no absolute black). */
+  --ui-color-surface: #1c222e;        /* Level 2 — standard operational panels */
+  --ui-color-surface-muted: #0e1117;  /* Level 0 — global canvas */
+  --ui-color-surface-raised: #242b3a; /* Level 3 — overlays, hovered cards */
+
+  /* Full surface-container ramp (recessed → popovers). */
+  --ui-color-surface-container-lowest: #0b0e16;
+  --ui-color-surface-container-low: #161b24;   /* Level 1 — recessed modules */
+  --ui-color-surface-container: #1c222e;        /* Level 2 — panels, tables */
+  --ui-color-surface-container-high: #242b3a;   /* Level 3 — interactive/hover */
+  --ui-color-surface-container-highest: #2e3748;/* Level 4 — dialogs, control heads */
+
+  /* Borders — hairline slate ramp by elevation. */
+  --ui-color-border: #2d3748;         /* Level 2 stroke */
+  --ui-color-border-subtle: #242d3d;  /* Level 1 stroke / dividers */
+  --ui-color-border-strong: #374151;  /* Level 3 stroke */
+  --ui-color-border-stronger: #475569;/* Level 4 stroke */
+  --ui-color-border-interactive: #7c9df0;
+
+  /* Row/divider hairline for data tables & feed lists. */
+  --ui-color-divider: #1b2230;
+
+  /* Text — pure white is prohibited; muted slate-white ramp. */
+  --ui-color-text: #e2e8f0;           /* primary content */
+  --ui-color-text-muted: #94a3b8;     /* secondary / structural labels */
+  --ui-color-text-subtle: #d1d5db;    /* supporting content */
+  --ui-color-text-placeholder: #64748b;
+
+  /* Focus ring — periwinkle selection cue. */
+  --ui-focus-ring: rgba(124, 157, 240, 0.5);
+
+  /* Elevation — cool-tinted, dark-atmosphere shadows. */
+  --ui-shadow-sm: 0 1px 2px rgba(7, 10, 15, 0.5);
+  --ui-shadow-md: 0 4px 20px -2px rgba(11, 15, 23, 0.75);
+  --ui-shadow-lg: 0 12px 36px -4px rgba(7, 10, 15, 0.9);
+
+  /* Overlay scrim. */
+  --ui-overlay-bg: rgba(7, 10, 15, 0.7);
+}
+

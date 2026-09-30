@@ -1,0 +1,176 @@
+/*
+ * ============================================================================
+ *  TAILWIND 4 SOBRE LOS TOKENS DE LA LANDING
+ * ============================================================================
+ *
+ *  Tailwind 4 configura por CSS, no por tailwind.config.ts: el tema vive en
+ *  `@theme`. Es la razon por la que este repo no tiene tailwind.config.ts.
+ *
+ *  `@import 'tailwindcss'` va PRIMERO porque es lo que genera las utilidades y las
+ *  capas base. Los tokens de `src/styles/tokens.css` se importan desde
+ *  `src/main.tsx`, antes que este archivo, de modo que las variables `--ui-*` ya
+ *  existen cuando `@theme inline` las referencia.
+ *
+ *  ---------------------------------------------------------------------------
+ *  UNA SOLA CAPA DE INDIRECTION
+ *  ---------------------------------------------------------------------------
+ *  `pf-web-frontend-client` mapea los tokens `--ui-*` a los roles Material 3
+ *  (`surface`, `on-surface`, `outline`, `primary`, ...) y ademas consume los
+ *  componentes de `@ai27-tech/ui`, que estan escritos contra esos roles. Alla
+ *  hacen falta las dos capas.
+ *
+ *  Aqui no. La landing no depende de la libreria y sus componentes se escriben
+ *  contra las utilidades de Tailwind. Asi que este archivo mapea los tokens
+ *  DIRECTAMENTE a los nombres de color de Tailwind, sin la capa de roles en
+ *  medio. Menos indireccion que mantener, mismo resultado.
+ *
+ *  Se conservan los nombres de rol del cliente a proposito, para que el nombre
+ *  `bg-surface` o `border-outline` signifique lo mismo en los dos repos:
+ *
+ *    --color-primary        -> --ui-color-primary
+ *    --color-on-primary     -> --ui-color-on-primary
+ *    --color-surface        -> --ui-color-surface          (nivel 2, paneles)
+ *    --color-surface-dim    -> --ui-color-surface-muted    (nivel 0, el canvas)
+ *    --color-surface-bright -> --ui-color-surface-raised   (nivel 3, hover)
+ *    --color-on-surface     -> --ui-color-text
+ *    --color-on-surface-variant -> --ui-color-text-muted
+ *    --color-outline        -> --ui-color-border-strong
+ *    --color-outline-variant -> --ui-color-border
+ *    --color-error          -> --ui-color-danger
+ *    --color-background     -> --ui-color-surface-muted
+ *
+ *  OJO con el Lienzo: el fondo de la pagina NO es `--color-surface` (panel), es
+ *  `--color-background` / `bg-surface-dim`, que apunta al token `surface-muted`
+ *  (#0e1117). Los mocks hacen mucho enfasis en esta distincion.
+ */
+@import 'tailwindcss';
+
+/*
+ * La landing es dark-only y no tiene toggle: no hay ninguna clase `.dark` en el
+ * arbol. La variante `dark:` queda declarada igual, para que exista el dia que
+ * se anada un tema claro, sin tener que cablear el custom variant.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  /* -- Marca y accion principal -- */
+  --color-primary: var(--ui-color-primary);
+  --color-on-primary: var(--ui-color-on-primary);
+  --color-primary-hover: var(--ui-color-primary-hover);
+  --color-primary-active: var(--ui-color-primary-active);
+
+  /* -- Superficies: la rampa de elevacion, sin negro absoluto -- */
+  --color-surface: var(--ui-color-surface);
+  --color-surface-dim: var(--ui-color-surface-muted);
+  --color-surface-bright: var(--ui-color-surface-raised);
+  --color-surface-recessed: var(--ui-color-surface-container-low);
+  --color-surface-container-high: var(--ui-color-surface-container-high);
+
+  /* -- Texto: nunca blanco puro -- */
+  --color-on-surface: var(--ui-color-text);
+  --color-on-surface-variant: var(--ui-color-text-muted);
+  --color-on-surface-subtle: var(--ui-color-text-subtle);
+  --color-on-surface-placeholder: var(--ui-color-text-placeholder);
+
+  /* -- Bordes y divisores -- */
+  --color-outline: var(--ui-color-border-strong);
+  --color-outline-variant: var(--ui-color-border);
+  --color-outline-subtle: var(--ui-color-border-subtle);
+  --color-divider: var(--ui-color-divider);
+
+  /* -- Estados de operacion -- */
+  --color-success: var(--ui-color-success);
+  --color-success-container: var(--ui-color-success-container);
+  --color-warning: var(--ui-color-warning);
+  --color-warning-container: var(--ui-color-warning-container);
+  --color-error: var(--ui-color-danger);
+  --color-error-container: var(--ui-color-danger-container);
+  --color-info: var(--ui-color-info);
+
+  /* -- Fondo de la pagina -- */
+  --color-background: var(--ui-color-surface-muted);
+  --color-on-background: var(--ui-color-text);
+
+  /*
+   * Tipografia. Inter variable en toda la landing, con el nombre que registra
+   * Fontsource. Las cifras de telemetria y metrics usan cifras tabulares
+   * (`tabular-nums`), como pide el diseno: los numeros no deben bailar cuando se
+   * actualizan en vivo.
+   */
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, monospace;
+
+  /* -- Radios: curvatura baja, perfil estructurado -- */
+  --radius-sm: var(--ui-radius-sm);
+  --radius-DEFAULT: var(--ui-radius);
+  --radius-md: var(--ui-radius);
+  --radius-lg: var(--ui-radius-lg);
+  --radius-xl: var(--ui-radius-xl);
+  --radius-full: var(--ui-radius-full);
+
+  /* -- Elevacion: sombras frias, de atmosfera oscura -- */
+  --shadow-sm: var(--ui-shadow-sm);
+  --shadow-md: var(--ui-shadow-md);
+  --shadow-lg: var(--ui-shadow-lg);
+
+  /* -- Movimiento: duraciones y curvas de la libreria -- */
+  --ease-standard: var(--ui-ease-standard);
+  --ease-emphasized: var(--ui-ease-emphasized);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    /*
+     * La navegacion es por anclas (#datos, #infraestructura, ...) contra una
+     * cabecera fija de 4rem. Sin esto, el scroll pegaria el inicio de la seccion
+     * justo debajo de la cabecera y el titulo quedaria tapado.
+     */
+    scroll-behavior: smooth;
+    scroll-padding-top: 4rem;
+  }
+
+  body {
+    @apply bg-background text-on-background font-sans antialiased;
+    color-scheme: dark;
+  }
+
+  /* Foco visible en todo lo interactivo: no se quita sin sustituto. */
+  :focus-visible {
+    @apply outline-primary outline-2 outline-offset-2;
+  }
+}
+
+/*
+ * ============================================================================
+ *  MOVIMIENTO REDUCIDO — INVARIANTE DEL SCAFFOLD
+ * ============================================================================
+ *
+ *  Los mocks traen animaciones infinitas: el barrido del radar, el flujo de
+ *  paquetes, el pulso de los nodos, el conic-gradient del sweep. Son parte del
+ *  diseno, y tambien son el tipo de cosa que hace dano a quien pidio menos
+ *  movimiento en su sistema operativo, o a quien esta leyendo con un lector de
+ *  pantalla mientras la pagina late.
+ *
+ *  Este bloque las apaga a TODAS de golpe. Es deliberadamente global y
+ *  deliberadamente temprano: la decision se toma una vez, aqui, y no se
+ *  re-discute en cada componente que agregue un keyframe.
+ *
+ *  Se usa la variante de la comunidad (no `animation: none`) para no romper
+ *  elementos que dependan de `animationend` para avanzar de estado, y para que la
+ *  transicion se complete en vez de cortarse. Cuando un componente necesite
+ *  lowering mas fino que esto, se resuelve con `motion-reduce:` en su lugar, no
+ *  desactivando este bloque.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-delay: 0ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-delay: 0ms !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}

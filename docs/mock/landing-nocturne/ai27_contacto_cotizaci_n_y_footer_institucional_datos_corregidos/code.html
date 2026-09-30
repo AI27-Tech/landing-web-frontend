@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI27 — Contacto y Cotización Operativa</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration Verbatim -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {},
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {},
+          "fontFamily": {
+            "headline": [
+              "Inter"
+            ],
+            "display": [
+              "Inter"
+            ],
+            "body": [
+              "Inter"
+            ],
+            "label": [
+              "Inter"
+            ]
+          },
+          "fontSize": {}
+        },
+      },
+    }
+  </script>
+<style>
+    /* Atmospheric tactical grid */
+    .tactical-grid-bg {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(45, 55, 72, 0.22) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(45, 55, 72, 0.22) 1px, transparent 1px);
+    }
+    
+    /* Tabular figures for telemetry & quantitative metrics */
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Subtle pulse animation for active operations */
+    @keyframes pulse-emerald {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(1.15); }
+    }
+    .status-pulse {
+      animation: pulse-emerald 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  </style>
+</head>
+<body class="bg-[#0E1117] text-[#E2E8F0] font-body antialiased selection:bg-[#7C9DF0] selection:text-[#0E1117] min-h-screen flex flex-col justify-between">
+<!-- MAIN CANVAS: Contacto / Cotización Táctica -->
+<main class="relative w-full overflow-hidden tactical-grid-bg pt-12 pb-20 md:py-24">
+<!-- Atmospheric Ambient Glow behind main panel -->
+<div class="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[720px] bg-[#7C9DF0]/10 rounded-full blur-[140px] -z-10"></div>
+<div class="pointer-events-none absolute top-1/4 right-10 w-[360px] h-[360px] bg-[#6EE7B7]/5 rounded-full blur-[100px] -z-10"></div>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- PARTE 1: BLOQUE CTA DE CONVERSIÓN (Banda táctica de alto impacto) -->
+<section class="bg-[#161B24] border border-[#2D3748] rounded shadow-2xl relative overflow-hidden backdrop-blur-sm">
+<!-- Header status bar inside tactical panel -->
+<div class="border-b border-[#2D3748] bg-[#0E1117]/60 px-6 py-2.5 flex flex-wrap items-center justify-between text-[11px] font-label tracking-wider uppercase text-[#94A3B8]">
+<div class="flex items-center gap-2">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-[#6EE7B7] status-pulse"></span>
+<span class="text-[#E2E8F0] font-semibold">TERMINAL DE ENLACE // SELECCIÓN DE PROTOCOLO</span>
+</div>
+<div class="hidden sm:flex items-center gap-6 font-mono text-[10px] text-[#94A3B8]">
+<span>CANAL: SSL/TLS AES-256</span>
+<span>LATENCIA: 14ms</span>
+<span class="text-[#7C9DF0]">MODO: RESPUESTA DIRECTA C4</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 p-6 sm:p-8 lg:p-12 items-start">
+<!-- COLUMNA IZQUIERDA: Propuesta de valor y acción -->
+<div class="lg:col-span-6 flex flex-col justify-between h-full space-y-8">
+<div class="space-y-5">
+<!-- Badge táctico -->
+<div class="inline-flex items-center gap-2.5 px-3 py-1 bg-[#1C222E] border border-[#2D3748] rounded text-[#7C9DF0] text-[11px] font-label font-semibold tracking-wider uppercase">
+<span class="w-2 h-2 rounded-full bg-[#6EE7B7] status-pulse"></span>
+<span>DESPLIEGUE OPERATIVO // CONTACTO &amp; COTIZACIÓN</span>
+</div>
+<!-- Titular de impacto -->
+<h1 class="font-headline text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#E2E8F0] tracking-tight leading-[1.15]">
+                Cotiza la seguridad y los datos de tu carga
+              </h1>
+<!-- Párrafo persuasivo -->
+<p class="font-body text-[#94A3B8] text-sm sm:text-base leading-relaxed">
+                Integra analítica predictiva, custodia satelital 24/7 y reacción táctica inmediata en tus corredores logísticos. Obtén una propuesta personalizada para el volumen y riesgo de tu operación en menos de 2 horas.
+              </p>
+</div>
+<!-- Métricas tácticas de servicio -->
+<div class="grid grid-cols-3 gap-3 pt-2 pb-2 border-y border-[#2D3748]/80 bg-[#0E1117]/30 p-3 rounded">
+<div class="flex flex-col">
+<span class="font-headline font-semibold text-base sm:text-lg text-[#6EE7B7] tabular-nums tracking-tight">&lt; 2 hrs</span>
+<span class="text-[10px] sm:text-[11px] font-label uppercase tracking-wider text-[#94A3B8] leading-tight mt-0.5">Respuesta de análisis</span>
+</div>
+<div class="flex flex-col border-l border-[#2D3748] pl-3">
+<span class="font-headline font-semibold text-base sm:text-lg text-[#E2E8F0] tabular-nums tracking-tight">99.8%</span>
+<span class="text-[10px] sm:text-[11px] font-label uppercase tracking-wider text-[#94A3B8] leading-tight mt-0.5">SLA neutralización</span>
+</div>
+<div class="flex flex-col border-l border-[#2D3748] pl-3">
+<span class="font-headline font-semibold text-base sm:text-lg text-[#7C9DF0] tracking-tight">API / TMS</span>
+<span class="text-[10px] sm:text-[11px] font-label uppercase tracking-wider text-[#94A3B8] leading-tight mt-0.5">Despliegue ágil</span>
+</div>
+</div>
+<!-- Acciones secundarias & canales de contacto C4 -->
+<div class="space-y-4 pt-2">
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+<a class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded border border-[#374151] hover:border-[#7C9DF0] bg-[#1C222E] hover:bg-[#242B3A] text-[#E2E8F0] text-[13px] font-semibold transition-all duration-150 active:scale-[0.99] text-center" href="#contacto-directo">
+<span class="material-symbols-outlined text-[18px] text-[#7C9DF0]">support_agent</span>
+<span>Hablar con un asesor experto</span>
+</a>
+<a class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded border border-[#2D3748] hover:border-[#374151] bg-[#0E1117] hover:bg-[#161B24] text-[#94A3B8] hover:text-[#E2E8F0] text-[13px] font-medium transition-all duration-150 active:scale-[0.99] text-center" href="tel:+525580002427">
+<span class="material-symbols-outlined text-[18px] text-[#6EE7B7]">call</span>
+<span class="tabular-nums">[teléfono de contacto]</span>
+</a>
+</div>
+<!-- Indicador de canal prioritario -->
+<div class="flex items-center gap-2 text-xs text-[#94A3B8]">
+<span class="inline-block w-2 h-2 rounded-full bg-[#6EE7B7]"></span>
+<span class="text-[#D1D5DB]">Disponibilidad 24/7 C4:</span>
+<span>Guardia táctica y despacho de custodias activas a nivel nacional</span>
+</div>
+</div>
+</div>
+<!-- COLUMNA DERECHA: Formulario compacto de cotización técnica -->
+<div class="lg:col-span-6">
+<div class="bg-[#1C222E] border border-[#2D3748] rounded p-6 sm:p-7 shadow-lg relative">
+<!-- Encabezado de la tarjeta de cotización -->
+<div class="flex items-center justify-between pb-5 mb-5 border-b border-[#2D3748]">
+<div>
+<h2 class="font-headline text-base font-semibold text-[#E2E8F0] tracking-tight">
+                    Solicitud de cotización técnica
+                  </h2>
+<p class="text-xs text-[#94A3B8] mt-0.5">
+                    Evaluación de cobertura, tecnología y custodia en ruta
+                  </p>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 bg-[#0E1117] border border-[#2D3748] rounded text-[10px] font-label uppercase tracking-widest text-[#6EE7B7]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#6EE7B7] status-pulse"></span>
+<span>CABINA DE VENTAS ACTIVA</span>
+</div>
+</div>
+<!-- Formulario de conversión -->
+<form class="space-y-4" id="quote-form" onsubmit="event.preventDefault(); alert('Solicitud registrada con éxito en cabina AI27. Un ingeniero de ruta te contactará en menos de 2 horas.');">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Nombre completo -->
+<div>
+<label class="block text-[11px] font-label uppercase tracking-wider text-[#94A3B8] mb-1.5" for="full-name">
+                      Nombre completo *
+                    </label>
+<input class="w-full bg-[#0E1117] border border-[#2D3748] rounded px-3.5 py-2.5 text-sm text-[#E2E8F0] placeholder-[#94A3B8]/40 focus:outline-none focus:border-[#7C9DF0] focus:ring-1 focus:ring-[#7C9DF0] transition-colors" id="full-name" name="fullName" placeholder="Lic. Carlos Mendoza" required="" type="text"/>
+</div>
+<!-- Empresa / Razón Social -->
+<div>
+<label class="block text-[11px] font-label uppercase tracking-wider text-[#94A3B8] mb-1.5" for="company-name">
+                      Empresa / Razón Social *
+                    </label>
+<input class="w-full bg-[#0E1117] border border-[#2D3748] rounded px-3.5 py-2.5 text-sm text-[#E2E8F0] placeholder-[#94A3B8]/40 focus:outline-none focus:border-[#7C9DF0] focus:ring-1 focus:ring-[#7C9DF0] transition-colors" id="company-name" name="companyName" placeholder="Logística Transmex S.A." required="" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Correo corporativo -->
+<div>
+<label class="block text-[11px] font-label uppercase tracking-wider text-[#94A3B8] mb-1.5" for="email">
+                      Correo corporativo *
+                    </label>
+<input class="w-full bg-[#0E1117] border border-[#2D3748] rounded px-3.5 py-2.5 text-sm text-[#E2E8F0] placeholder-[#94A3B8]/40 focus:outline-none focus:border-[#7C9DF0] focus:ring-1 focus:ring-[#7C9DF0] transition-colors" id="email" name="email" placeholder="carlos@transmex.com" required="" type="email"/>
+</div>
+<!-- Teléfono / Celular -->
+<div>
+<label class="block text-[11px] font-label uppercase tracking-wider text-[#94A3B8] mb-1.5" for="phone">
+                      Teléfono / Móvil *
+                    </label>
+<input class="w-full bg-[#0E1117] border border-[#2D3748] rounded px-3.5 py-2.5 text-sm text-[#E2E8F0] placeholder-[#94A3B8]/40 focus:outline-none focus:border-[#7C9DF0] focus:ring-1 focus:ring-[#7C9DF0] transition-colors tabular-nums" id="phone" name="phone" placeholder="+52 55 1234 5678" required="" type="tel"/>
+</div>
+</div>
+<!-- Selector de Tipo de carga y corredores -->
+<div>
+<label class="block text-[11px] font-label uppercase tracking-wider text-[#94A3B8] mb-1.5" for="cargo-type">
+                    Tipo de carga y corredores principales *
+                  </label>
+<select class="w-full bg-[#0E1117] border border-[#2D3748] rounded px-3.5 py-2.5 text-sm text-[#E2E8F0] focus:outline-none focus:border-[#7C9DF0] focus:ring-1 focus:ring-[#7C9DF0] transition-colors" id="cargo-type" name="cargoType" required="">
+<option class="text-[#94A3B8]" disabled="" selected="" value="">Seleccionar categoría logística</option>
+<option value="electronica-bajio">Electrónica &amp; Retail / Corredor Bajío - Norte (NAFTA)</option>
+<option value="farma-centro">Farmacéutica y Cadena de Frío / Centro - Occidente</option>
+<option value="alimentos-nacional">Alimentos, Bebidas y Consumo Masivo / Rutas Nacionales</option>
+<option value="quimicos-puerto">Químicos y Material Peligroso / Corredor Portuario (Manzanillo / Veracruz)</option>
+<option value="automotriz">Automotriz &amp; Tier 1 / Puebla - Bajío - Monterrey</option>
+<option value="carga-general">Carga General / Corredores Mixtos</option>
+</select>
+</div>
+<!-- Selector de volumen mensual de viajes -->
+<div>
+<label class="block text-[11px] font-label uppercase tracking-wider text-[#94A3B8] mb-1.5" for="monthly-volume">
+                    Número estimado de viajes al mes *
+                  </label>
+<select class="w-full bg-[#0E1117] border border-[#2D3748] rounded px-3.5 py-2.5 text-sm text-[#E2E8F0] focus:outline-none focus:border-[#7C9DF0] focus:ring-1 focus:ring-[#7C9DF0] transition-colors" id="monthly-volume" name="monthlyVolume" required="">
+<option class="text-[#94A3B8]" disabled="" selected="" value="">Seleccionar volumen operativo</option>
+<option value="10-50">10 a 50 viajes / mes (Operación focalizada)</option>
+<option value="50-200">50 a 200 viajes / mes (Flota media)</option>
+<option value="200-500">200 a 500 viajes / mes (Alta densidad logística)</option>
+<option value="500+">+500 viajes / mes (Operador logístico / Empresa global)</option>
+</select>
+</div>
+<!-- Botón primario de máxima jerarquía -->
+<div class="pt-2">
+<button class="w-full flex items-center justify-center gap-2.5 py-3.5 px-6 rounded bg-[#7C9DF0] hover:bg-[#8FADF5] text-[#0E1117] font-semibold text-sm tracking-tight shadow-md transition-all duration-150 active:scale-[0.99] cursor-pointer" type="submit">
+<span>Cotizar servicio</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+<!-- Nota legal y cifrado -->
+<div class="flex items-start gap-2 pt-2 text-[11px] text-[#94A3B8] leading-tight">
+<span class="material-symbols-outlined text-[15px] text-[#7C9DF0] shrink-0 mt-0.5">lock</span>
+<p>
+                    Tus datos operativos están protegidos bajo cifrado AES-256 y acuerdos de confidencialidad estricta. AI27 no comparte información de rutas con terceros.
+                  </p>
+</div>
+</form>
+</div>
+</div>
+</div>
+<!-- Barra inferior del contenedor: telemetry strip -->
+<div class="border-t border-[#2D3748] bg-[#0E1117]/80 px-6 py-3 flex flex-wrap items-center justify-between gap-4 text-[11px] text-[#94A3B8]">
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1.5 text-[#E2E8F0]">
+<span class="material-symbols-outlined text-[15px] text-[#7C9DF0]">verified</span>
+              Monitoreo activo de más de 350,000 viajes anuales
+            </span>
+</div>
+<div class="flex items-center gap-6 font-mono text-[10px]">
+<span>COBERTURA: 32 ESTADOS</span>
+<span>CABINAS: CDMX / GDL / MTY</span>
+<span class="text-[#6EE7B7]">ALERTA AUTOMATIZADA: ON</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- PARTE 2: FOOTER INSTITUCIONAL Y TÉCNICO COMPLETO -->
+<footer class="w-full bg-[#0E1117] border-t border-[#2D3748] pt-14 pb-8 relative z-10 text-[#94A3B8]">
+<!-- Coordenadas técnicas hairline -->
+<div class="max-w-7xl mx-auto px-6 mb-8 pb-4 border-b border-[#2D3748]/60 flex flex-wrap justify-between items-center text-[10px] font-mono tracking-widest text-[#94A3B8]/60 uppercase">
+<span>AI27 // INTELLIGENCE SYSTEM NETWORK</span>
+<span class="hidden sm:inline">GEO-FENCE LAT 19.4326° N, LONG 99.1332° W</span>
+<span>NODE STATUS: SYNCHRONIZED</span>
+</div>
+<!-- Grid principal del Footer -->
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-12">
+<!-- Columna 1: Marca y Misión (5 cols) -->
+<div class="lg:col-span-5 space-y-4 pr-0 lg:pr-8">
+<div class="flex items-center gap-3">
+<!-- Logo AI27 -->
+<div class="font-headline text-2xl font-bold tracking-tight text-[#E2E8F0] flex items-center gap-1.5">
+<span class="w-3 h-3 bg-[#7C9DF0] inline-block rounded-xs"></span>
+            AI27
+          </div>
+</div>
+<p class="font-body text-[13px] text-[#94A3B8] leading-relaxed max-w-md">
+          Seguridad e inteligencia de datos para el transporte de carga en México. Más de 25 años anticipando el riesgo en ruta con telemetría en tiempo real y capacidad de reacción inmediata en autopistas federales.
+        </p>
+<!-- Indicador de estado del sistema -->
+<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-[#161B24] border border-[#2D3748] rounded text-xs text-[#E2E8F0]">
+<span class="w-2 h-2 rounded-full bg-[#6EE7B7] status-pulse"></span>
+<span class="text-[12px] font-medium">Todos los servicios y cabinas C4 operativos</span>
+</div>
+</div>
+<!-- Columna 2: Plataforma & Red (2 cols) -->
+<div class="lg:col-span-2 space-y-3">
+<h3 class="font-headline text-xs font-semibold uppercase tracking-wider text-[#E2E8F0]">
+          Plataforma &amp; Red
+        </h3>
+<ul class="space-y-2 text-[13px]">
+<li>
+<a class="hover:text-[#7C9DF0] transition-colors duration-150" href="#">Centro de Monitoreo C4</a>
+</li>
+<li>
+<a class="hover:text-[#7C9DF0] transition-colors duration-150" href="#">Grupo de Reacción Propio</a>
+</li>
+<li>
+<a class="hover:text-[#7C9DF0] transition-colors duration-150" href="#">Corredores de Seguridad</a>
+</li>
+<li>
+<a class="hover:text-[#7C9DF0] transition-colors duration-150" href="#">Datos e IA Predictiva</a>
+</li>
+<li>
+<a class="hover:text-[#7C9DF0] transition-colors duration-150" href="#">Integración API / TMS</a>
+</li>
+</ul>
+</div>
+<!-- Columna 3: Empresa & Trayectoria (2 cols) -->
+<div class="lg:col-span-2 space-y-3">
+<h3 class="font-headline text-xs font-semibold uppercase tracking-wider text-[#E2E8F0]">
+          Compañía
+        </h3>
+<ul class="space-y-2 text-[13px]">
+<li>
+<a class="hover:text-[#7C9DF0] transition-colors duration-150" href="#">Quiénes Somos</a>
+</li>
+<li>
+<a class="hover:text-[#7C9DF0] transition-colors duration-150" href="#">25 Años de Trayectoria</a>
+</li>
+<li>
+<a class="hover:text-[#7C9DF0] transition-colors duration-150" href="#">Casos de Éxito</a>
+</li>
+<li>
+<a class="hover:text-[#7C9DF0] transition-colors duration-150" href="#">Cobertura Nacional</a>
+</li>
+<li>
+<a class="hover:text-[#7C9DF0] transition-colors duration-150" href="#">Sala de Prensa</a>
+</li>
+</ul>
+</div>
+<!-- Columna 4: Contacto Operativo & Despacho (3 cols) -->
+<div class="lg:col-span-3 space-y-3">
+<h3 class="font-headline text-xs font-semibold uppercase tracking-wider text-[#E2E8F0]">
+          Atención Inmediata
+        </h3>
+<div class="space-y-2.5 text-[13px]"><div class="flex items-start gap-2.5"><span class="material-symbols-outlined text-[17px] text-[#7C9DF0] shrink-0 mt-0.5">phone_in_talk</span><div><span class="block text-[11px] text-[#94A3B8] uppercase tracking-wider">Línea C4 Nacional 24/7:</span><a class="text-[#E2E8F0] hover:text-[#7C9DF0] font-semibold transition-colors" href="tel:">[teléfono de contacto]</a></div></div><div class="flex items-start gap-2.5"><span class="material-symbols-outlined text-[17px] text-[#7C9DF0] shrink-0 mt-0.5">mail</span><div class="space-y-1"><span class="block text-[11px] text-[#94A3B8] uppercase tracking-wider">Correos de contacto:</span><div class="text-xs text-[#94A3B8]">Ventas: <a class="text-[#E2E8F0] hover:text-[#7C9DF0] transition-colors" href="mailto:cmatus@ai27.com">cmatus@ai27.com</a></div><div class="text-xs text-[#94A3B8]">Atención comercial: <a class="text-[#E2E8F0] hover:text-[#7C9DF0] transition-colors" href="mailto:esamper@ai27.com">esamper@ai27.com</a></div></div></div><div class="flex items-start gap-2.5"><span class="material-symbols-outlined text-[17px] text-[#7C9DF0] shrink-0 mt-0.5">location_on</span><div><span class="block text-[11px] text-[#94A3B8] uppercase tracking-wider">Matriz de Operaciones:</span><span class="text-[#94A3B8] text-xs">[dirección]</span></div></div></div>
+</div>
+</div>
+<!-- Sub-footer con Copyright y Enlaces Legales (Alineado con Footer JSON) -->
+<div class="border-t border-[#2D3748] pt-8">
+<div class="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto px-6 gap-4">
+<!-- Copyright institucional verbatim según Shared Components JSON -->
+<div class="text-[13px] text-[#94A3B8] text-center md:text-left">© 2026 AI27. Todos los derechos reservados.</div>
+<!-- Links Legales según Shared Components JSON -->
+<div class="flex flex-wrap justify-center items-center gap-5 text-[13px]">© 2026 AI27. Todos los derechos reservados.</div>
+</div>
+<!-- Micro badge de seguridad inferior -->
+<div class="max-w-7xl mx-auto px-6 mt-4 pt-3 flex flex-wrap justify-between items-center text-[10px] font-mono text-[#94A3B8]/60 uppercase border-t border-[#2D3748]/30">
+<span>AI27 // DESPLIEGUE TÁCTICO &amp; PROTOCOLO LOGÍSTICO // ENCRIPTACIÓN AES-256</span>
+<span>CENTRO DE ATENCIÓN A EMERGENCIAS ACTIVO</span>
+</div>
+</div>
+</footer>
+</body></html>

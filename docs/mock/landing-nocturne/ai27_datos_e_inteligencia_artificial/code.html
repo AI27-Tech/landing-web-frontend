@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI27 - Datos e Inteligencia Artificial</title>
+<!-- Inter Google Font -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            canvas: "#0E1117",
+            surface: "#1C222E",
+            "surface-raised": "#242B3A",
+            "surface-recessed": "#161B24",
+            primary: "#7C9DF0",
+            tactical: "#6EE7B7",
+            warning: "#FCD34D",
+            danger: "#FCA5A5",
+            border: "#2D3748",
+            "border-strong": "#374151",
+            textPrimary: "#E2E8F0",
+            textMuted: "#94A3B8",
+            textSupport: "#D1D5DB"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          fontFamily: {
+            headline: ["Inter", "sans-serif"],
+            display: ["Inter", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            label: ["Inter", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    /* Technical millimeter background grid */
+    .bg-grid-pattern {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(45, 55, 72, 0.25) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(45, 55, 72, 0.25) 1px, transparent 1px);
+    }
+    
+    .bg-radar-glow {
+      background: radial-gradient(circle at 75% 20%, rgba(124, 157, 240, 0.08) 0%, rgba(14, 17, 23, 0) 70%);
+    }
+
+    /* Tabular figures for telemetry accuracy */
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #161B24;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2D3748;
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #7C9DF0;
+    }
+  </style>
+</head>
+<body class="bg-[#0E1117] text-[#E2E8F0] font-body antialiased selection:bg-[#7C9DF0]/20 selection:text-[#7C9DF0]">
+<!-- CONTINUOUS INTERIOR SECTION: DATOS + IA -->
+<section class="relative w-full bg-[#0E1117] bg-grid-pattern bg-radar-glow py-16 px-4 sm:px-6 lg:px-8 border-b border-[#2D3748] overflow-hidden">
+<!-- Atmospheric lighting effects -->
+<div class="pointer-events-none absolute -top-40 right-1/4 w-96 h-96 bg-[#7C9DF0]/5 rounded-full blur-3xl"></div>
+<div class="pointer-events-none absolute bottom-0 left-10 w-80 h-80 bg-[#6EE7B7]/5 rounded-full blur-3xl"></div>
+<div class="max-w-7xl mx-auto relative z-10">
+<!-- ================= 1. ENCABEZADO DE SECCIÓN ================= -->
+<div class="max-w-4xl mb-14">
+<!-- Tag Superior Táctico -->
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-[#161B24] border border-[#2D3748] rounded text-[11px] font-mono font-semibold tracking-wider text-[#7C9DF0] uppercase mb-4 shadow-sm">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-[#6EE7B7] animate-pulse"></span>
+<span>• DATOS + IA // PLATAFORMA ANALÍTICA PREDICTIVA</span>
+</div>
+<!-- Titular Dominante -->
+<h2 class="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#E2E8F0] tracking-tight leading-tight mb-5">
+          No solo protegemos tu carga: <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#7C9DF0] via-[#A5B4FC] to-[#6EE7B7]">te damos sus datos</span>
+</h2>
+<!-- Párrafo de Apoyo -->
+<p class="text-[15px] sm:text-base text-[#94A3B8] font-normal leading-relaxed max-w-3xl">
+          Cada viaje monitoreado genera millones de puntos de telemetría. En AI27 transformamos esos datos en visibilidad operacional en tiempo real, predicción algorítmica de riesgos y analítica estratégica para la toma de decisiones críticas en tu cadena de suministro.
+        </p>
+</div>
+<!-- ================= 2. LAYOUT PRINCIPAL DE DOS COLUMNAS ================= -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
+<!-- COLUMNA IZQUIERDA: 4 Capacidades Clave -->
+<div class="lg:col-span-5 flex flex-col gap-4">
+<!-- Card 1 -->
+<div class="group relative bg-[#1C222E] hover:bg-[#242B3A] border border-[#2D3748] hover:border-[#7C9DF0]/50 rounded-lg p-5 transition-all duration-200 shadow-sm">
+<div class="flex items-start gap-4">
+<div class="flex-shrink-0 w-10 h-10 rounded bg-[#161B24] border border-[#2D3748] flex items-center justify-center text-[#7C9DF0] group-hover:border-[#7C9DF0]/40 transition-colors">
+<span class="material-symbols-outlined text-[20px]">sensors</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1.5">
+<h3 class="font-headline text-base font-semibold text-[#E2E8F0] tracking-tight group-hover:text-[#7C9DF0] transition-colors">
+                    1. Visibilidad total del viaje
+                  </h3>
+<span class="font-mono text-[10px] uppercase tracking-wider text-[#94A3B8] bg-[#161B24] px-1.5 py-0.5 rounded border border-[#2D3748]">TELEMETRÍA</span>
+</div>
+<p class="text-[13px] text-[#94A3B8] leading-normal font-normal">
+                  Seguimiento granular y estado operativo de cada embarque en tiempo real, telemetría continua y trazabilidad de extremo a extremo.
+                </p>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative bg-[#1C222E] hover:bg-[#242B3A] border border-[#2D3748] hover:border-[#6EE7B7]/50 rounded-lg p-5 transition-all duration-200 shadow-sm">
+<div class="flex items-start gap-4">
+<div class="flex-shrink-0 w-10 h-10 rounded bg-[#161B24] border border-[#2D3748] flex items-center justify-center text-[#6EE7B7] group-hover:border-[#6EE7B7]/40 transition-colors">
+<span class="material-symbols-outlined text-[20px]">neurology</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1.5">
+<h3 class="font-headline text-base font-semibold text-[#E2E8F0] tracking-tight group-hover:text-[#6EE7B7] transition-colors">
+                    2. Predicción de riesgos
+                  </h3>
+<span class="font-mono text-[10px] uppercase tracking-wider text-[#6EE7B7] bg-[#161B24] px-1.5 py-0.5 rounded border border-[#6EE7B7]/30">RED NEURONAL</span>
+</div>
+<p class="text-[13px] text-[#94A3B8] leading-normal font-normal">
+                  Modelos de IA generativa y redes neuronales que anticipan tramos críticos, anomalías de velocidad y ventanas horarias de vulnerabilidad antes de que ocurra el incidente.
+                </p>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group relative bg-[#1C222E] hover:bg-[#242B3A] border border-[#2D3748] hover:border-[#7C9DF0]/50 rounded-lg p-5 transition-all duration-200 shadow-sm">
+<div class="flex items-start gap-4">
+<div class="flex-shrink-0 w-10 h-10 rounded bg-[#161B24] border border-[#2D3748] flex items-center justify-center text-[#7C9DF0] group-hover:border-[#7C9DF0]/40 transition-colors">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1.5">
+<h3 class="font-headline text-base font-semibold text-[#E2E8F0] tracking-tight group-hover:text-[#7C9DF0] transition-colors">
+                    3. Analítica e informes ejecutivos
+                  </h3>
+<span class="font-mono text-[10px] uppercase tracking-wider text-[#94A3B8] bg-[#161B24] px-1.5 py-0.5 rounded border border-[#2D3748]">BI AUDITABLE</span>
+</div>
+<p class="text-[13px] text-[#94A3B8] leading-normal font-normal">
+                  Tableros dinámicos de Business Intelligence y reportes auditables con KPIs de seguridad, SLA de transporte y desempeño logístico.
+                </p>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="group relative bg-[#1C222E] hover:bg-[#242B3A] border border-[#2D3748] hover:border-[#7C9DF0]/50 rounded-lg p-5 transition-all duration-200 shadow-sm">
+<div class="flex items-start gap-4">
+<div class="flex-shrink-0 w-10 h-10 rounded bg-[#161B24] border border-[#2D3748] flex items-center justify-center text-[#7C9DF0] group-hover:border-[#7C9DF0]/40 transition-colors">
+<span class="material-symbols-outlined text-[20px]">route</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1.5">
+<h3 class="font-headline text-base font-semibold text-[#E2E8F0] tracking-tight group-hover:text-[#7C9DF0] transition-colors">
+                    4. Inteligencia accionable
+                  </h3>
+<span class="font-mono text-[10px] uppercase tracking-wider text-[#94A3B8] bg-[#161B24] px-1.5 py-0.5 rounded border border-[#2D3748]">DECISION MOTOR</span>
+</div>
+<p class="text-[13px] text-[#94A3B8] leading-normal font-normal">
+                  Motor de alertas predictivas, cálculo dinámico de rutas seguras y recomendaciones automatizadas para directores de logística y seguridad patrimonial.
+                </p>
+</div>
+</div>
+</div>
+<!-- Micro badge de integración -->
+<div class="mt-1 flex items-center justify-between px-3 py-2 bg-[#161B24]/80 rounded border border-[#2D3748]/60 text-[11px] font-mono text-[#94A3B8]">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-[#6EE7B7]">verified_user</span>
+              API &amp; Webhook Ready (SAP / Oracle / TMS)
+            </span>
+<span class="text-[#7C9DF0]">REST / gRPC</span>
+</div>
+</div>
+<!-- COLUMNA DERECHA: Mockup UI Dashboard de Analítica -->
+<div class="lg:col-span-7">
+<div class="bg-[#1C222E] border border-[#2D3748] rounded-lg shadow-2xl overflow-hidden flex flex-col">
+<!-- Barra superior de Consola -->
+<div class="bg-[#161B24] border-b border-[#2D3748] px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+<div class="flex items-center gap-2.5">
+<div class="flex items-center gap-1">
+<div class="w-2.5 h-2.5 rounded-full bg-[#2D3748]"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-[#2D3748]"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-[#2D3748]"></div>
+</div>
+<div class="h-4 w-px bg-[#2D3748] mx-1"></div>
+<span class="font-mono text-xs font-semibold text-[#E2E8F0] tracking-wide flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-[#7C9DF0]">terminal</span>
+                  AI27 Client Intelligence Hub
+                </span>
+<span class="text-[10px] font-mono text-[#94A3B8] hidden sm:inline">v4.8.2-prod</span>
+</div>
+<div class="flex items-center gap-2.5">
+<!-- Selector de rango de fechas -->
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#1C222E] border border-[#2D3748] rounded text-xs text-[#E2E8F0] font-mono">
+<span class="material-symbols-outlined text-[13px] text-[#94A3B8]">calendar_today</span>
+<span>Últimos 30 días</span>
+<span class="material-symbols-outlined text-[12px] text-[#94A3B8]">arrow_drop_down</span>
+</div>
+<!-- Estado LEO-Sat -->
+<div class="inline-flex items-center gap-1.5 px-2 py-1 bg-[#161B24] border border-[#2D3748] rounded text-[11px] font-mono text-[#6EE7B7]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#6EE7B7] animate-ping"></span>
+<span class="hidden sm:inline">Sincronizado LEO-Sat</span>
+</div>
+<!-- Botón Exportar -->
+<button class="inline-flex items-center gap-1 px-2.5 py-1 bg-[#242B3A] hover:bg-[#2D3748] border border-[#374151] rounded text-xs font-medium text-[#E2E8F0] transition-colors" type="button">
+<span class="material-symbols-outlined text-[13px]">file_download</span>
+<span class="hidden sm:inline">CSV / PDF</span>
+</button>
+</div>
+</div>
+<!-- Contenido del Dashboard Mockup -->
+<div class="p-5 space-y-5">
+<!-- Fila de KPIs del cliente -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+<!-- KPI 1 -->
+<div class="bg-[#161B24] border border-[#2D3748] rounded p-3.5 flex flex-col justify-between">
+<div class="flex items-center justify-between text-xs text-[#94A3B8] font-mono uppercase tracking-wider mb-2">
+<span>Total Viajes</span>
+<span class="material-symbols-outlined text-[16px] text-[#7C9DF0]">local_shipping</span>
+</div>
+<div class="text-2xl font-bold font-headline text-[#E2E8F0] tabular-nums">
+                    14,820
+                  </div>
+<div class="mt-2 flex items-center text-[11px] text-[#6EE7B7] font-mono">
+<span class="material-symbols-outlined text-[13px] mr-0.5">trending_up</span>
+<span>+8.4% vs mes anterior</span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-[#161B24] border border-[#2D3748] rounded p-3.5 flex flex-col justify-between">
+<div class="flex items-center justify-between text-xs text-[#94A3B8] font-mono uppercase tracking-wider mb-2">
+<span>Incidentes Prevenidos</span>
+<span class="material-symbols-outlined text-[16px] text-[#6EE7B7]">shield</span>
+</div>
+<div class="text-2xl font-bold font-headline text-[#6EE7B7] tabular-nums">
+                    48
+                  </div>
+<div class="mt-2 flex items-center text-[11px] text-[#6EE7B7] font-mono">
+<span class="material-symbols-outlined text-[13px] mr-0.5">check_circle</span>
+<span>100% neutralizados con IA</span>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-[#161B24] border border-[#2D3748] rounded p-3.5 flex flex-col justify-between">
+<div class="flex items-center justify-between text-xs text-[#94A3B8] font-mono uppercase tracking-wider mb-2">
+<span>Índice de Riesgo</span>
+<span class="material-symbols-outlined text-[16px] text-[#7C9DF0]">speed</span>
+</div>
+<div class="text-2xl font-bold font-headline text-[#E2E8F0] tabular-nums">
+                    0.04% <span class="text-xs font-normal text-[#94A3B8] tracking-normal font-sans">Mínimo</span>
+</div>
+<div class="mt-2 flex items-center text-[11px] text-[#94A3B8] font-mono">
+<span class="text-[#7C9DF0] mr-1">Score:</span>
+<span class="text-[#E2E8F0] font-semibold tabular-nums">99.96 / 100</span>
+</div>
+</div>
+</div>
+<!-- Gráfico de Tendencia de Riesgo & Horas Críticas (SVG táctico) -->
+<div class="bg-[#161B24] border border-[#2D3748] rounded p-4">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="text-xs font-semibold font-headline text-[#E2E8F0] tracking-wide uppercase">
+                      Tendencia de Riesgo &amp; Horas Críticas
+                    </span>
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-[#7C9DF0]"></span>
+</div>
+<div class="flex items-center gap-4 text-[11px] font-mono text-[#94A3B8]">
+<span class="flex items-center gap-1.5">
+<span class="w-2.5 h-1 rounded bg-[#7C9DF0]"></span> Predicción IA
+                    </span>
+<span class="flex items-center gap-1.5">
+<span class="w-2.5 h-1 rounded bg-[#6EE7B7]"></span> Corredores Seguros
+                    </span>
+</div>
+</div>
+<!-- Visualización SVG de analítica de alta definición -->
+<div class="relative w-full h-44 bg-[#0E1117] rounded border border-[#2D3748]/70 p-2 overflow-hidden">
+<!-- Gridlines de fondo -->
+<div class="absolute inset-0 flex flex-col justify-between p-3 pointer-events-none opacity-20">
+<div class="border-b border-[#2D3748] w-full"></div>
+<div class="border-b border-[#2D3748] w-full"></div>
+<div class="border-b border-[#2D3748] w-full"></div>
+<div class="border-b border-[#2D3748] w-full"></div>
+</div>
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 540 140">
+<defs>
+<!-- Gradient para Área Predicción -->
+<lineargradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#7C9DF0" stop-opacity="0.32"></stop>
+<stop offset="90%" stop-color="#7C9DF0" stop-opacity="0.0"></stop>
+</lineargradient>
+<!-- Gradient para Curva -->
+<lineargradient id="lineGradient" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0%" stop-color="#7C9DF0"></stop>
+<stop offset="50%" stop-color="#6EE7B7"></stop>
+<stop offset="100%" stop-color="#7C9DF0"></stop>
+</lineargradient>
+</defs>
+<!-- Área rellena bajo la curva -->
+<path d="M 0,110 Q 70,120 135,70 T 270,85 T 405,30 T 540,65 L 540,140 L 0,140 Z" fill="url(#areaGradient)"></path>
+<!-- Curva Primaria (Telemetría de Riesgo) -->
+<path d="M 0,110 Q 70,120 135,70 T 270,85 T 405,30 T 540,65" fill="none" stroke="url(#lineGradient)" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Línea de Umbral Crítico Operacional -->
+<line stroke="#FCD34D" stroke-dasharray="4 4" stroke-opacity="0.5" stroke-width="1.2" x1="0" x2="540" y1="45" y2="45"></line>
+<!-- Puntos de Datos Críticos / Intervenciones IA -->
+<circle cx="135" cy="70" fill="#1C222E" r="3.5" stroke="#7C9DF0" stroke-width="2"></circle>
+<circle cx="270" cy="85" fill="#1C222E" r="3.5" stroke="#6EE7B7" stroke-width="2"></circle>
+<!-- Hotspot de intervención 03:00 am -->
+<g transform="translate(405, 30)">
+<circle class="animate-ping" cx="0" cy="0" fill="#6EE7B7" fill-opacity="0.4" r="5"></circle>
+<circle cx="0" cy="0" fill="#161B24" r="3.5" stroke="#6EE7B7" stroke-width="2"></circle>
+</g>
+<circle cx="540" cy="65" fill="#1C222E" r="3.5" stroke="#7C9DF0" stroke-width="2"></circle>
+</svg>
+<!-- Tooltip flotante táctico anclado en 03:00 hrs -->
+<div class="absolute top-3 left-[68%] -translate-x-1/2 bg-[#1C222E]/95 backdrop-blur-sm border border-[#6EE7B7]/40 rounded px-2.5 py-1.5 shadow-lg pointer-events-none">
+<div class="flex items-center gap-1.5 text-[10px] font-mono text-[#6EE7B7]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#6EE7B7]"></span>
+<span class="font-semibold">03:40 AM · ALERTA EVITADA</span>
+</div>
+<div class="text-[11px] text-[#E2E8F0] font-sans">Desvío dinámico 57D ejecutado</div>
+</div>
+<!-- Ejes Horarios -->
+<div class="absolute bottom-1 left-0 right-0 flex justify-between px-3 text-[10px] font-mono text-[#94A3B8]">
+<span>00:00</span>
+<span>04:00</span>
+<span>08:00</span>
+<span>12:00</span>
+<span>16:00</span>
+<span>20:00</span>
+<span>24:00</span>
+</div>
+</div>
+</div>
+<!-- Sub-panel de viajes activos en monitoreo -->
+<div class="space-y-2">
+<div class="flex items-center justify-between text-xs font-mono text-[#94A3B8] px-1">
+<span>UNIDADES EN TRÁNSITO BAJO VIGILANCIA IA (3 DE 1,420 ACTIVAS)</span>
+<span class="text-[#7C9DF0] cursor-pointer hover:underline">Ver todas</span>
+</div>
+<div class="space-y-1.5">
+<!-- Fila Viaje 1 -->
+<div class="bg-[#161B24] border border-[#2D3748] rounded px-3 py-2.5 flex flex-wrap items-center justify-between gap-2 hover:border-[#374151] transition-colors">
+<div class="flex items-center gap-3">
+<span class="font-mono text-xs font-bold text-[#E2E8F0] bg-[#1C222E] px-2 py-0.5 rounded border border-[#2D3748]">
+                        MTY-092
+                      </span>
+<span class="text-xs text-[#D1D5DB] font-medium">Corredor Bajío-Norte</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono bg-[#6EE7B7]/10 text-[#6EE7B7] border border-[#6EE7B7]/30">
+<span class="w-1.5 h-1.5 rounded-full bg-[#6EE7B7]"></span>
+                        En ruta segura
+                      </span>
+<span class="text-xs font-mono text-[#94A3B8]">ETA 14:30</span>
+</div>
+</div>
+<!-- Fila Viaje 2 -->
+<div class="bg-[#161B24] border border-[#2D3748] rounded px-3 py-2.5 flex flex-wrap items-center justify-between gap-2 hover:border-[#374151] transition-colors">
+<div class="flex items-center gap-3">
+<span class="font-mono text-xs font-bold text-[#E2E8F0] bg-[#1C222E] px-2 py-0.5 rounded border border-[#2D3748]">
+                        CDMX-418
+                      </span>
+<span class="text-xs text-[#D1D5DB] font-medium">Autopista 57D</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono bg-[#7C9DF0]/10 text-[#7C9DF0] border border-[#7C9DF0]/30">
+<span class="material-symbols-outlined text-[12px]">alt_route</span>
+                        Riesgo mitigado por desvío preventivo
+                      </span>
+</div>
+</div>
+<!-- Fila Viaje 3 -->
+<div class="bg-[#161B24] border border-[#2D3748] rounded px-3 py-2.5 flex flex-wrap items-center justify-between gap-2 hover:border-[#374151] transition-colors">
+<div class="flex items-center gap-3">
+<span class="font-mono text-xs font-bold text-[#E2E8F0] bg-[#1C222E] px-2 py-0.5 rounded border border-[#2D3748]">
+                        GDL-105
+                      </span>
+<span class="text-xs text-[#D1D5DB] font-medium">Corredor Occidente</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono bg-[#1C222E] text-[#6EE7B7] border border-[#2D3748]">
+<span class="material-symbols-outlined text-[12px]">check</span>
+                        Telemetría nominal 100%
+                      </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ================= 3. FILA INFERIOR DE MÉTRICAS DE VALOR DE DATOS ================= -->
+<div class="mb-10">
+<div class="text-[11px] font-mono uppercase tracking-widest text-[#94A3B8] mb-4 flex items-center gap-2">
+<span class="w-2 h-0.5 bg-[#7C9DF0]"></span>
+<span>IMPACTO OPERATIVO Y VOLUMEN DE PROCESAMIENTO</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Metrica 1 -->
+<div class="bg-[#1C222E] border border-[#2D3748] rounded p-5 hover:border-[#7C9DF0]/50 transition-colors duration-150 flex flex-col justify-between">
+<div>
+<div class="text-[11px] font-mono text-[#7C9DF0] uppercase tracking-wider mb-2">TELEMETRÍA ACUMULADA</div>
+<div class="text-3xl font-extrabold font-headline text-[#E2E8F0] tracking-tight tabular-nums mb-2">
+                1.2M+
+              </div>
+<div class="text-sm font-semibold text-[#E2E8F0] mb-1">
+                Viajes Analizados
+              </div>
+</div>
+<p class="text-xs text-[#94A3B8] leading-relaxed mt-2 border-t border-[#2D3748]/60 pt-3">
+              Millones de kilómetros de telemetría procesados para entrenar modelos predictivos con datos reales de carreteras.
+            </p>
+</div>
+<!-- Metrica 2 -->
+<div class="bg-[#1C222E] border border-[#2D3748] rounded p-5 hover:border-[#6EE7B7]/50 transition-colors duration-150 flex flex-col justify-between">
+<div>
+<div class="text-[11px] font-mono text-[#6EE7B7] uppercase tracking-wider mb-2">EFECTIVIDAD COMPROBADA</div>
+<div class="text-3xl font-extrabold font-headline text-[#6EE7B7] tracking-tight tabular-nums mb-2">
+                -92%
+              </div>
+<div class="text-sm font-semibold text-[#E2E8F0] mb-1">
+                Reducción de Riesgo
+              </div>
+</div>
+<p class="text-xs text-[#94A3B8] leading-relaxed mt-2 border-t border-[#2D3748]/60 pt-3">
+              Disminución demostrada en siniestros y desvíos no autorizados mediante alertas tempranas y acción anticipada.
+            </p>
+</div>
+<!-- Metrica 3 -->
+<div class="bg-[#1C222E] border border-[#2D3748] rounded p-5 hover:border-[#7C9DF0]/50 transition-colors duration-150 flex flex-col justify-between">
+<div>
+<div class="text-[11px] font-mono text-[#7C9DF0] uppercase tracking-wider mb-2">PROFUNDIDAD DE ANÁLISIS</div>
+<div class="text-3xl font-extrabold font-headline text-[#E2E8F0] tracking-tight tabular-nums mb-2">
+                150+
+              </div>
+<div class="text-sm font-semibold text-[#E2E8F0] mb-1">
+                Variables por Viaje
+              </div>
+</div>
+<p class="text-xs text-[#94A3B8] leading-relaxed mt-2 border-t border-[#2D3748]/60 pt-3">
+              Análisis de velocidad, paradas no programadas, clima, hábitos de manejo y datos de integración directa C4/C5.
+            </p>
+</div>
+<!-- Metrica 4 -->
+<div class="bg-[#1C222E] border border-[#2D3748] rounded p-5 hover:border-[#7C9DF0]/50 transition-colors duration-150 flex flex-col justify-between">
+<div>
+<div class="text-[11px] font-mono text-[#7C9DF0] uppercase tracking-wider mb-2">VELOCIDAD DE DISPERSIÓN</div>
+<div class="text-3xl font-extrabold font-headline text-[#E2E8F0] tracking-tight tabular-nums mb-2">
+                &lt; 2 seg
+              </div>
+<div class="text-sm font-semibold text-[#E2E8F0] mb-1">
+                Tiempo Real
+              </div>
+</div>
+<p class="text-xs text-[#94A3B8] leading-relaxed mt-2 border-t border-[#2D3748]/60 pt-3">
+              Latencia ultra baja de procesamiento de eventos y distribución de datos hacia tu ERP/TMS corporativo.
+            </p>
+</div>
+</div>
+</div>
+<!-- ================= PIE DE SECCIÓN TÁCTICO ================= -->
+<div class="pt-6 border-t border-[#2D3748] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] font-mono text-[#94A3B8]">
+<div class="flex items-center gap-2 tracking-wider">
+<span class="inline-block w-2 h-2 rounded-full bg-[#7C9DF0]/70"></span>
+<span>AI27 // CLIENT ANALYTICS &amp; PREDICTIVE AI ENGINE</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-[#E2E8F0] bg-[#161B24] px-2 py-0.5 rounded border border-[#2D3748]">ENCRIPTACIÓN AES-256</span>
+<span class="text-[#6EE7B7] flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">lock</span>
+            SOC2 TYPE II CERTIFIED
+          </span>
+</div>
+</div>
+</div>
+</section>
+</body></html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Centro de Monitoreo y Grupo de Reacción — AI27</title>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              canvas: "#0E1117",
+              surface: "#1C222E",
+              raised: "#242B3A",
+              recessed: "#161B24",
+              primary: "#7C9DF0",
+              border: "#2D3748",
+              strong: "#374151",
+              text: "#E2E8F0",
+              muted: "#94A3B8",
+              sub: "#D1D5DB",
+              success: "#6EE7B7",
+              warning: "#FCD34D",
+              danger: "#FCA5A5"
+            }
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          fontFamily: {
+            headline: ["Inter", "sans-serif"],
+            display: ["Inter", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            label: ["Inter", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Radar sweep animation */
+    @keyframes radar-sweep {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .radar-beam {
+      animation: radar-sweep 4s linear infinite;
+      transform-origin: center center;
+    }
+
+    /* Grid background */
+    .tactical-grid {
+      background-size: 38px 38px;
+      background-image: 
+        linear-gradient(to right, rgba(124, 157, 240, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(124, 157, 240, 0.035) 1px, transparent 1px);
+    }
+
+    /* Scanlines effect overlay */
+    .scanlines-overlay {
+      background: linear-gradient(
+        rgba(14, 17, 23, 0) 50%, 
+        rgba(10, 13, 18, 0.3) 50%
+      );
+      background-size: 100% 4px;
+    }
+  </style>
+</head>
+<body class="bg-[#0E1117] text-[#E2E8F0] font-body antialiased selection:bg-[#7C9DF0]/20 selection:text-[#7C9DF0]">
+<!-- SECCIÓN INTERIOR: CENTRO DE MONITOREO Y GRUPO DE REACCIÓN -->
+<section class="relative min-h-screen w-full bg-[#0E1117] tactical-grid py-16 md:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden border-y border-[#2D3748]/50">
+<!-- Atmospheric Radial Glows -->
+<div class="pointer-events-none absolute top-10 left-1/4 -translate-x-1/2 w-[650px] h-[450px] bg-[#7C9DF0]/[0.035] rounded-full blur-[140px]"></div>
+<div class="pointer-events-none absolute bottom-1/4 right-10 w-[550px] h-[550px] bg-[#6EE7B7]/[0.025] rounded-full blur-[160px]"></div>
+<div class="relative max-w-7xl mx-auto space-y-14">
+<!-- 1. ENCABEZADO DE SECCIÓN -->
+<div class="max-w-4xl space-y-4">
+<!-- Badge Operativo -->
+<div class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-[#161B24] border border-[#2D3748] text-[11px] font-mono tracking-wider uppercase text-[#7C9DF0]">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#6EE7B7] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-[#6EE7B7]"></span>
+</span>
+<span class="text-[#E2E8F0] font-semibold">Operación 24/7</span>
+<span class="text-[#374151]">//</span>
+<span class="tracking-widest">Cabina C4 &amp; Fuerza Operativa</span>
+</div>
+<!-- Titular Principal -->
+<h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-headline tracking-[-0.02em] leading-tight text-[#E2E8F0]">
+          Un centro de monitoreo y un <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#7C9DF0] via-[#9AB6F7] to-[#6EE7B7]">grupo de reacción propios</span>
+</h2>
+<!-- Párrafo de apoyo -->
+<p class="text-[#94A3B8] text-base sm:text-lg leading-relaxed max-w-3xl">
+          AI27 cuenta con un centro de monitoreo privado y un grupo de reacción propio que permiten una acción inmediata ante eventos inesperados, en estrecha coordinación con autoridades federales, estatales y municipales.
+        </p>
+</div>
+<!-- 2. LAYOUT PRINCIPAL (GRID 12 COLUMNAS) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- COLUMNA IZQUIERDA (7 COLS): CONSOLA DE COMANDO DEL CENTRO DE MONITOREO -->
+<div class="lg:col-span-7 space-y-4">
+<div class="relative bg-[#1C222E] border border-[#2D3748] rounded-lg shadow-xl shadow-[#000000]/40 overflow-hidden">
+<!-- Cabecera de Consola Técnica -->
+<div class="bg-[#161B24] border-b border-[#2D3748] px-4 py-3 flex flex-wrap items-center justify-between gap-3 font-mono text-[11px]">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#6EE7B7]/10 border border-[#6EE7B7]/30 text-[#6EE7B7]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#6EE7B7] animate-pulse"></span>
+<span class="font-semibold tracking-wider">SISTEMA ACTIVO</span>
+</div>
+<span class="text-[#374151]">|</span>
+<span class="text-[#94A3B8] flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-[#7C9DF0]">schedule</span>
+<span class="text-[#E2E8F0] tabular-nums font-medium" id="live-clock">03:42:19 CST</span>
+<span class="text-[#94A3B8]">// CABINA PRINCIPAL</span>
+</span>
+</div>
+<div class="flex items-center gap-4 text-[#94A3B8]">
+<div class="flex items-center gap-1">
+<span class="text-[10px] uppercase tracking-wider text-[#94A3B8]">Latencia:</span>
+<span class="text-[#6EE7B7] tabular-nums font-semibold">14ms</span>
+</div>
+<span class="text-[#374151]">|</span>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-[#7C9DF0]">satellite_alt</span>
+<span class="text-[#E2E8F0] tracking-tight">LEO-MESH 99.98%</span>
+</div>
+</div>
+</div>
+<!-- Panel Interior: Métricas de Telemetría -->
+<div class="p-5 space-y-5">
+<!-- Fila de Mini Tarjetas de Telemetría -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+<!-- KPI 1 -->
+<div class="bg-[#161B24] border border-[#2D3748] p-3 rounded-lg relative overflow-hidden group hover:border-[#374151] transition-colors">
+<div class="flex items-center justify-between text-[#94A3B8] text-[11px] font-mono uppercase tracking-wider mb-1">
+<span>Unidades Activas</span>
+<span class="material-symbols-outlined text-[15px] text-[#7C9DF0]">local_shipping</span>
+</div>
+<div class="text-xl font-bold font-headline text-[#E2E8F0] tabular-nums tracking-tight">
+                    4,892
+                  </div>
+<div class="flex items-center gap-1.5 mt-1 text-[11px] text-[#6EE7B7]">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-[#6EE7B7]"></span>
+<span>En ruta segura</span>
+</div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-[#161B24] border border-[#2D3748] p-3 rounded-lg relative overflow-hidden group hover:border-[#374151] transition-colors">
+<div class="flex items-center justify-between text-[#94A3B8] text-[11px] font-mono uppercase tracking-wider mb-1">
+<span>Alertas Gestionadas</span>
+<span class="material-symbols-outlined text-[15px] text-[#FCD34D]">flip_camera_ios</span>
+</div>
+<div class="text-xl font-bold font-headline text-[#E2E8F0] tabular-nums tracking-tight">
+                    0 <span class="text-xs font-normal text-[#94A3B8]">críticas</span>
+</div>
+<div class="flex items-center gap-1.5 mt-1 text-[11px] text-[#FCD34D]">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-[#FCD34D]"></span>
+<span>14 preventivas activas</span>
+</div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-[#161B24] border border-[#2D3748] p-3 rounded-lg relative overflow-hidden group hover:border-[#374151] transition-colors">
+<div class="flex items-center justify-between text-[#94A3B8] text-[11px] font-mono uppercase tracking-wider mb-1">
+<span>Viajes Monitoreados</span>
+<span class="material-symbols-outlined text-[15px] text-[#7C9DF0]">hub</span>
+</div>
+<div class="text-xl font-bold font-headline text-[#E2E8F0] tabular-nums tracking-tight">
+                    1,280+
+                  </div>
+<div class="flex items-center gap-1.5 mt-1 text-[11px] text-[#94A3B8]">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-[#7C9DF0]"></span>
+<span>Turno en curso</span>
+</div>
+</div>
+</div>
+<!-- Simulación de Módulo Dual: Log de Eventos + Mini Escáner de Radar -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+<!-- Feed en Vivo de Seguridad (7 cols) -->
+<div class="md:col-span-7 bg-[#161B24] border border-[#2D3748] rounded-lg p-3.5 space-y-2.5">
+<div class="flex items-center justify-between border-b border-[#2D3748]/60 pb-2">
+<span class="text-[11px] font-mono uppercase tracking-wider text-[#94A3B8] flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[13px] text-[#7C9DF0]">receipt_long</span>
+                      Log de Eventos en Tiempo Real
+                    </span>
+<span class="text-[10px] font-mono text-[#6EE7B7] bg-[#6EE7B7]/10 px-1.5 py-0.5 rounded border border-[#6EE7B7]/20">SYNC</span>
+</div>
+<div class="space-y-2 text-[12px] font-mono">
+<div class="p-2 rounded bg-[#1C222E]/80 border-l-2 border-[#6EE7B7] hover:bg-[#242B3A] transition-colors">
+<div class="flex justify-between items-center text-[10px] text-[#94A3B8] mb-0.5">
+<span class="text-[#6EE7B7] font-semibold">03:41:02 CST</span>
+<span class="text-[#7C9DF0]">TR-8821</span>
+</div>
+<p class="text-[#E2E8F0] font-medium leading-snug">Autopista 57D Km 162 — Check-in biométrico confirmado.</p>
+<span class="text-[10px] text-[#94A3B8]">Operador verificado sin anomalías</span>
+</div>
+<div class="p-2 rounded bg-[#1C222E]/80 border-l-2 border-[#FCD34D] hover:bg-[#242B3A] transition-colors">
+<div class="flex justify-between items-center text-[10px] text-[#94A3B8] mb-0.5">
+<span class="text-[#FCD34D] font-semibold">03:38:45 CST</span>
+<span class="text-[#7C9DF0]">CV-1049</span>
+</div>
+<p class="text-[#E2E8F0] font-medium leading-snug">Corredor Bajío — Desvío predictivo preventivo ejecutado.</p>
+<span class="text-[10px] text-[#94A3B8]">Ruta recalculada por congestión crítica</span>
+</div>
+<div class="p-2 rounded bg-[#1C222E]/80 border-l-2 border-[#7C9DF0] hover:bg-[#242B3A] transition-colors">
+<div class="flex justify-between items-center text-[10px] text-[#94A3B8] mb-0.5">
+<span class="text-[#7C9DF0] font-semibold">03:32:10 CST</span>
+<span class="text-[#7C9DF0]">TF-4402</span>
+</div>
+<p class="text-[#E2E8F0] font-medium leading-snug">Macro-libramiento GDL — Escolta táctica enlazada.</p>
+<span class="text-[10px] text-[#94A3B8]">Custodia visual activa en cuadrante 4</span>
+</div>
+</div>
+</div>
+<!-- Mini Radar / Cobertura Satelital (5 cols) -->
+<div class="md:col-span-5 bg-[#161B24] border border-[#2D3748] rounded-lg p-3.5 flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between z-10">
+<span class="text-[11px] font-mono uppercase tracking-wider text-[#94A3B8] flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-[#7C9DF0]">radar</span>
+                      Escáner C4
+                    </span>
+<span class="text-[10px] font-mono text-[#7C9DF0]">GEO-COV 360°</span>
+</div>
+<!-- Radar Sweep Canvas Visual -->
+<div class="relative w-36 h-36 mx-auto my-3 flex items-center justify-center">
+<!-- Concentric circles -->
+<div class="absolute inset-0 rounded-full border border-[#2D3748]"></div>
+<div class="absolute inset-4 rounded-full border border-[#2D3748]/70"></div>
+<div class="absolute inset-9 rounded-full border border-[#2D3748]/40"></div>
+<!-- Axis lines -->
+<div class="absolute inset-x-0 top-1/2 h-[1px] bg-[#2D3748]/60"></div>
+<div class="absolute inset-y-0 left-1/2 w-[1px] bg-[#2D3748]/60"></div>
+<!-- Rotating sweep -->
+<div class="absolute inset-0 rounded-full overflow-hidden pointer-events-none radar-beam">
+<div class="w-1/2 h-1/2 origin-bottom-right bg-gradient-to-br from-[#7C9DF0]/30 to-transparent"></div>
+</div>
+<!-- Target Blips -->
+<div class="absolute top-7 right-8 w-2 h-2 rounded-full bg-[#6EE7B7] shadow-sm shadow-[#6EE7B7] animate-pulse"></div>
+<div class="absolute bottom-9 left-7 w-2 h-2 rounded-full bg-[#7C9DF0] shadow-sm shadow-[#7C9DF0]"></div>
+<div class="absolute top-12 left-10 w-1.5 h-1.5 rounded-full bg-[#6EE7B7]/80"></div>
+<div class="absolute bottom-6 right-10 w-1.5 h-1.5 rounded-full bg-[#FCD34D]"></div>
+<!-- Center point -->
+<div class="w-2 h-2 rounded-full bg-[#E2E8F0] z-10 shadow-sm shadow-white"></div>
+</div>
+<!-- Coordinates telemetry bar -->
+<div class="z-10 pt-2 border-t border-[#2D3748]/60 font-mono text-[10px] text-[#94A3B8] flex justify-between">
+<span>LAT 20°34'N // LON 100°23'W</span>
+<span class="text-[#6EE7B7]">ENLACE OK</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Barra de Estado Inferior de la Consola -->
+<div class="bg-[#161B24] border-t border-[#2D3748] px-4 py-2 flex flex-wrap items-center justify-between text-[11px] font-mono text-[#94A3B8]">
+<div class="flex items-center gap-2">
+<span class="text-[#374151]">»</span>
+<span>DESPACHO C4: <strong class="text-[#E2E8F0]">CABINA MATRIZ QUERÉTARO</strong></span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#6EE7B7]"></span>
+<span class="text-[#6EE7B7]">REACCIÓN INMEDIATA EN ESPERA ACTIVA</span>
+</div>
+</div>
+</div>
+</div>
+<!-- COLUMNA DERECHA (5 COLS): PROTOCOLO DE GRUPO DE REACCIÓN (STEPPER / TIMELINE) -->
+<div class="lg:col-span-5 space-y-4">
+<div class="bg-[#1C222E] border border-[#2D3748] rounded-lg p-6 relative overflow-hidden shadow-xl shadow-[#000000]/40">
+<div class="flex items-center justify-between pb-5 border-b border-[#2D3748]">
+<div>
+<span class="text-[11px] font-mono uppercase tracking-wider text-[#7C9DF0] block">Protocolo Operativo</span>
+<h3 class="text-xl font-bold font-headline text-[#E2E8F0]">Secuencia del Grupo de Reacción</h3>
+</div>
+<div class="w-9 h-9 rounded bg-[#161B24] border border-[#2D3748] flex items-center justify-center text-[#7C9DF0]">
+<span class="material-symbols-outlined text-[20px]">security</span>
+</div>
+</div>
+<!-- Timeline Stepper 4 Pasos -->
+<div class="relative mt-6 space-y-8">
+<!-- Línea vertical conectora -->
+<div class="absolute left-4 top-4 bottom-4 w-px bg-gradient-to-b from-[#7C9DF0] via-[#2D3748] to-[#6EE7B7]"></div>
+<!-- Paso 01 -->
+<div class="relative flex items-start gap-4 group">
+<div class="relative z-10 flex-shrink-0 w-8 h-8 rounded bg-[#161B24] border border-[#7C9DF0] flex items-center justify-center text-[#7C9DF0] font-mono text-xs font-bold shadow-md shadow-[#7C9DF0]/10 group-hover:scale-105 transition-transform">
+                  01
+                </div>
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<h4 class="text-sm font-semibold font-headline text-[#E2E8F0]">Detección de evento</h4>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#7C9DF0]/10 text-[#7C9DF0] border border-[#7C9DF0]/20">&lt; 15 seg</span>
+</div>
+<p class="text-xs text-[#94A3B8] leading-relaxed">
+                    Detección inmediata en cabina C4 mediante algoritmos predictivos y sensores de telemetría a bordo con confirmación satelital.
+                  </p>
+</div>
+</div>
+<!-- Paso 02 -->
+<div class="relative flex items-start gap-4 group">
+<div class="relative z-10 flex-shrink-0 w-8 h-8 rounded bg-[#161B24] border border-[#2D3748] group-hover:border-[#7C9DF0] flex items-center justify-center text-[#E2E8F0] font-mono text-xs font-bold transition-colors">
+                  02
+                </div>
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<h4 class="text-sm font-semibold font-headline text-[#E2E8F0]">Alerta y evaluación táctica</h4>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#161B24] text-[#94A3B8] border border-[#2D3748]">Análisis C4</span>
+</div>
+<p class="text-xs text-[#94A3B8] leading-relaxed">
+                    Calificación del nivel de riesgo en segundos por analistas especializados y verificación de integridad de cabina mediante protocolo seguro.
+                  </p>
+</div>
+</div>
+<!-- Paso 03 -->
+<div class="relative flex items-start gap-4 group">
+<div class="relative z-10 flex-shrink-0 w-8 h-8 rounded bg-[#161B24] border border-[#FCD34D]/60 flex items-center justify-center text-[#FCD34D] font-mono text-xs font-bold shadow-md shadow-[#FCD34D]/10">
+                  03
+                </div>
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<h4 class="text-sm font-semibold font-headline text-[#E2E8F0]">Despacho de reacción en campo</h4>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#FCD34D]/10 text-[#FCD34D] border border-[#FCD34D]/20">Despliegue</span>
+</div>
+<p class="text-xs text-[#94A3B8] leading-relaxed">
+                    Activación y despliegue inmediato de unidades de escolta y patrullas de custodia táctica más cercanas al punto de incidencia.
+                  </p>
+</div>
+</div>
+<!-- Paso 04 -->
+<div class="relative flex items-start gap-4 group">
+<div class="relative z-10 flex-shrink-0 w-8 h-8 rounded bg-[#161B24] border border-[#6EE7B7] flex items-center justify-center text-[#6EE7B7] font-mono text-xs font-bold shadow-md shadow-[#6EE7B7]/10">
+                  04
+                </div>
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<h4 class="text-sm font-semibold font-headline text-[#E2E8F0]">Coordinación y neutralización</h4>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#6EE7B7]/10 text-[#6EE7B7] border border-[#6EE7B7]/20">Cierre</span>
+</div>
+<p class="text-xs text-[#94A3B8] leading-relaxed">
+                    Enlace directo con Guardia Nacional, corporaciones estatales y resolución del evento con aseguramiento completo de la carga y el conductor.
+                  </p>
+</div>
+</div>
+</div>
+<!-- Mini Banner de Cobertura en Carretera -->
+<div class="mt-8 p-3.5 bg-[#161B24] border border-[#2D3748] rounded flex items-center justify-between text-xs">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[#7C9DF0] text-[18px]">verified_user</span>
+<span class="text-[#E2E8F0] font-medium">Ejes Carreteros Blindados</span>
+</div>
+<span class="font-mono text-[11px] text-[#6EE7B7] bg-[#6EE7B7]/10 px-2 py-0.5 rounded border border-[#6EE7B7]/20">99.2% EFECTIVIDAD</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 3. FILA INFERIOR: 3 TARJETAS DE CAPACIDADES INSTITUCIONALES -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+<!-- Tarjeta 1: Monitoreo privado 24/7 -->
+<div class="bg-[#1C222E] border border-[#2D3748] rounded-lg p-6 space-y-4 hover:border-[#374151] hover:bg-[#242B3A]/80 transition-all duration-200 group">
+<div class="w-12 h-12 rounded bg-[#161B24] border border-[#2D3748] flex items-center justify-center text-[#7C9DF0] group-hover:border-[#7C9DF0] transition-colors">
+<span class="material-symbols-outlined text-[24px]">desktop_windows</span>
+</div>
+<div class="space-y-2">
+<h3 class="text-lg font-bold font-headline text-[#E2E8F0] tracking-tight group-hover:text-[#7C9DF0] transition-colors">
+              Monitoreo privado 24/7
+            </h3>
+<p class="text-sm text-[#94A3B8] leading-relaxed">
+              Instalaciones blindadas de comando C4 con operadores certificados en turnos continuos, monitoreo biométrico y redundancia satelital total sin interrupciones.
+            </p>
+</div>
+<div class="pt-2 flex items-center gap-2 text-[11px] font-mono text-[#7C9DF0]">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>Certificación de analistas C4</span>
+</div>
+</div>
+<!-- Tarjeta 2: Grupo de reacción propio -->
+<div class="bg-[#1C222E] border border-[#2D3748] rounded-lg p-6 space-y-4 hover:border-[#374151] hover:bg-[#242B3A]/80 transition-all duration-200 group">
+<div class="w-12 h-12 rounded bg-[#161B24] border border-[#2D3748] flex items-center justify-center text-[#7C9DF0] group-hover:border-[#7C9DF0] transition-colors">
+<span class="material-symbols-outlined text-[24px]">local_police</span>
+</div>
+<div class="space-y-2">
+<h3 class="text-lg font-bold font-headline text-[#E2E8F0] tracking-tight group-hover:text-[#7C9DF0] transition-colors">
+              Grupo de reacción propio
+            </h3>
+<p class="text-sm text-[#94A3B8] leading-relaxed">
+              Personal táctico de seguridad entrenado en disuasión y respuesta inmediata, distribuido estratégicamente en los principales ejes carreteros y zonas de alto flujo comercial.
+            </p>
+</div>
+<div class="pt-2 flex items-center gap-2 text-[11px] font-mono text-[#6EE7B7]">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>Custodias y patrullas con enlace satelital</span>
+</div>
+</div>
+<!-- Tarjeta 3: Coordinación con autoridades -->
+<div class="bg-[#1C222E] border border-[#2D3748] rounded-lg p-6 space-y-4 hover:border-[#374151] hover:bg-[#242B3A]/80 transition-all duration-200 group">
+<div class="w-12 h-12 rounded bg-[#161B24] border border-[#2D3748] flex items-center justify-center text-[#7C9DF0] group-hover:border-[#7C9DF0] transition-colors">
+<span class="material-symbols-outlined text-[24px]">corporate_fare</span>
+</div>
+<div class="space-y-2">
+<h3 class="text-lg font-bold font-headline text-[#E2E8F0] tracking-tight group-hover:text-[#7C9DF0] transition-colors">
+              Coordinación con autoridades
+            </h3>
+<p class="text-sm text-[#94A3B8] leading-relaxed">
+              Protocolos formales y canales de comunicación directa y encriptada con mandos de la Guardia Nacional, corporaciones estatales y fiscalías para intervención expedita.
+            </p>
+</div>
+<div class="pt-2 flex items-center gap-2 text-[11px] font-mono text-[#7C9DF0]">
+<span class="material-symbols-outlined text-[14px]">sync_alt</span>
+<span>Convenios federados de auxilio en ruta</span>
+</div>
+</div>
+</div>
+<!-- 4. MICRO-FOOTER / METADATA BAR TÁCTICA -->
+<div class="border-t border-[#2D3748] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-[#94A3B8]">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded bg-[#7C9DF0]"></span>
+<span class="tracking-wide">AI27 // PROTOCOLO DE DESPLIEGUE OPERATIVO Y SEGURIDAD PATRIMONIAL</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 rounded bg-[#161B24] border border-[#2D3748] text-[#E2E8F0]">
+<span class="text-[#94A3B8]">TIEMPO DE RESPUESTA PROMEDIO:</span>
+<span class="text-[#6EE7B7] font-bold">&lt; 4 MIN</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Live Clock Script for micro-interaction -->
+<script>
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const clockElement = document.getElementById('live-clock');
+      if (clockElement) {
+        clockElement.textContent = `${hours}:${minutes}:${seconds} CST`;
+      }
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body></html>

@@ -1,0 +1,13 @@
+dist
+coverage
+node_modules
+pnpm-lock.yaml
+
+# Los mocks son artefactos de diseno: se reimportan de la herramienta que los
+# genero y reformatearlos solo genera ruido en cada reimport.
+docs/mock
+
+# Espejo de @ai27-tech/ui. Si Prettier lo reformatea, el `diff` contra el origen
+# deja de mostrar solo las diferencias intencionales y este archivo pierde su
+# unica propiedad util: saber que cambio de verdad diverge.
+src/styles/tokens.css

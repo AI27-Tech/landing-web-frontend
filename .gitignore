@@ -1,0 +1,13 @@
+node_modules
+dist
+coverage
+.DS_Store
+
+# Artefactos de tooling
+.vite
+*.tsbuildinfo
+
+# Entorno: .env.example SI se versiona; los valores reales no.
+.env
+.env.local
+.env.*.local
