@@ -4,6 +4,21 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:10:01 09:00
+
+**Resumen:** Se integró Google Analytics 4 en la landing mediante el snippet oficial `gtag.js`, inyectado en el `<head>` de `index.html`.
+
+**Decisión de enfoque:** la landing es un sitio estático, de una sola ruta y agnóstico a la plataforma —no declara `firebase` como dependencia y no habla con ningún backend de AI27—. Por eso la medición entra con el snippet web de GA4 (`googletagmanager.com/gtag/js`), no con `firebase/analytics`: no agrega dependencias ni ata el sitio público al SDK de la plataforma. Al ser una sola página con anclas, el propio `gtag` registra el `page_view` inicial; no hay navegación SPA que instrumentar.
+
+**ID de medición:** se dejó puesto el de la propiedad GA4 del proyecto `ai27-landing-page`, `G-XDG9H9EC2H`. No es un secreto (identifica la propiedad de destino, no autoriza nada, y viaja en el HTML que descarga cualquier visitante), así que va directo en `index.html`, sin variable de entorno.
+
+**Verificación:** `pnpm build` pasa; el `index.html` resultante incluye el snippet. `pnpm typecheck` y `pnpm lint` no se ven afectados (el cambio es HTML, no TS).
+
+**Archivos modificados:**
+
+- `index.html`
+- `CHANGELOG.md`
+
 ## 2026:10:01 00:30
 
 **Resumen:** Se quitó el parpadeo que quedaba en las tarjetas verticales (las de capacidades apiladas). Misma raíz que el arreglo anterior —conflicto sobre `transform` con Motion— pero por otra vía: `transition-all`.

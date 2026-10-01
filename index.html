@@ -35,6 +35,30 @@
     <!-- TODO: definir og:image / twitter:image con el recorte real de la marca. -->
 
     <meta name="twitter:card" content="summary_large_image" />
+
+    <!--
+      Google Analytics 4 (gtag.js). La landing es un sitio estático de una sola
+      ruta y agnóstico a la plataforma: no usa el SDK de Firebase, así que la
+      medición entra con el snippet oficial de GA4, no con firebase/analytics.
+      En un sitio de una sola página el propio gtag ya registra el page_view
+      inicial; no hay navegación SPA que instrumentar.
+
+      El ID de medición G-XDG9H9EC2H identifica la propiedad GA4 del proyecto
+      ai27-landing-page. No es un secreto: solo indica a dónde enviar los datos
+      y viaja en el HTML que descarga cualquier visitante; no autoriza nada.
+    -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-XDG9H9EC2H"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-XDG9H9EC2H');
+    </script>
   </head>
   <body>
     <div id="root"></div>
