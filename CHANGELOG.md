@@ -4,6 +4,38 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:10:01 12:30
+
+**Resumen:** Se agregó soporte de despliegue automático para la rama `lan-wf-q` hacia su sitio dedicado en Firebase Hosting. El workflow ahora detecta la rama y despliega al sitio correspondiente (producción o QA).
+
+**Cambios:**
+
+- `.github/workflows/deploy-firebase.yml`:
+  - Se agregó `lan-wf-q` al trigger `on.push.branches`.
+  - El grupo de `concurrency` ahora es dinámico (`${{ github.ref }}`) para evitar solapamientos por rama independiente.
+  - Se añadió un step "Determinar configuración de despliegue" que mapea:
+    - `lan-wf-m` → sitio `ai27-landing-page`, descripción "Producción"
+    - `lan-wf-q` → sitio `ai27-landing-page-qa`, descripción "QA"
+  - El step de despliegue ahora usa el parámetro `target` dinámico y muestra en el nombre qué entorno se está desplegando.
+
+- `README.md`:
+  - Se actualizó la tabla de ramas para incluir el destino de despliegue automático.
+  - Se agregó la sección "Despliegue automático" bajo "Ramas" con los detalles del flujo.
+  - Se renombró "Verificación" a "Verificación local y CI" para aclarar qué verificaciones corren en cada contexto.
+
+**Requisitos:** El secreto de repositorio `FIREBASE_SERVICE_ACCOUNT` debe existir y contener el JSON de la cuenta de servicio de Firebase. Si ya se utilizaba para `lan-wf-m`, no es necesario agregarlo de nuevo.
+
+**Flujo de despliegue:**
+- Cada push a `lan-wf-m` o `lan-wf-q` dispara el workflow.
+- Se ejecutan verificaciones (typecheck, lint, build); si todas pasan, se despliega.
+- Si alguna falla, no hay despliegue y el developer debe arreglar la rama y hacer push de nuevo.
+
+**Archivos modificados:**
+
+- `.github/workflows/deploy-firebase.yml`
+- `README.md`
+- `CHANGELOG.md`
+
 ## 2026:10:01 12:00
 
 **Resumen:** Se puso la landing en modo "En construcción": la página ahora muestra únicamente una pantalla a toda la ventana, sin header, footer ni ninguna de las secciones del mock.
