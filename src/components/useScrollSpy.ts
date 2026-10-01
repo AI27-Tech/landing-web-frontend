@@ -11,6 +11,10 @@ import { useEffect, useState } from 'react';
  * seccion activa, de modo que el resaltado cambia cuando el titulo de la
  * siguiente seccion cruza el tercio superior de la pantalla.
  *
+ * Devuelve null cuando ninguna seccion es visible (ej: estás en el Hero o
+ * antes de la primera seccion), para que no quede un enlace resaltado cuando
+ * no corresponda.
+ *
  * No es una animacion: no lo cubre la guarda de reduced-motion. Es navegacion.
  */
 export function useScrollSpy(ids: readonly string[]): string | null {
@@ -40,9 +44,9 @@ export function useScrollSpy(ids: readonly string[]): string | null {
           }
         }
         const primera = ids.find((id) => visibles.has(id));
-        if (primera) {
-          setActivo(primera);
-        }
+        // Si no hay ninguna seccion visible, devuelve null
+        // Esto ocurre cuando estás en el Hero o antes de la primera seccion
+        setActivo(primera ?? null);
       },
       { rootMargin: '-64px 0px -55% 0px', threshold: 0 },
     );

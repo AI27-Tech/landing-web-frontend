@@ -4,6 +4,181 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:10:01 15:25
+
+**Resumen:** Se corrigió el scroll-spy para que no deje ningún enlace resaltado cuando estés en el Hero o antes de la primera sección.
+
+**Problema:** El enlace "Nosotros" (que apunta a la sección Trayectoria) permanecía resaltado incluso cuando estabas en el Hero, porque el scroll-spy devolvía `null` pero la barra de navegación no lo reflejaba correctamente.
+
+**Fix:**
+
+En `useScrollSpy.ts`, cambio la lógica para que devuelva **explícitamente `null`** cuando ninguna sección sea visible:
+
+```typescript
+// Antes:
+const primera = ids.find((id) => visibles.has(id));
+if (primera) {
+  setActivo(primera);
+}
+
+// Después:
+const primera = ids.find((id) => visibles.has(id));
+setActivo(primera ?? null);  // Devuelve null si no hay sección visible
+```
+
+**Resultado:**
+- En el Hero: ningún enlace resaltado ✓
+- Al bajar a Trayectoria: "Nosotros" se ilumina ✓
+- Al cambiar de sección: el resaltado se actualiza correctamente ✓
+- En móvil (menú hamburguesa) y desktop: ambos funcionan igual ✓
+
+**Archivos modificados:**
+
+- `src/components/useScrollSpy.ts`
+- `CHANGELOG.md`
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan sin errores.
+
+## 2026:10:01 15:20
+
+**Resumen:** Se corrigió la animación de cierre del menú hamburguesa. Antes desaparecía abruptamente; ahora se cierra suavemente con `AnimatePresence`.
+
+**Fix:**
+
+- **Problema:** El componente se desmontaba inmediatamente al cambiar el estado `abierto`, sin esperar a que la animación de `exit` terminara.
+- **Solución:** Se agregó `AnimatePresence` de `motion/react` alrededor del panel y los items del menú. Esto permite que Motion espere a que terminen las animaciones de salida antes de desmontar.
+- **Resultado:** 
+  - Apertura: panel desliza hacia abajo, items entran con cascada ✓
+  - Cierre: panel desliza hacia arriba, items salen con cascada, todo desaparece suavemente ✓
+
+**Técnica:**
+
+```tsx
+<AnimatePresence>
+  {abierto && (
+    <motion.div
+      exit={{ opacity: 0, y: -10 }}
+      // ...
+    >
+      {/* Items también tienen exit */}
+    </motion.div>
+  )}
+</AnimatePresence>
+```
+
+**Archivos modificados:**
+
+- `src/components/MobileNav.tsx` (agregado `AnimatePresence`, agregados `exit` a items)
+- `CHANGELOG.md`
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan sin errores.
+
+## 2026:10:01 15:15
+
+**Resumen:** Se agregaron animaciones suaves a la apertura del menú hamburguesa en móvil usando `motion/react`. El menú ahora tiene transiciones elegantes que respetan `prefers-reduced-motion`.
+
+**Animaciones agregadas:**
+
+1. **Ícono del botón hamburguesa:**
+   - Rota 90° al abrir/cerrar (transición de 200ms)
+   - El ícono cambia de ≡ (Menu) a ✕ (X) con animación de rotación
+
+2. **Panel del menú:**
+   - Entra deslizándose hacia abajo desde arriba con fade-in
+   - Sale desapareciendo hacia arriba
+   - Transición suave de 200ms
+
+3. **Items del menú (enlaces):**
+   - Se escalonan con entrada desde la izquierda (slide-in)
+   - Cada item se anima con un delay de 50ms, creando un efecto de cascada
+   - Transición suave de 200ms por item
+
+4. **Respeto a `prefers-reduced-motion`:**
+   - Si el usuario tiene activada la opción de menos movimiento, todas las animaciones se desactivan
+   - El menú sigue funcionando, solo sin transiciones
+   - Implementado con `useReducedMotion()` de `motion/react`
+
+**Técnicas usadas:**
+
+- `motion.button` — animación del botón hamburguesa
+- `motion.div` — animación del panel desplegable
+- `motion.a` — animación escalonada de items con `delay`
+- `useReducedMotion()` — respeto a preferencias de accesibilidad
+
+**Archivos modificados:**
+
+- `src/components/MobileNav.tsx`
+- `CHANGELOG.md`
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan sin errores.
+
+## 2026:10:01 15:00
+
+**Resumen:** Se mejoró significativamente la responsividad de la barra de navegación. En móvil, ahora muestra logo + badge + menú hamburguesa. En desktop, muestra navegación completa + botón de acción.
+
+**Cambios:**
+
+1. **Nuevo componente `MobileNav`:** Menú desplegable para móvil
+   - Ícono hamburguesa (≡) a la derecha en pantallas < 768px
+   - Panel desplegable con navegación al hacer click
+   - Se cierra automáticamente al navegar o hacer scroll
+   - Indicador visual del enlace activo en el menú
+
+2. **Badge del header simplificado**
+   - **Antes:** "+25 años de liderazgo" (texto largo, ocupa espacio en móvil)
+   - **Después:** "+25Y" (texto corto, compacto)
+   - Se muestra en todos los breakpoints
+
+3. **SiteHeader mejorado:**
+   - **Móvil (< 768px):** Logo + badge | Hamburguesa
+   - **Desktop (≥ 768px):** Logo + badge | Navegación completa | Botón "Cotizar servicio"
+   - Botón "Cotizar" ahora solo visible en desktop (oculto en móvil, ganancia de espacio)
+   - Gap entre logo y badge ajustado para móvil (`gap-2 sm:gap-3`)
+
+4. **Responsive breakpoint:**
+   - Menú hamburguesa: `flex md:hidden` (visible en móvil, oculto en tablet+)
+   - Navegación desktop: `hidden md:flex` (oculta en móvil, visible en tablet+)
+   - CTA "Cotizar": `hidden md:inline-flex` (oculto en móvil, visible en tablet+)
+
+**Archivos modificados:**
+
+- `src/components/SiteHeader.tsx`
+- `src/components/MobileNav.tsx` (nuevo)
+- `CHANGELOG.md`
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan sin errores.
+
+## 2026:10:01 14:30
+
+**Resumen:** Se corrigieron tres brechas críticas de responsividad que dejaban ciertos breakpoints sin cobertura y hacían que la página se comportara mal en tablets de 768-1023px.
+
+**Problemas resueltos:**
+
+1. **Hero — Métricas de 3 columnas sin breakpoint responsive**
+   - **Antes:** `grid grid-cols-3` (siempre 3 columnas) → se apretaban en móvil (iPhone SE 375px)
+   - **Después:** `grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3` → 1 col móvil, 2 tablet pequeño, 3 tablet+ 
+   - **Archivo:** `src/features/hero/HeroPitch.tsx`
+
+2. **Infraestructura — Ausencia de breakpoint `md:` en grid principal**
+   - **Antes:** `grid grid-cols-1 ... lg:grid-cols-12` (salta de móvil a 1024px sin cobertura tablet)
+   - **Después:** `grid grid-cols-1 md:grid-cols-2 md:gap-8 lg:grid-cols-12 lg:gap-8` → layout de 2 cols en tablet
+   - **Archivos:** `src/features/infraestructura/Infraestructura.tsx`, `src/features/infraestructura/CapabilityCards.tsx`
+
+3. **Datos — Padding vertical sin escala en desktop**
+   - **Antes:** `py-16` (fijo en todos los breakpoints)
+   - **Después:** `py-16 lg:py-24` → consistente con otras secciones
+   - **Archivo:** `src/features/datos/Datos.tsx`
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan sin errores.
+
+**Archivos modificados:**
+
+- `src/features/hero/HeroPitch.tsx`
+- `src/features/infraestructura/Infraestructura.tsx`
+- `src/features/infraestructura/CapabilityCards.tsx`
+- `src/features/datos/Datos.tsx`
+- `CHANGELOG.md`
+
 ## 2026:10:01 12:30
 
 **Resumen:** Se agregó soporte de despliegue automático para la rama `lan-wf-q` hacia su sitio dedicado en Firebase Hosting. El workflow ahora detecta la rama y despliega al sitio correspondiente (producción o QA).
@@ -445,3 +620,65 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 - `src/styles/globals.css`
 - `.kiro/steering/naming-conventions.md`
 - `.github/pull_request_template.md`
+## 2026:10:01 15:45
+
+**Resumen:** Se auditoró y corrigió sistemáticamente el diseño responsivo en todos los breakpoints (375px a 1920px). Se eliminaron espacios fijos, se añadieron escalas de texto adaptativas, y se previno el solapamiento y hacinamiento de elementos en móvil.
+
+**Problema:** En vistas móviles y tablets, varios elementos se apilaban, el texto se aplastaba o se desbordaba, y los espacios no se ajustaban para pantallas pequeñas. Ejemplo: la consola de monitoreo mostraba encabezados y logs de eventos comprimidos; las métricas no escalaban; el panel de reacción tenía saltos de layout.
+
+**Fixes por componente:**
+
+### **CommandConsole.tsx** (Sección Monitoreo)
+- **Cabecera técnica:** Cambios de `text-[11px]` a `text-[10px] sm:text-[11px]` con espacios adaptativos (`gap-2 sm:gap-3`). Oculto "CABINA PRINCIPAL" en móvil.
+- **KPIs:** Grid de `grid-cols-1 sm:grid-cols-3` con `gap-2 sm:gap-3` y `truncate` en textos largos. Tamaños: `text-lg sm:text-xl` para valores.
+- **Log de eventos:** Contenedor con `lg:col-span-7`, espacios móviles `p-2.5 sm:p-3.5`, y texto con `line-clamp-2` para títulos y `line-clamp-1` para detalles.
+- **Mini radar:** Reducido a `h-28 w-28 sm:h-36 sm:w-36` con escalas de blips y coordenadas truncadas.
+- **Barra de estado:** Reorganizada en `flex-col gap-2 sm:flex-row sm:gap-0` con texto comprimido ("DESPACHO:" sin "QUERÉTARO" en móvil).
+
+### **Monitoreo.tsx** (Sección principal)
+- **Padding:** Añadido `px-3 sm:px-6` y `py-12 sm:py-16 md:py-24` para escalas verticales.
+- **Espacios internos:** Cambiados `space-y-14` a `space-y-10 sm:space-y-12 md:space-y-14`.
+- **Grid:** Espacios `gap-6 sm:gap-8` en la malla de CommandConsole + ReactionProtocol.
+
+### **ReactionProtocol.tsx** (Protocolo del grupo de reacción)
+- **Cabecera:** Layout flexbox con `flex-col sm:flex-row` para acomodar en móvil.
+- **Título:** Reducido a `text-lg sm:text-xl` sin pérdida de legibilidad.
+- **Stepper:** Espacios `space-y-6 sm:space-y-8` entre pasos; pasos con `gap-3 sm:gap-4`.
+- **Badges:** Reducidos a `text-[8px] sm:text-[10px]` dentro de cada paso.
+- **Banner:** Reorganizado con `flex-col sm:flex-row` y `gap-3 sm:gap-0` para flujo móvil.
+
+### **InfraMetrics.tsx** (Métricas de infraestructura)
+- **Grid:** `grid-cols-2 gap-2 sm:gap-3 md:gap-4 md:grid-cols-4` para escala progresiva.
+- **Valores:** Tamaños `text-lg sm:text-2xl md:text-3xl lg:text-4xl` con `tabular-nums` preservado.
+- **Etiquetas:** `text-[8px] sm:text-[10px] md:text-[11px]` tracking-wider sin desbordamiento.
+- **Pie de metadatos:** Reorganizado en `flex-col sm:flex-row` con `line-clamp-2 sm:line-clamp-none` para evitar ruido visual.
+
+**Patrones aplicados:**
+
+1. **Escala de texto progresiva:** `text-Xpx sm:text-Ypx md:text-Zpx` para cada elemento.
+2. **Truncado y clamping:** `truncate`, `line-clamp-2`, `line-clamp-1` para textos largos.
+3. **Espacios adaptativos:** `gap-2 sm:gap-3 md:gap-4` y `p-2.5 sm:p-3.5` en lugar de valores fijos.
+4. **Layouts flexbox móvil-first:** `flex-col gap-2 sm:flex-row sm:gap-0` para flujo adaptativo.
+5. **Visibilidad condicional:** `hidden sm:inline` para elementos innecesarios en móvil.
+
+**Breakpoints testeados:**
+- 375px (iPhone SE): Monitoreo, métricas, eventos sin solapamiento ✓
+- 390px (Android estándar): Idem ✓
+- 640px (sm): Transición a 2-3 columnas, espacios ampliados ✓
+- 768px (md): Grillas a 4 columnas, logs lado a lado con radar ✓
+- 1024px (lg): Layouts 2-column completos ✓
+- 1920px (desktop): Espacios máximos, legibilidad óptima ✓
+
+**Archivos modificados:**
+
+- `src/features/monitoreo/CommandConsole.tsx`
+- `src/features/monitoreo/Monitoreo.tsx`
+- `src/features/monitoreo/ReactionProtocol.tsx`
+- `src/features/monitoreo/MonitoreoCapabilities.tsx`
+- `src/features/infraestructura/InfraMetrics.tsx`
+- `src/features/infraestructura/CapabilityCards.tsx`
+- `src/features/datos/DataCapabilities.tsx`
+- `CHANGELOG.md`
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan sin errores. Dev server ejecutándose en http://localhost:5173.
+
