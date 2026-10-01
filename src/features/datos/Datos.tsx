@@ -15,7 +15,7 @@ export function Datos() {
   return (
     <section
       id="datos"
-      className="bg-grid-pattern bg-radar-glow border-outline-variant relative w-full overflow-hidden border-b py-16"
+      className="bg-grid-pattern bg-radar-glow border-outline-variant relative w-full overflow-hidden border-b py-16 lg:py-24"
     >
       {/* Halos atmosfericos */}
       <div className="bg-primary/5 pointer-events-none absolute -top-40 right-1/4 h-96 w-96 rounded-full blur-3xl" />

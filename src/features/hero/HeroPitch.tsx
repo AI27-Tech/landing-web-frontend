@@ -71,11 +71,11 @@ export function HeroPitch() {
       </div>
 
       {/* Metricas de confianza */}
-      <div className="border-outline-variant grid grid-cols-3 gap-4 border-t pt-6">
+      <div className="border-outline-variant grid grid-cols-1 gap-4 border-t pt-6 sm:grid-cols-2 md:grid-cols-3">
         {metricas.map(({ valor, etiqueta, destacado }, i) => (
           <div
             key={etiqueta}
-            className={`flex flex-col ${i > 0 ? 'border-outline-variant border-l pl-4' : ''}`}
+            className={`flex flex-col ${i > 0 ? 'border-outline-variant border-l pl-4 sm:border-l-0 sm:pl-0 md:border-l md:pl-4' : ''}`}
           >
             <span
               className={`text-xl font-bold tracking-tight tabular-nums sm:text-2xl ${

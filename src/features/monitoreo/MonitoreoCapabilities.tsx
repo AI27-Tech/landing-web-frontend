@@ -56,40 +56,40 @@ const capacidades: Capacidad[] = [
 export function MonitoreoCapabilities() {
   return (
     <>
-      <Stagger className="grid grid-cols-1 gap-6 pt-4 md:grid-cols-3">
+      <Stagger className="grid grid-cols-1 gap-4 sm:gap-6 pt-3 sm:pt-4 md:grid-cols-3">
         {capacidades.map((cap) => (
           <StaggerItem
             key={cap.titulo}
-            className="group bg-surface border-outline-variant hover:border-outline hover:bg-surface-bright/80 flex h-full flex-col space-y-4 rounded-lg border p-6 transition-colors duration-200"
+            className="group bg-surface border-outline-variant hover:border-outline hover:bg-surface-bright/80 flex h-full flex-col space-y-3 sm:space-y-4 rounded-lg border p-4 sm:p-6 transition-colors duration-200"
           >
-            <div className="bg-surface-recessed border-outline-variant text-primary group-hover:border-primary flex h-12 w-12 items-center justify-center rounded border transition-colors">
+            <div className="bg-surface-recessed border-outline-variant text-primary group-hover:border-primary flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded border transition-colors flex-shrink-0">
               {cap.icono}
             </div>
-            <div className="space-y-2">
-              <h3 className="text-on-surface group-hover:text-primary text-lg font-bold tracking-tight transition-colors">
+            <div className="space-y-1.5 sm:space-y-2">
+              <h3 className="text-on-surface group-hover:text-primary text-base sm:text-lg font-bold tracking-tight transition-colors line-clamp-2">
                 {cap.titulo}
               </h3>
-              <p className="text-on-surface-variant text-sm leading-relaxed">{cap.descripcion}</p>
+              <p className="text-on-surface-variant text-xs sm:text-sm leading-relaxed line-clamp-4">{cap.descripcion}</p>
             </div>
-            <div className={`flex items-center gap-2 pt-2 font-mono text-[11px] ${cap.pieColor}`}>
+            <div className={`flex items-center gap-1.5 sm:gap-2 pt-1 sm:pt-2 font-mono text-[9px] sm:text-[11px] ${cap.pieColor}`}>
               {cap.pieIcono}
-              <span>{cap.pie}</span>
+              <span className="truncate">{cap.pie}</span>
             </div>
           </StaggerItem>
         ))}
       </Stagger>
 
       {/* Micro-footer / barra de metadatos */}
-      <div className="border-outline-variant text-on-surface-variant flex flex-col items-center justify-between gap-4 border-t pt-6 font-mono text-[11px] sm:flex-row">
+      <div className="border-outline-variant text-on-surface-variant flex flex-col items-start justify-between gap-3 border-t pt-4 sm:pt-6 font-mono text-[9px] sm:text-[11px] sm:flex-row sm:items-center">
         <div className="flex items-center gap-2">
-          <span className="bg-primary h-2 w-2 rounded" />
-          <span className="tracking-wide">
-            AI27 // PROTOCOLO DE DESPLIEGUE OPERATIVO Y SEGURIDAD PATRIMONIAL
+          <span className="bg-primary h-1.5 w-1.5 sm:h-2 sm:w-2 rounded flex-shrink-0" />
+          <span className="tracking-wide truncate sm:truncate-none">
+            AI27 // PROTOCOLO // SEGURIDAD
           </span>
         </div>
-        <div className="bg-surface-recessed border-outline-variant text-on-surface flex items-center gap-2 rounded border px-3 py-1">
-          <span className="text-on-surface-variant">TIEMPO DE RESPUESTA PROMEDIO:</span>
-          <span className="text-success font-bold">&lt; 4 MIN</span>
+        <div className="bg-surface-recessed border-outline-variant text-on-surface flex flex-col items-start gap-1 rounded border px-2 py-1 sm:px-3 sm:flex-row sm:items-center sm:gap-2">
+          <span className="text-on-surface-variant text-[8px] sm:text-[11px]">RESPUESTA:</span>
+          <span className="text-success font-bold text-[10px] sm:text-[11px]">&lt; 4 MIN</span>
         </div>
       </div>
     </>
