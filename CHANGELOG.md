@@ -193,6 +193,15 @@ setActivo(primera ?? null);  // Devuelve null si no hay sección visible
     - `lan-wf-q` → sitio `ai27-landing-page-qa`, descripción "QA"
   - El step de despliegue ahora usa el parámetro `target` dinámico y muestra en el nombre qué entorno se está desplegando.
 
+- `firebase.json`:
+  - Se cambió de un objeto `hosting` único a un array de dos objetos, cada uno con su `target` (Firebase requiere esta estructura para usar `--only hosting:<target>`).
+  - Ambos targets comparten la misma configuración de rewrites, headers y ignore, diferenciados solo por su `target` (que mapea al sitio en Firebase).
+
+- `.firebaserc`:
+  - Se agregó la sección `targets` que mapea los dos targets a los sitios reales de Firebase Hosting.
+  - Estructura: `targets.ai27-landing-page.hosting.ai27-landing-page` → sitio `ai27-landing-page` (prod).
+  - Estructura: `targets.ai27-landing-page.hosting.ai27-landing-page-qa` → sitio `ai27-landing-page-qa` (QA).
+
 - `README.md`:
   - Se actualizó la tabla de ramas para incluir el destino de despliegue automático.
   - Se agregó la sección "Despliegue automático" bajo "Ramas" con los detalles del flujo.
@@ -208,6 +217,8 @@ setActivo(primera ?? null);  // Devuelve null si no hay sección visible
 **Archivos modificados:**
 
 - `.github/workflows/deploy-firebase.yml`
+- `firebase.json`
+- `.firebaserc`
 - `README.md`
 - `CHANGELOG.md`
 
