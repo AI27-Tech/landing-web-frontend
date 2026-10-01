@@ -4,6 +4,22 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:10:01 12:00
+
+**Resumen:** Se puso la landing en modo "En construcción": la página ahora muestra únicamente una pantalla a toda la ventana, sin header, footer ni ninguna de las secciones del mock.
+
+**Enfoque:** se agregó `src/features/en-construccion/EnConstruccion.tsx`, una pantalla única que ocupa toda la ventana (`min-h-screen`, centrada) con el nombre AI27 y un mensaje breve. `App.tsx` ahora renderiza solo `<EnConstruccion />`. La composición original de la landing (header, Hero, Trayectoria, Infraestructura, Monitoreo, Datos, Contacto, footer) se conservó comentada en `App.tsx` para republicarla sin reconstruirla.
+
+**Convenciones:** colores por rol (`bg-background`, `text-on-surface`, `text-on-surface-variant`, `border-outline`), nunca por valor. Sin router (sigue siendo una sola ruta) y sin Motion (no hay contenido de scroll que revelar).
+
+**Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan.
+
+**Archivos modificados:**
+
+- `src/App.tsx`
+- `src/features/en-construccion/EnConstruccion.tsx` (nuevo)
+- `CHANGELOG.md`
+
 ## 2026:10:01 09:00
 
 **Resumen:** Se integró Google Analytics 4 en la landing mediante el snippet oficial `gtag.js`, inyectado en el `<head>` de `index.html`.
