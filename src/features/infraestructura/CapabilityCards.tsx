@@ -62,34 +62,34 @@ const capacidades: Capacidad[] = [
 
 export function CapabilityCards() {
   return (
-    <Stagger className="flex flex-col justify-between gap-3.5 sm:gap-4 lg:col-span-5">
+    <Stagger className="flex flex-col justify-between gap-2.5 sm:gap-3.5 md:col-span-2 lg:col-span-5">
       {capacidades.map((cap) => (
         <StaggerItem
           key={cap.titulo}
-          className="group bg-surface-recessed hover:bg-surface border-outline-variant hover:border-outline flex flex-col justify-between rounded-sm border p-4 transition-colors duration-200 sm:p-5"
+          className="group bg-surface-recessed hover:bg-surface border-outline-variant hover:border-outline flex flex-col justify-between rounded-sm border p-3 sm:p-4 transition-colors duration-200"
         >
-          <div className="flex items-start gap-3.5">
+          <div className="flex items-start gap-2.5 sm:gap-3.5">
             <div
-              className={`bg-surface group-hover:bg-surface-bright border-outline-variant flex h-9 w-9 shrink-0 items-center justify-center rounded-sm border transition-colors ${cap.iconoColor}`}
+              className={`bg-surface group-hover:bg-surface-bright border-outline-variant flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-sm border transition-colors ${cap.iconoColor}`}
             >
               {cap.icono}
             </div>
-            <div>
-              <h3 className="text-on-surface text-base font-semibold tracking-tight">
+            <div className="min-w-0">
+              <h3 className="text-on-surface text-sm sm:text-base font-semibold tracking-tight line-clamp-2">
                 {cap.titulo}
               </h3>
-              <p className="text-on-surface-variant mt-1.5 text-[13px] leading-relaxed">
+              <p className="text-on-surface-variant mt-1 sm:mt-1.5 text-[12px] sm:text-[13px] leading-relaxed line-clamp-3">
                 {cap.descripcion}
               </p>
             </div>
           </div>
-          <div className="border-outline-variant/70 mt-3.5 flex items-center justify-between border-t pt-2.5">
+          <div className="border-outline-variant/70 mt-2.5 sm:mt-3.5 flex items-center justify-between gap-2 border-t pt-2">
             <span
-              className={`font-mono text-[10px] font-semibold tracking-wider uppercase ${cap.etiquetaColor}`}
+              className={`font-mono text-[8px] sm:text-[10px] font-semibold tracking-wider uppercase truncate ${cap.etiquetaColor}`}
             >
               {cap.etiqueta}
             </span>
-            <span className="text-on-surface-placeholder font-mono text-[10px]">{cap.codigo}</span>
+            <span className="text-on-surface-placeholder font-mono text-[8px] sm:text-[10px] flex-shrink-0">{cap.codigo}</span>
           </div>
         </StaggerItem>
       ))}
