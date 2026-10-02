@@ -27,8 +27,8 @@ export function Infraestructura() {
           <InfraHeader />
         </Reveal>
 
-        <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-12 lg:gap-8">
-          <Reveal from="left" className="lg:col-span-7">
+        <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-12 lg:gap-8">
+          <Reveal from="left" className="md:col-span-2 lg:col-span-7">
             <TacticalMap />
           </Reveal>
           {/* CapabilityCards gestiona su entrada con Stagger; su col-span vive

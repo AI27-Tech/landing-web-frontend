@@ -107,7 +107,9 @@ Son **artefactos de diseño, no código**: HTML estático con Tailwind por CDN, 
 
 `nocturne_operations/DESIGN.md` es la guía de color, tipografía y forma que describe el sistema Nocturne. Los tokens de `tokens.css` implementan esa misma guía.
 
-## Verificación
+## Verificación local y CI
+
+Localmente:
 
 ```bash
 pnpm typecheck
@@ -118,19 +120,36 @@ pnpm build
 
 Las cuatro tienen que pasar. No basta con que compile. No hay tests todavía: el scaffold no tiene UI que probar, y `vitest` se agrega con la primera sección que tenga comportamiento propio (el reloj del Hero, el resaltado de la sección activa, el envío del formulario).
 
-Tampoco hay CI ni `husky` de momento, a diferencia de los otros repos. Cuando la landing tenga su pipeline de despliegue, se agrega `.github/workflows/` en ese momento.
+En CI:
+
+- Cada push a `lan-wf-m` o `lan-wf-q` ejecuta `typecheck`, `lint` y `build` antes de desplegar. Ver "Despliegue automático" en la sección de Ramas.
+- Otros pushes (ramas de trabajo, `lan-wf-d`, PRs) no disparan nada automático todavía.
 
 ## Ramas
 
 Tres ramas de larga vida, con prefijo `lan-wf-`:
 
-| Rama       | Rol           |
-| ---------- | ------------- |
-| `lan-wf-m` | principal     |
-| `lan-wf-d` | desarrollo    |
-| `lan-wf-q` | aseguramiento |
+| Rama       | Rol           | Despliegue automático                   |
+| ---------- | ------------- | --------------------------------------- |
+| `lan-wf-m` | principal     | `ai27-landing-page` (producción, live)  |
+| `lan-wf-d` | desarrollo    | No automatizado                         |
+| `lan-wf-q` | aseguramiento | `ai27-landing-page-qa` (QA)             |
 
 Todas las demás siguen GitHub Flow: `feat/hero`, `fix/anchors-nav`, `chore/tokens-sync`.
+
+### Despliegue automático
+
+Cada push a `lan-wf-m` o `lan-wf-q` dispara un workflow que:
+
+1. Instala dependencias.
+2. Verifica tipos, lint y build.
+3. Si todo pasa, despliega a Firebase Hosting al sitio correspondiente.
+
+El workflow está en `.github/workflows/deploy-firebase.yml`. Ambas ramas comparten verificaciones iguales; solo cambia el **destino de despliegue** (parámetro `target` en la acción de Firebase).
+
+**Requisito:** el secreto de repositorio `FIREBASE_SERVICE_ACCOUNT` debe contener el JSON de una cuenta de servicio de Firebase con permiso de Hosting, configurado en `GitHub > Settings > Secrets and variables > Actions > New repository secret`.
+
+Si el build falla, no hay despliegue; el developer debe arreglar la rama y hacer push de nuevo.
 
 ## Decisiones abiertas
 

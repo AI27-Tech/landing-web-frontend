@@ -1,8 +1,13 @@
 # Despliegue de la landing a Firebase Hosting.
 #
-# Se dispara al hacer push a la rama principal (lan-wf-m). Primero corre las
-# verificaciones del repo (typecheck, lint, build); solo si pasan, publica el
-# contenido de dist/ en Firebase Hosting.
+# Se dispara al hacer push a las ramas lan-wf-m (producción) o lan-wf-q (QA).
+# Primero corre las verificaciones del repo (typecheck, lint, build); solo si
+# pasan, publica el contenido de dist/ en Firebase Hosting al sitio
+# correspondiente.
+#
+# Mapeo de ramas:
+#   - lan-wf-m → ai27-landing-page (producción, live)
+#   - lan-wf-q → ai27-landing-page-qa (QA)
 #
 # Requisito: el secreto de repositorio FIREBASE_SERVICE_ACCOUNT debe contener el
 # JSON de una cuenta de servicio de Firebase con permiso de Hosting. Se genera
@@ -18,10 +23,11 @@ on:
   push:
     branches:
       - lan-wf-m
+      - lan-wf-q
 
-# Evita despliegues solapados: si llega un push nuevo, cancela el anterior.
+# Evita despliegues solapados por rama: si llega un push nuevo, cancela el anterior.
 concurrency:
-  group: firebase-hosting-lan-wf-m
+  group: firebase-hosting-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -54,10 +60,22 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Desplegar a Firebase Hosting
+      - name: Determinar configuración de despliegue
+        id: config
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/lan-wf-m" ]; then
+            echo "sitio=ai27-landing-page" >> $GITHUB_OUTPUT
+            echo "descripcion=Producción" >> $GITHUB_OUTPUT
+          elif [ "${{ github.ref }}" == "refs/heads/lan-wf-q" ]; then
+            echo "sitio=ai27-landing-page-qa" >> $GITHUB_OUTPUT
+            echo "descripcion=QA" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Desplegar a Firebase Hosting (${{ steps.config.outputs.descripcion }})
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           projectId: ai27-landing-page
           channelId: live
+          target: ${{ steps.config.outputs.sitio }}

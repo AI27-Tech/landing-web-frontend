@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "ai27-landing-page"
+  },
+  "targets": {
+    "ai27-landing-page": {
+      "hosting": {
+        "ai27-landing-page": [
+          "ai27-landing-page"
+        ],
+        "ai27-landing-page-qa": [
+          "ai27-landing-page-qa"
+        ]
+      }
+    }
   }
 }
