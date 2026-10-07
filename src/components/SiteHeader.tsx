@@ -18,7 +18,8 @@ const enlaces = [
   { etiqueta: 'Nosotros', href: '#nosotros' },
   { etiqueta: 'Infraestructura', href: '#infraestructura' },
   { etiqueta: 'Monitoreo', href: '#monitoreo' },
-  { etiqueta: 'Datos', href: '#datos' },
+  // Enlace a '#datos' retirado temporalmente: la seccion Datos e IA quedo
+  // desvinculada de la pagina (ver App.tsx). Restaurar junto con <Datos />.
 ] as const;
 
 const ids = enlaces.map((enlace) => enlace.href.slice(1));
