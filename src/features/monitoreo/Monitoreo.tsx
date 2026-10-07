@@ -10,7 +10,6 @@ import { Reveal } from '@/components/motion/Reveal';
 import { CommandConsole } from '@/features/monitoreo/CommandConsole';
 import { MonitoreoCapabilities } from '@/features/monitoreo/MonitoreoCapabilities';
 import { MonitoreoHeader } from '@/features/monitoreo/MonitoreoHeader';
-import { ReactionProtocol } from '@/features/monitoreo/ReactionProtocol';
 
 export function Monitoreo() {
   return (
@@ -27,15 +26,13 @@ export function Monitoreo() {
           <MonitoreoHeader />
         </Reveal>
 
-        <div className="grid grid-cols-1 items-start gap-6 sm:gap-8 lg:grid-cols-12">
-          <Reveal from="left" className="lg:col-span-7">
-            <CommandConsole />
-          </Reveal>
-          {/* ReactionProtocol (stepper con Stagger) y MonitoreoCapabilities
-              (grilla con Stagger) gestionan su propia entrada; no se envuelven
-              en Reveal para no solapar dos animaciones de opacidad. */}
-          <ReactionProtocol />
-        </div>
+        {/* La tarjeta "Protocolo Operativo / Grupo de Reaccion"
+            (ReactionProtocol) se retiro temporalmente; la consola de comando
+            ocupa el ancho completo. Restaurar reintroduciendo el grid de dos
+            columnas y <ReactionProtocol /> con col-span-5. */}
+        <Reveal from="left">
+          <CommandConsole />
+        </Reveal>
 
         <MonitoreoCapabilities />
       </div>
