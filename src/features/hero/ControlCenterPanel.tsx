@@ -1,97 +1,15 @@
 /*
  * Columna derecha del Hero: panel "Centro de Control AI27". Portado del mock
- * Nocturne. Cuatro bloques: cabecera con reloj en vivo, visualizador de ruta,
- * rejilla de KPIs y registro de incidentes.
+ * Nocturne. Bloques: cabecera con reloj en vivo, rejilla de KPIs y registro de
+ * incidentes.
  *
  * Los iconos son lucide-react (el unico paquete de iconos de los repos AI27).
  * El mock usa Material Symbols, que es un artefacto del generador, no una
  * decision de codigo; aqui se mapean a su equivalente de lucide.
  */
-import {
-  BadgeCheck,
-  Gauge,
-  RadioTower,
-  Route,
-  Satellite,
-  ShieldCheck,
-  Terminal,
-  Truck,
-} from 'lucide-react';
+import { BadgeCheck, RadioTower, ShieldCheck, Terminal } from 'lucide-react';
 import { Counter } from '@/components/motion/Counter';
 import { useSystemClock } from '@/features/hero/useSystemClock';
-
-/* El visualizador de ruta: CDMX -> unidad en transito -> QRO -> MTY. */
-function RouteVisualizer() {
-  return (
-    <div className="bg-surface-recessed border-outline-variant relative mt-4 rounded border p-3.5">
-      <div className="text-on-surface-variant mb-2 flex items-center justify-between text-[11px] font-semibold uppercase">
-        <span className="text-on-surface flex items-center gap-1.5">
-          <Route className="text-primary h-3.5 w-3.5" />
-          Corredor Estratégico Bajío - Norte
-        </span>
-        <span className="text-success border-success/30 bg-success-container rounded border px-2 py-0.5 text-[10px]">
-          Riesgo: 0.02% (Bajo)
-        </span>
-      </div>
-
-      {/* Esquema vectorial de la ruta */}
-      <div className="border-outline-variant/60 bg-background/60 relative my-2 flex h-28 w-full items-center justify-between overflow-hidden rounded border px-3 sm:px-6">
-        <div className="bg-radar-grid pointer-events-none absolute inset-0 opacity-20" />
-        {/* Lineas de la ruta */}
-        <div className="bg-outline-variant absolute top-1/2 right-10 left-10 h-0.5 -translate-y-1/2" />
-        <div className="absolute top-1/2 left-10 h-0.5 w-2/3 -translate-y-1/2 bg-gradient-to-r from-[#6ee7b7] via-[#7c9df0] to-[#7c9df0]" />
-
-        {/* Nodo 1: CDMX */}
-        <div className="relative z-10 flex flex-col items-center">
-          <div className="bg-surface border-primary flex h-3.5 w-3.5 items-center justify-center rounded-full border-2">
-            <div className="bg-primary h-1.5 w-1.5 rounded-full" />
-          </div>
-          <span className="text-on-surface mt-1.5 text-[10px] font-bold">CDMX</span>
-          <span className="text-on-surface-variant text-[9px] tabular-nums">DEP 04:10</span>
-        </div>
-
-        {/* Unidad de telemetria en transito */}
-        <div className="relative z-10 flex flex-col items-center">
-          <div className="relative">
-            <span className="animate-ping-slow bg-success absolute inline-flex h-full w-full rounded-full opacity-60" />
-            <div className="bg-success text-on-primary flex h-4 w-4 items-center justify-center rounded-full shadow-lg">
-              <Truck className="h-2.5 w-2.5" />
-            </div>
-          </div>
-          <span className="text-success mt-1 text-[10px] font-semibold tabular-nums">UNIT-849</span>
-          <span className="text-on-surface-variant text-[9px] tabular-nums">82 km/h</span>
-        </div>
-
-        {/* Nodo 2: QRO */}
-        <div className="relative z-10 flex flex-col items-center">
-          <div className="bg-surface border-outline-variant flex h-3 w-3 items-center justify-center rounded-full border">
-            <div className="bg-on-surface-variant h-1 w-1 rounded-full" />
-          </div>
-          <span className="text-on-surface-variant mt-1.5 text-[10px]">QRO</span>
-          <span className="text-on-surface-variant text-[9px]">SAFE OK</span>
-        </div>
-
-        {/* Nodo 3: MTY */}
-        <div className="relative z-10 flex flex-col items-center">
-          <div className="bg-surface border-outline flex h-3.5 w-3.5 items-center justify-center rounded-full border-2">
-            <div className="bg-outline h-1.5 w-1.5 rounded-full" />
-          </div>
-          <span className="text-on-surface mt-1.5 text-[10px] font-bold">MTY Hub</span>
-          <span className="text-on-surface-variant text-[9px] tabular-nums">ETA 14:30</span>
-        </div>
-      </div>
-
-      {/* Detalles de micro-telemetria */}
-      <div className="text-on-surface-variant flex items-center justify-between px-1 pt-1 text-[11px]">
-        <span className="flex items-center gap-1">
-          <Satellite className="text-primary h-3 w-3" />
-          Constelación LEO 8/8
-        </span>
-        <span className="tabular-nums">Protocolo AES-256 enlazado</span>
-      </div>
-    </div>
-  );
-}
 
 type Kpi = {
   etiqueta: string;
@@ -118,22 +36,6 @@ const kpis: Kpi[] = [
     valor: <Counter value={99.84} decimals={2} suffix="%" />,
     valorColor: 'text-success',
     icono: <BadgeCheck className="text-success h-4 w-4" />,
-  },
-  {
-    etiqueta: 'Alertas Neutralizadas',
-    nota: 'Turno Activo',
-    notaColor: 'text-warning',
-    valor: <Counter value={342} />,
-    valorColor: 'text-on-surface',
-    icono: <span className="text-on-surface-variant text-[11px]">hoy</span>,
-  },
-  {
-    etiqueta: 'Latencia Satelital',
-    nota: 'Óptima',
-    notaColor: 'text-success',
-    valor: <Counter value={18} suffix="ms" />,
-    valorColor: 'text-primary',
-    icono: <Gauge className="text-on-surface-variant h-4 w-4" />,
   },
 ];
 
@@ -241,7 +143,6 @@ export function ControlCenterPanel() {
           </div>
         </div>
 
-        <RouteVisualizer />
         <KpiGrid />
         <IncidentLog />
       </div>

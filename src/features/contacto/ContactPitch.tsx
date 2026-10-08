@@ -9,9 +9,7 @@
 import { Headset, Phone } from 'lucide-react';
 
 const metricas = [
-  { valor: '< 2 hrs', etiqueta: 'Respuesta de análisis', color: 'text-success' },
-  { valor: '99.8%', etiqueta: 'SLA neutralización', color: 'text-on-surface' },
-  { valor: 'API / TMS', etiqueta: 'Despliegue ágil', color: 'text-primary' },
+  { valor: '< 24 hrs', etiqueta: 'Respuesta de cotización', color: 'text-success' },
 ] as const;
 
 export function ContactPitch() {
@@ -30,12 +28,12 @@ export function ContactPitch() {
         <p className="text-on-surface-variant text-sm leading-relaxed sm:text-base">
           Integra analítica predictiva, custodia satelital 24/7 y reacción táctica inmediata en tus
           corredores logísticos. Obtén una propuesta personalizada para el volumen y riesgo de tu
-          operación en menos de 2 horas.
+          operación en menos de 24 horas.
         </p>
       </div>
 
       {/* Metricas de servicio */}
-      <div className="border-outline-variant/80 bg-background/30 grid grid-cols-3 gap-3 rounded border-y p-3">
+      <div className="border-outline-variant/80 bg-background/30 grid grid-cols-1 gap-3 rounded border-y p-3">
         {metricas.map((m, i) => (
           <div
             key={m.etiqueta}
