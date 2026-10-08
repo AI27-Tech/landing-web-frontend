@@ -78,12 +78,14 @@ function FaseCard({ fase }: { fase: Fase }) {
           <div className="text-success mb-1 font-mono text-[11px] tracking-wider uppercase">
             {fase.categoria}
           </div>
-          <h4 className="text-on-surface mb-2 text-base font-semibold">{fase.titulo}</h4>
-          <p className="text-on-surface-variant text-sm leading-relaxed">{fase.descripcion}</p>
+          <h4 className="text-on-surface text-base font-semibold">{fase.titulo}</h4>
         </div>
-        <div className="border-outline-variant/60 mt-4 flex items-center justify-between border-t pt-3 font-mono text-[11px]">
-          <span className="text-on-surface-variant/70">{fase.metaIzq}</span>
-          <span className="text-success font-medium">{fase.metaDer}</span>
+        <div>
+          <p className="text-on-surface-variant text-sm leading-relaxed">{fase.descripcion}</p>
+          <div className="border-outline-variant/60 mt-4 flex items-center justify-between border-t pt-3 font-mono text-[11px]">
+            <span className="text-on-surface-variant/70">{fase.metaIzq}</span>
+            <span className="text-success font-medium">{fase.metaDer}</span>
+          </div>
         </div>
       </div>
     );
@@ -103,14 +105,16 @@ function FaseCard({ fase }: { fase: Fase }) {
         <div className="text-on-surface-variant mb-1 font-mono text-[11px] tracking-wider uppercase">
           {fase.categoria}
         </div>
-        <h4 className="text-on-surface group-hover:text-primary mb-2 text-base font-semibold transition-colors">
+        <h4 className="text-on-surface group-hover:text-primary text-base font-semibold transition-colors">
           {fase.titulo}
         </h4>
-        <p className="text-on-surface-variant text-sm leading-relaxed">{fase.descripcion}</p>
       </div>
-      <div className="border-outline-variant/60 text-on-surface-variant/70 mt-4 flex items-center justify-between border-t pt-3 font-mono text-[11px]">
-        <span>{fase.metaIzq}</span>
-        <span className="text-on-surface">{fase.metaDer}</span>
+      <div>
+        <p className="text-on-surface-variant text-sm leading-relaxed">{fase.descripcion}</p>
+        <div className="border-outline-variant/60 text-on-surface-variant/70 mt-4 flex items-center justify-between border-t pt-3 font-mono text-[11px]">
+          <span>{fase.metaIzq}</span>
+          <span className="text-on-surface">{fase.metaDer}</span>
+        </div>
       </div>
     </div>
   );
