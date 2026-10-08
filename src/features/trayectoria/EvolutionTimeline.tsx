@@ -20,13 +20,13 @@ type Fase = {
 
 const fases: Fase[] = [
   {
-    fase: 'Fase I',
-    categoria: 'Origen',
-    titulo: 'Seguridad física y grupo de reacción',
-    descripcion: 'Custodia y respuesta en ruta.',
-    metaIzq: 'MODELO REACTIVO',
-    metaDer: 'TERRESTRE',
-    destacada: false,
+    fase: 'Fase IV',
+    categoria: 'IA generativa & predictiva',
+    titulo: 'Predicción e inteligencia de datos',
+    descripcion: 'Anticipación de riesgos.',
+    metaIzq: 'PREDICCIÓN ACTIVA',
+    metaDer: '99.84% EFICACIA',
+    destacada: true,
   },
   {
     fase: 'Fase II',
@@ -47,20 +47,20 @@ const fases: Fase[] = [
     destacada: false,
   },
   {
-    fase: 'Fase IV',
-    categoria: 'IA generativa & predictiva',
-    titulo: 'Predicción e inteligencia de datos',
-    descripcion: 'Anticipación de riesgos.',
-    metaIzq: 'PREDICCIÓN ACTIVA',
-    metaDer: '99.84% EFICACIA',
-    destacada: true,
+    fase: 'Fase I',
+    categoria: 'Origen',
+    titulo: 'Seguridad física y grupo de reacción',
+    descripcion: 'Custodia y respuesta en ruta.',
+    metaIzq: 'MODELO REACTIVO',
+    metaDer: 'TERRESTRE',
+    destacada: false,
   },
 ];
 
 function FaseCard({ fase }: { fase: Fase }) {
   if (fase.destacada) {
     return (
-      <div className="card-tactical bg-surface/90 border-success/50 ring-success/20 flex flex-col justify-between rounded border p-5 shadow-[0_0_15px_-3px_rgba(110,231,183,0.15)] ring-1 backdrop-blur-sm">
+      <div className="card-tactical bg-surface/90 border-success/50 ring-success/20 flex h-full min-h-[232px] flex-col justify-between rounded border p-5 shadow-[0_0_15px_-3px_rgba(110,231,183,0.15)] ring-1 backdrop-blur-sm">
         <div>
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -90,7 +90,7 @@ function FaseCard({ fase }: { fase: Fase }) {
   }
 
   return (
-    <div className="card-tactical group bg-surface/80 border-outline-variant flex flex-col justify-between rounded border p-5 backdrop-blur-sm">
+    <div className="card-tactical group bg-surface/80 border-outline-variant flex h-full min-h-[232px] flex-col justify-between rounded border p-5 backdrop-blur-sm">
       <div>
         <div className="mb-4 flex items-center justify-between">
           <span className="text-primary font-mono text-xl font-bold tracking-tight">
