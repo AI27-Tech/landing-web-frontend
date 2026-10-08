@@ -17,17 +17,18 @@ type Metrica = {
 
 const metricas: Metrica[] = [
   {
-    valor: <Counter value={120} prefix="+" />,
+    valor: <Counter value={250} prefix="+" />,
     numerica: true,
-    etiqueta: 'Puntos de control',
+    etiqueta: 'Patrullas en campo',
     etiquetaColor: 'text-primary',
     descripcion:
-      'Ubicaciones estratégicas activas en carreteras federales y libramientos (datos ilustrativos de red).',
+      'Unidades de custodia y reacción desplegadas en los principales corredores logísticos del país.',
   },
   {
-    valor: <Counter value={24000} suffix=" km" />,
+    // Km recorridos al mes = 250 patrullas × 13,000 km por unidad al mes.
+    valor: <Counter value={3250000} suffix=" km" />,
     numerica: true,
-    etiqueta: 'Corredores monitoreados',
+    etiqueta: 'recorridos al mes',
     etiquetaColor: 'text-success',
     descripcion: 'Ejes troncales logísticos asegurados bajo cobertura algorítmica y física.',
   },
