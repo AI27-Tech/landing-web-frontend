@@ -6,7 +6,7 @@
  * El reloj y el barrido del radar: el reloj es dato (no lo apaga reduced-motion);
  * el barrido y los pulsos si los apaga la guarda global.
  */
-import { Clock, Radar, Satellite, ScanEye, ScrollText, Truck, Waypoints } from 'lucide-react';
+import { Clock, Radar, Satellite, ScrollText, Truck } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useLocalClock } from '@/features/monitoreo/useLocalClock';
 
@@ -27,26 +27,6 @@ const kpis: Kpi[] = [
     puntoColor: 'bg-success',
     pieColor: 'text-success',
     pie: 'En ruta segura',
-  },
-  {
-    etiqueta: 'Alertas Gestionadas',
-    icono: <ScanEye className="text-warning h-[15px] w-[15px]" />,
-    valor: (
-      <>
-        0 <span className="text-on-surface-variant text-xs font-normal">críticas</span>
-      </>
-    ),
-    puntoColor: 'bg-warning',
-    pieColor: 'text-warning',
-    pie: '14 preventivas activas',
-  },
-  {
-    etiqueta: 'Viajes Monitoreados',
-    icono: <Waypoints className="text-primary h-[15px] w-[15px]" />,
-    valor: '1,280+',
-    puntoColor: 'bg-primary',
-    pieColor: 'text-on-surface-variant',
-    pie: 'Turno en curso',
   },
 ];
 
@@ -122,7 +102,7 @@ export function CommandConsole() {
         {/* Panel interior */}
         <div className="space-y-5 p-5">
           {/* KPIs */}
-          <div className="grid grid-cols-1 gap-2 sm:gap-3 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-2 sm:gap-3">
             {kpis.map((kpi) => (
               <div
                 key={kpi.etiqueta}
