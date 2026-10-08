@@ -1,14 +1,36 @@
 /*
  * Formulario de solicitud de cotizacion. Portado del mock Nocturne.
  *
- * DECISION ABIERTA (README, "A donde va el formulario de cotizacion"): el mock
- * hace event.preventDefault() + alert() porque no hay backend. Se conserva ese
- * comportamiento como placeholder EXPLICITO; no se inventa un endpoint, un
- * servicio de formularios ni un mailto. Cuando se decida el destino, este
- * handler es el unico punto que cambia.
+ * ENVIO POR mailto (sitio estatico, sin backend): al enviar se abre el cliente
+ * de correo del usuario con un mensaje prellenado a partir de los campos. El
+ * destino se reparte entre las dos cuentas de ventas (ver DESTINOS) con un
+ * round-robin por navegador (localStorage) de arranque aleatorio: cada visitante
+ * alterna estrictamente entre una cuenta y la otra, pero no todos empiezan por
+ * la misma, de modo que el reparto queda lo mas parejo posible sin servidor.
+ *
+ * Limite conocido: el reparto solo puede contarse por navegador; no hay un
+ * contador global. Si en el futuro hay backend, este handler es el unico punto
+ * que cambia.
  */
 import { ArrowRight, Lock } from 'lucide-react';
 import type { FormEvent } from 'react';
+
+// Cuentas de ventas que reciben las cotizaciones, en orden de indice (0 y 1).
+const DESTINOS = ['cmatus@ai27.com', 'esamper@ai27.com'] as const;
+const LS_CLAVE = 'ai27:cotizacion:contador';
+
+function elegirDestino(): string {
+  try {
+    const almacen = window.localStorage;
+    const previo = almacen.getItem(LS_CLAVE);
+    const contador = previo === null ? Math.floor(Math.random() * 2) : Number(previo);
+    const seguro = Number.isFinite(contador) ? contador : 0;
+    almacen.setItem(LS_CLAVE, String(seguro + 1));
+    return seguro % 2 === 0 ? DESTINOS[0] : DESTINOS[1];
+  } catch {
+    return Math.random() < 0.5 ? DESTINOS[0] : DESTINOS[1];
+  }
+}
 
 const camposTexto = [
   {
@@ -68,10 +90,41 @@ const labelClase = 'mb-1.5 block text-[11px] tracking-wider text-on-surface-vari
 export function QuoteForm() {
   function manejarEnvio(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault();
-    // Placeholder del mock: sin backend. Ver la nota de decision abierta arriba.
-    alert(
-      'Solicitud registrada con éxito en cabina AI27. Un ingeniero de ruta te contactará en menos de 2 horas.',
-    );
+    const form = evento.currentTarget;
+    const datos = new FormData(form);
+
+    // Para los <select>, el texto de la opcion elegida es mas legible que su value.
+    const textoOpcion = (name: string) => {
+      const el = form.elements.namedItem(name);
+      if (el instanceof HTMLSelectElement) {
+        return el.options[el.selectedIndex]?.text ?? '';
+      }
+      return String(datos.get(name) ?? '');
+    };
+
+    const nombre = String(datos.get('fullName') ?? '');
+    const empresa = String(datos.get('companyName') ?? '');
+    const correo = String(datos.get('email') ?? '');
+    const telefono = String(datos.get('phone') ?? '');
+    const carga = textoOpcion('cargoType');
+    const volumen = textoOpcion('monthlyVolume');
+
+    const destino = elegirDestino();
+    const asunto = `Solicitud de cotización — ${empresa || nombre || 'AI27'}`;
+    const cuerpo = [
+      'Nueva solicitud de cotización desde el sitio AI27.',
+      '',
+      `Nombre completo: ${nombre}`,
+      `Empresa / Razón social: ${empresa}`,
+      `Correo corporativo: ${correo}`,
+      `Teléfono / Móvil: ${telefono}`,
+      `Tipo de carga y corredores: ${carga}`,
+      `Número estimado de viajes al mes: ${volumen}`,
+    ].join('\n');
+
+    const mailto = `mailto:${destino}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+    // Abre el cliente de correo del usuario con la solicitud prellenada.
+    window.location.href = mailto;
   }
 
   return (
