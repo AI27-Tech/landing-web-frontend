@@ -112,17 +112,28 @@ export function SiteFooter() {
           <div className="space-y-2.5 text-[13px]">
             <div className="flex items-start gap-2.5">
               <PhoneCall className="text-primary mt-0.5 h-[17px] w-[17px] shrink-0" />
-              <div>
+              <div className="space-y-1">
                 <span className="text-on-surface-variant block text-[11px] tracking-wider uppercase">
-                  Línea C4 Nacional 24/7:
+                  Teléfonos de contacto:
                 </span>
-                {/* TODO: numero real cuando se defina el dato de contacto. */}
-                <a
-                  className="text-on-surface hover:text-primary font-semibold transition-colors"
-                  href="#"
-                >
-                  [teléfono de contacto]
-                </a>
+                <div className="text-on-surface-variant text-xs">
+                  Ventas:{' '}
+                  <a
+                    className="text-on-surface hover:text-primary transition-colors"
+                    href="tel:+525560827466"
+                  >
+                    (55) 6082 7466
+                  </a>
+                </div>
+                <div className="text-on-surface-variant text-xs">
+                  Atención comercial:{' '}
+                  <a
+                    className="text-on-surface hover:text-primary transition-colors"
+                    href="tel:+525549090269"
+                  >
+                    (55) 4909 0269
+                  </a>
+                </div>
               </div>
             </div>
             <div className="flex items-start gap-2.5">
