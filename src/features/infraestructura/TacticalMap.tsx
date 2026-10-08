@@ -161,7 +161,7 @@ export function TacticalMap() {
               <circle fill="#161b24" r="6" stroke="#7c9df0" strokeWidth="2" />
               <circle fill="#6ee7b7" r="2.5" />
               <text fill="#e2e8f0" fontFamily="ui-monospace, monospace" fontSize="10" fontWeight="600" x="10" y="4">
-                CDMX [C5/HQ]
+                CDMX
               </text>
             </g>
             {/* QRO */}

@@ -72,7 +72,7 @@ export function ContactPitch() {
 
         <div className="text-on-surface-variant flex items-center gap-2 text-xs">
           <span className="bg-success inline-block h-2 w-2 rounded-full" />
-          <span className="text-on-surface-subtle">Disponibilidad 24/7 C4:</span>
+          <span className="text-on-surface-subtle">Disponibilidad 24/7:</span>
           <span>Guardia táctica y despacho de custodias activas a nivel nacional</span>
         </div>
       </div>

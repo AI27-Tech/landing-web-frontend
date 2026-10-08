@@ -20,7 +20,7 @@ type Fase = {
 
 const fases: Fase[] = [
   {
-    fase: 'Fase IV',
+    fase: 'Fase I',
     categoria: 'IA generativa & predictiva',
     titulo: 'Predicción e inteligencia de datos',
     descripcion: 'Anticipación de riesgos.',
@@ -33,7 +33,7 @@ const fases: Fase[] = [
     categoria: 'Monitoreo',
     titulo: 'Centro de monitoreo y GPS 24/7',
     descripcion: 'Geocercas y seguimiento.',
-    metaIzq: 'TELEMETRÍA GPS',
+    metaIzq: 'SEGUIMIENTO GPS',
     metaDer: 'NODO CENTRAL',
     destacada: false,
   },
@@ -47,7 +47,7 @@ const fases: Fase[] = [
     destacada: false,
   },
   {
-    fase: 'Fase I',
+    fase: 'Fase IV',
     categoria: 'Origen',
     titulo: 'Seguridad física y grupo de reacción',
     descripcion: 'Custodia y respuesta en ruta.',
@@ -130,7 +130,7 @@ export function EvolutionTimeline() {
         </div>
         <div className="text-on-surface-variant/70 flex items-center gap-2 font-mono text-xs">
           <span className="bg-success h-2 w-2 animate-pulse rounded-full" />
-          <span>FLUJO VECTORIAL DE TELEMETRÍA</span>
+          <span>FLUJO VECTORIAL DE DATOS</span>
         </div>
       </div>
 

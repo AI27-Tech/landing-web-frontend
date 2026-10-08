@@ -19,7 +19,7 @@ import { Mail, MapPin, PhoneCall } from 'lucide-react';
 import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 
 const plataforma = [
-  'Centro de Monitoreo C4',
+  'Centro de Monitoreo',
   'Grupo de Reacción Propio',
   'Corredores de Seguridad',
   'Datos e IA Predictiva',
@@ -61,13 +61,13 @@ export function SiteFooter() {
           </div>
           <p className="text-on-surface-variant max-w-md text-[13px] leading-relaxed">
             Seguridad e inteligencia de datos para el transporte de carga en México. Más de 25 años
-            anticipando el riesgo en ruta con telemetría en tiempo real y capacidad de reacción
+            anticipando el riesgo en ruta con monitoreo en tiempo real y capacidad de reacción
             inmediata en autopistas federales.
           </p>
           <div className="bg-surface-recessed border-outline-variant text-on-surface inline-flex items-center gap-2 rounded border px-3 py-1.5 text-xs">
             <span className="bg-success status-pulse h-2 w-2 rounded-full" />
             <span className="text-[12px] font-medium">
-              Todos los servicios y cabinas C4 operativos
+              Todos los servicios y cabinas operativos
             </span>
           </div>
         </StaggerItem>

@@ -45,7 +45,7 @@ const metricas: Metrica[] = [
     etiqueta: 'Operación y reacción',
     etiquetaColor: 'text-success',
     descripcion:
-      'Supervisión ininterrumpida desde C4 con unidades de custodia y reacción en campo.',
+      'Supervisión ininterrumpida desde CM con unidades de custodia y reacción en campo.',
   },
 ];
 
@@ -87,7 +87,7 @@ export function InfraMetrics() {
         <div className="flex items-center space-x-2 flex-shrink-0">
           <span className="bg-success inline-block h-1 w-1 sm:h-1.5 sm:w-1.5 rounded-full" />
           <span className="text-on-surface-variant font-mono text-[8px] sm:text-[9px] md:text-[10px] tracking-wider uppercase">
-            TELEMETRÍA · 28MS
+            MONITOREO ACTIVO
           </span>
         </div>
       </div>

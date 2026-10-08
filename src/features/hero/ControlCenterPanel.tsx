@@ -128,7 +128,7 @@ export function ControlCenterPanel() {
                 Centro de Control AI27
               </h2>
               <p className="text-on-surface-variant text-[11px]">
-                Telemetría en Vivo &amp; Predicción Neural
+                Monitoreo en Vivo &amp; Predicción Neural
               </p>
             </div>
           </div>

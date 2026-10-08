@@ -1,12 +1,12 @@
 /*
  * Consola de comando del centro de monitoreo (columna izquierda). Portada del
- * mock Nocturne: cabecera tecnica con reloj en vivo, tres KPIs de telemetria,
+ * mock Nocturne: cabecera tecnica con reloj en vivo, KPIs de estado,
  * log de eventos en tiempo real, mini escaner de radar y barra de estado.
  *
  * El reloj y el barrido del radar: el reloj es dato (no lo apaga reduced-motion);
  * el barrido y los pulsos si los apaga la guarda global.
  */
-import { Clock, Radar, Satellite, ScrollText, Truck } from 'lucide-react';
+import { Clock, Radar, ScrollText, Truck } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useLocalClock } from '@/features/monitoreo/useLocalClock';
 
@@ -86,17 +86,6 @@ export function CommandConsole() {
               <span className="text-on-surface-variant text-[9px] sm:text-[11px]">// CABINA</span>
             </span>
           </div>
-          <div className="text-on-surface-variant flex items-center gap-2 sm:gap-4">
-            <div className="flex items-center gap-0.5 sm:gap-1">
-              <span className="text-[9px] tracking-wider uppercase sm:text-[10px]">Lat:</span>
-              <span className="text-success font-semibold tabular-nums text-[10px] sm:text-[11px]">14ms</span>
-            </div>
-            <span className="text-outline hidden sm:inline">|</span>
-            <div className="flex items-center gap-0.5 sm:gap-1">
-              <Satellite className="text-primary h-[11px] w-[11px] sm:h-[13px] sm:w-[13px]" />
-              <span className="text-on-surface tracking-tight text-[9px] sm:text-[11px]">LEO 99%</span>
-            </div>
-          </div>
         </div>
 
         {/* Panel interior */}
@@ -159,8 +148,8 @@ export function CommandConsole() {
               <div className="z-10 flex items-center justify-between gap-2">
                 <span className="text-on-surface-variant flex items-center gap-1 sm:gap-1.5 font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-wider uppercase">
                   <Radar className="text-primary h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                  <span className="hidden sm:inline">Escáner C4</span>
-                  <span className="sm:hidden">C4</span>
+                  <span className="hidden sm:inline">Escáner Táctico</span>
+                  <span className="sm:hidden">Escáner</span>
                 </span>
                 <span className="text-primary font-mono text-[8px] sm:text-[10px]">360°</span>
               </div>

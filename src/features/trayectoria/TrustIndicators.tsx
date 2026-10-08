@@ -70,20 +70,16 @@ const indicadores: Indicador[] = [
     ),
   },
   {
-    cifra: (
-      <>
-        24/7 <span className="text-success text-2xl">C4</span>
-      </>
-    ),
+    cifra: <>24/7</>,
     icono: <MonitorSmartphone className="h-5 w-5" />,
     iconoColor: 'text-success',
     titulo: 'Centro de monitoreo propio',
     descripcion:
-      'Infraestructura redundante propia, enlazada en tiempo real a fuerzas de seguridad y protocolos C4/C5.',
+      'Infraestructura redundante propia, enlazada en tiempo real a fuerzas de seguridad.',
     pie: (
       <span className="text-primary flex items-center gap-1.5 font-mono text-[11px]">
         <span className="bg-primary h-2 w-2 animate-ping rounded-full" />
-        TELEMETRÍA EN VIVO ACTIVA
+        MONITOREO EN VIVO ACTIVO
       </span>
     ),
   },
@@ -131,7 +127,6 @@ export function TrustIndicators() {
         <span>AI27 // PLATAFORMA DE SEGURIDAD PREDICTIVA • INFRAESTRUCTURA OPERATIVA</span>
         <div className="mt-2 flex items-center gap-4 sm:mt-0">
           <span>ENCRIPTACIÓN AES-256</span>
-          <span>LATENCIA PROMEDIO: 18ms</span>
         </div>
       </div>
     </div>

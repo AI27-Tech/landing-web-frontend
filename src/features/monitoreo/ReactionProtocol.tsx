@@ -24,14 +24,14 @@ const pasos: Paso[] = [
     titulo: 'Detección de evento',
     badge: '< 15 seg',
     descripcion:
-      'Detección inmediata en cabina C4 mediante algoritmos predictivos y sensores de telemetría a bordo con confirmación satelital.',
+      'Detección inmediata en cabina de monitoreo mediante algoritmos predictivos y sensores a bordo con confirmación satelital.',
     numeroClase: 'border-primary text-primary shadow-md shadow-primary/10',
     badgeClase: 'bg-primary/10 text-primary border-primary/20',
   },
   {
     numero: '02',
     titulo: 'Alerta y evaluación táctica',
-    badge: 'Análisis C4',
+    badge: 'Análisis Táctico',
     descripcion:
       'Calificación del nivel de riesgo en segundos por analistas especializados y verificación de integridad de cabina mediante protocolo seguro.',
     numeroClase: 'border-outline-variant text-on-surface group-hover:border-primary',

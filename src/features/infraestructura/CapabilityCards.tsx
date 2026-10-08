@@ -43,8 +43,8 @@ const capacidades: Capacidad[] = [
     iconoColor: 'text-primary',
     titulo: 'Coordinación con autoridades',
     descripcion:
-      'Enlace operativo y de telemetría en tiempo real con mandos federales (Guardia Nacional), corporaciones estatales y dependencias municipales.',
-    etiqueta: 'PROTOCOLOS C4 / C5 DIRECTOS',
+      'Enlace operativo en tiempo real con todos los niveles de gobierno.',
+    etiqueta: 'ENLACE GUBERNAMENTAL DIRECTO',
     etiquetaColor: 'text-primary',
     codigo: 'ENLACE-FED-GN',
   },
