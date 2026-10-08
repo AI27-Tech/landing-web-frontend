@@ -157,8 +157,18 @@ export function SiteFooter() {
                 <span className="text-on-surface-variant block text-[11px] tracking-wider uppercase">
                   Matriz de Operaciones:
                 </span>
-                {/* TODO: direccion real cuando se defina el dato de contacto. */}
-                <span className="text-on-surface-variant text-xs">[dirección]</span>
+                <address className="text-xs not-italic">
+                  <a
+                    className="text-on-surface-variant hover:text-primary transition-colors"
+                    href="https://www.google.com/maps/place/AI27+Predictive+Intelligence/@19.5032909,-99.1778381,17z/data=!3m1!4b1!4m6!3m5!1s0x85d1f31db4b6a31b:0xfeda91cb25f61590!8m2!3d19.5032909!4d-99.1778381!16s%2Fg%2F11gnpv6bgy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Eje 5 Nte 990, Santa Bárbara, Azcapotzalco,
+                    <br />
+                    02230 Ciudad de México, CDMX
+                  </a>
+                </address>
               </div>
             </div>
           </div>
