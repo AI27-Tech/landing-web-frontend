@@ -18,20 +18,10 @@
 import { Mail, MapPin, PhoneCall } from 'lucide-react';
 import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 
-const plataforma = [
-  'Centro de Monitoreo',
-  'Grupo de Reacción Propio',
-  'Corredores de Seguridad',
-  'Datos e IA Predictiva',
-  'Integración API / TMS',
-];
-
 const compania = [
-  'Quiénes Somos',
-  '25 Años de Trayectoria',
-  'Casos de Éxito',
-  'Cobertura Nacional',
-  'Sala de Prensa',
+  { etiqueta: 'Quiénes Somos', href: '#' },
+  { etiqueta: 'Casos de Éxito', href: '#' },
+  { etiqueta: 'Cobertura Nacional', href: '#infraestructura' },
 ];
 
 const enlacesLegales = [
@@ -72,32 +62,16 @@ export function SiteFooter() {
           </div>
         </StaggerItem>
 
-        {/* Plataforma & Red */}
-        <StaggerItem className="space-y-3 lg:col-span-2">
-          <h3 className="text-on-surface text-xs font-semibold tracking-wider uppercase">
-            Plataforma &amp; Red
-          </h3>
-          <ul className="space-y-2 text-[13px]">
-            {plataforma.map((item) => (
-              <li key={item}>
-                <a className="hover:text-primary transition-colors duration-150" href="#">
-                  {item}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </StaggerItem>
-
-        {/* Compania */}
-        <StaggerItem className="space-y-3 lg:col-span-2">
+        {/* Compania (empieza en la col 8 para empujar este grupo a la derecha) */}
+        <StaggerItem className="space-y-3 lg:col-span-2 lg:col-start-8">
           <h3 className="text-on-surface text-xs font-semibold tracking-wider uppercase">
             Compañía
           </h3>
           <ul className="space-y-2 text-[13px]">
-            {compania.map((item) => (
-              <li key={item}>
-                <a className="hover:text-primary transition-colors duration-150" href="#">
-                  {item}
+            {compania.map(({ etiqueta, href }) => (
+              <li key={etiqueta}>
+                <a className="hover:text-primary transition-colors duration-150" href={href}>
+                  {etiqueta}
                 </a>
               </li>
             ))}
@@ -175,7 +149,9 @@ export function SiteFooter() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Eje 5 Nte 990, Santa Bárbara, Azcapotzalco,
+                    Eje 5 Nte 990,
+                    <br />
+                    Santa Bárbara, Azcapotzalco,
                     <br />
                     02230 Ciudad de México, CDMX
                   </a>
