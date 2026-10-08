@@ -49,7 +49,7 @@ const fases: Fase[] = [
   {
     fase: 'Fase IV',
     categoria: 'Origen',
-    titulo: 'Seguridad física y grupo de reacción',
+    titulo: 'Seguimiento en tiempo real y grupo de reacción',
     descripcion: 'Custodia y respuesta en ruta.',
     metaIzq: 'MODELO REACTIVO',
     metaDer: 'TERRESTRE',
