@@ -7,7 +7,6 @@
 import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
 import { Contacto } from '@/features/contacto/Contacto';
-import { Datos } from '@/features/datos/Datos';
 import { Hero } from '@/features/hero/Hero';
 import { Infraestructura } from '@/features/infraestructura/Infraestructura';
 import { Monitoreo } from '@/features/monitoreo/Monitoreo';
@@ -22,7 +21,6 @@ export function App() {
         <Trayectoria />
         <Infraestructura />
         <Monitoreo />
-        <Datos />
         <Contacto />
       </main>
       <SiteFooter />

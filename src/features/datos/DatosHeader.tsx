@@ -18,7 +18,7 @@ export function DatosHeader() {
       </h2>
 
       <p className="text-on-surface-variant max-w-3xl text-[15px] leading-relaxed font-normal sm:text-base">
-        Cada viaje monitoreado genera millones de puntos de telemetría. En AI27 transformamos esos
+        Cada viaje monitoreado genera miles de datos. En AI27 transformamos esos
         datos en visibilidad operacional en tiempo real, predicción algorítmica de riesgos y
         analítica estratégica para la toma de decisiones críticas en tu cadena de suministro.
       </p>

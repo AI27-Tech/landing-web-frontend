@@ -1,12 +1,12 @@
 /*
  * Consola de comando del centro de monitoreo (columna izquierda). Portada del
- * mock Nocturne: cabecera tecnica con reloj en vivo, tres KPIs de telemetria,
+ * mock Nocturne: cabecera tecnica con reloj en vivo, KPIs de estado,
  * log de eventos en tiempo real, mini escaner de radar y barra de estado.
  *
  * El reloj y el barrido del radar: el reloj es dato (no lo apaga reduced-motion);
  * el barrido y los pulsos si los apaga la guarda global.
  */
-import { Clock, Radar, Satellite, ScanEye, ScrollText, Truck, Waypoints } from 'lucide-react';
+import { Clock, Radar, ScrollText, Truck } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useLocalClock } from '@/features/monitoreo/useLocalClock';
 
@@ -28,26 +28,6 @@ const kpis: Kpi[] = [
     pieColor: 'text-success',
     pie: 'En ruta segura',
   },
-  {
-    etiqueta: 'Alertas Gestionadas',
-    icono: <ScanEye className="text-warning h-[15px] w-[15px]" />,
-    valor: (
-      <>
-        0 <span className="text-on-surface-variant text-xs font-normal">críticas</span>
-      </>
-    ),
-    puntoColor: 'bg-warning',
-    pieColor: 'text-warning',
-    pie: '14 preventivas activas',
-  },
-  {
-    etiqueta: 'Viajes Monitoreados',
-    icono: <Waypoints className="text-primary h-[15px] w-[15px]" />,
-    valor: '1,280+',
-    puntoColor: 'bg-primary',
-    pieColor: 'text-on-surface-variant',
-    pie: 'Turno en curso',
-  },
 ];
 
 type Evento = {
@@ -61,28 +41,28 @@ type Evento = {
 
 const eventos: Evento[] = [
   {
-    hora: '03:41:02 CST',
-    horaColor: 'text-success',
-    borde: 'border-success',
-    ref: 'TR-8821',
-    titulo: 'Autopista 57D Km 162 — Check-in biométrico confirmado.',
-    detalle: 'Operador verificado sin anomalías',
+    hora: '03:42:17 CST',
+    horaColor: 'text-error',
+    borde: 'border-error',
+    ref: 'INC-2271',
+    titulo: 'Intento de robo con violencia.',
+    detalle: 'Grupo de reacción desplegado · enlace con Guardia Nacional · unidad asegurada',
   },
   {
-    hora: '03:38:45 CST',
+    hora: '03:39:48 CST',
     horaColor: 'text-warning',
     borde: 'border-warning',
-    ref: 'CV-1049',
-    titulo: 'Corredor Bajío — Desvío predictivo preventivo ejecutado.',
-    detalle: 'Ruta recalculada por congestión crítica',
+    ref: 'INC-2268',
+    titulo: 'Cierre total de la circulación.',
+    detalle: 'Bloqueo por manifestación · reruteo activado por corredor alterno',
   },
   {
-    hora: '03:32:10 CST',
-    horaColor: 'text-primary',
-    borde: 'border-primary',
-    ref: 'TF-4402',
-    titulo: 'Macro-libramiento GDL — Escolta táctica enlazada.',
-    detalle: 'Custodia visual activa en cuadrante 4',
+    hora: '03:35:03 CST',
+    horaColor: 'text-warning',
+    borde: 'border-warning',
+    ref: 'INC-2264',
+    titulo: 'Desvío no programado detectado.',
+    detalle: 'Unidad TR-5583 fuera de ruta · contacto con operador en curso',
   },
 ];
 
@@ -106,23 +86,12 @@ export function CommandConsole() {
               <span className="text-on-surface-variant text-[9px] sm:text-[11px]">// CABINA</span>
             </span>
           </div>
-          <div className="text-on-surface-variant flex items-center gap-2 sm:gap-4">
-            <div className="flex items-center gap-0.5 sm:gap-1">
-              <span className="text-[9px] tracking-wider uppercase sm:text-[10px]">Lat:</span>
-              <span className="text-success font-semibold tabular-nums text-[10px] sm:text-[11px]">14ms</span>
-            </div>
-            <span className="text-outline hidden sm:inline">|</span>
-            <div className="flex items-center gap-0.5 sm:gap-1">
-              <Satellite className="text-primary h-[11px] w-[11px] sm:h-[13px] sm:w-[13px]" />
-              <span className="text-on-surface tracking-tight text-[9px] sm:text-[11px]">LEO 99%</span>
-            </div>
-          </div>
         </div>
 
         {/* Panel interior */}
         <div className="space-y-5 p-5">
           {/* KPIs */}
-          <div className="grid grid-cols-1 gap-2 sm:gap-3 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-2 sm:gap-3">
             {kpis.map((kpi) => (
               <div
                 key={kpi.etiqueta}
@@ -179,8 +148,8 @@ export function CommandConsole() {
               <div className="z-10 flex items-center justify-between gap-2">
                 <span className="text-on-surface-variant flex items-center gap-1 sm:gap-1.5 font-mono text-[9px] sm:text-[10px] md:text-[11px] tracking-wider uppercase">
                   <Radar className="text-primary h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                  <span className="hidden sm:inline">Escáner C4</span>
-                  <span className="sm:hidden">C4</span>
+                  <span className="hidden sm:inline">Escáner Táctico</span>
+                  <span className="sm:hidden">Escáner</span>
                 </span>
                 <span className="text-primary font-mono text-[8px] sm:text-[10px]">360°</span>
               </div>

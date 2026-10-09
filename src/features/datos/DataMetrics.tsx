@@ -19,14 +19,14 @@ type Metrica = {
 
 const metricas: Metrica[] = [
   {
-    etiqueta: 'TELEMETRÍA ACUMULADA',
+    etiqueta: 'DATOS ACUMULADOS',
     etiquetaColor: 'text-primary',
     valor: <Counter value={1.2} decimals={1} suffix="M+" />,
     valorColor: 'text-on-surface',
     hoverBorde: 'hover:border-primary/50',
     titulo: 'Viajes Analizados',
     descripcion:
-      'Millones de kilómetros de telemetría procesados para entrenar modelos predictivos con datos reales de carreteras.',
+      'Millones de kilómetros de datos procesados para entrenar modelos predictivos con datos reales de carreteras.',
   },
   {
     etiqueta: 'EFECTIVIDAD COMPROBADA',
@@ -46,7 +46,7 @@ const metricas: Metrica[] = [
     hoverBorde: 'hover:border-primary/50',
     titulo: 'Variables por Viaje',
     descripcion:
-      'Análisis de velocidad, paradas no programadas, clima, hábitos de manejo y datos de integración directa C4/C5.',
+      'Análisis de velocidad, paradas no programadas, clima, hábitos de manejo y datos de integración directa.',
   },
   {
     etiqueta: 'VELOCIDAD DE DISPERSIÓN',
@@ -56,7 +56,7 @@ const metricas: Metrica[] = [
     hoverBorde: 'hover:border-primary/50',
     titulo: 'Tiempo Real',
     descripcion:
-      'Latencia ultra baja de procesamiento de eventos y distribución de datos hacia tu ERP/TMS corporativo.',
+      'Procesamiento de eventos y distribución de datos hacia tu ERP/TMS corporativo.',
   },
 ];
 

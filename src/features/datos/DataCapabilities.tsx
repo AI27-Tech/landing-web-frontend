@@ -25,10 +25,10 @@ const capacidades: Capacidad[] = [
     hoverBorde: 'hover:border-primary/50',
     hoverTitulo: 'group-hover:text-primary',
     titulo: '1. Visibilidad total del viaje',
-    badge: 'TELEMETRÍA',
+    badge: 'SEGUIMIENTO',
     badgeClase: 'text-on-surface-variant border-outline-variant',
     descripcion:
-      'Seguimiento granular y estado operativo de cada embarque en tiempo real, telemetría continua y trazabilidad de extremo a extremo.',
+      'Seguimiento granular y estado operativo de cada embarque en tiempo real, monitoreo continuo y trazabilidad de extremo a extremo.',
   },
   {
     icono: <BrainCircuit className="h-5 w-5" />,

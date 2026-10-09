@@ -28,10 +28,10 @@ const capacidades: Capacidad[] = [
     icono: <Monitor className="h-6 w-6" />,
     titulo: 'Monitoreo privado 24/7',
     descripcion:
-      'Instalaciones blindadas de comando C4 con operadores certificados en turnos continuos, monitoreo biométrico y redundancia satelital total sin interrupciones.',
+      'Instalaciones blindadas de comando con operadores certificados en turnos continuos, monitoreo biométrico y redundancia satelital total sin interrupciones.',
     pieIcono: <CircleCheck className="h-3.5 w-3.5" />,
     pieColor: 'text-primary',
-    pie: 'Certificación de analistas C4',
+    pie: 'Certificación de analistas',
   },
   {
     icono: <ShieldAlert className="h-6 w-6" />,

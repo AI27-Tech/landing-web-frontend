@@ -4,6 +4,145 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:10:08 17:20
+
+**fix: UI fixes.** En las tarjetas de indicadores de confianza (`TrustIndicators`)
+se reacomodó el contenido: la etiqueta (titulo) pasó a ir justo debajo de la
+cifra, como valor secundario, y la descripción y el pie bajaron al bloque
+inferior de la tarjeta (antes el titulo quedaba separado al centro). Además, en
+la línea cronológica (`EvolutionTimeline`) se ajustó el título de la Fase I a
+"Seguimiento en tiempo real y grupo de reacción".
+
+- `src/features/trayectoria/TrustIndicators.tsx`,
+  `src/features/trayectoria/EvolutionTimeline.tsx`
+
+## 2026:10:08 17:01
+
+**fix: avoid routes in the event log.** En el log de eventos de la consola de
+monitoreo (`CommandConsole`) se quitó la especificación de ruta/ubicación de los
+títulos de los tres eventos (Autopista México–Puebla, Arco Norte, Corredor
+Bajío y sus marcadores de km); quedan solo el motivo del incidente (robo con
+violencia, cierre total de la circulación, desvío no programado) y sus mensajes
+complementarios.
+
+- `src/features/monitoreo/CommandConsole.tsx`
+
+## 2026:10:08 16:51
+
+**fix: removed unused labels.** Limpieza del footer (`SiteFooter`): se retiraron
+elementos de lista sobrantes y quedó la columna de Compañía con "Cobertura
+Nacional" enlazada a `#infraestructura`; se eliminó código muerto resultante.
+
+- `src/components/SiteFooter.tsx`
+
+## 2026:10:08 16:22
+
+**fix: removed telemetría, C4/C5, and latencia texts.** Barrido de copy en toda la
+landing: se quitaron o reescribieron todas las referencias visibles a "C4/C5",
+"telemetría" y "latencia" (etiquetas, badges, descripciones, strips de estado y
+el indicador LAT/LEO), más los comentarios internos equivalentes. No se tocó
+`tokens.css` (espejo de la librería) ni los mocks.
+
+- `src/components/SiteFooter.tsx`, `src/features/contacto/ContactPitch.tsx`,
+  `src/features/contacto/Contacto.tsx`, `src/features/datos/AnalyticsDashboard.tsx`,
+  `src/features/datos/DataCapabilities.tsx`, `src/features/datos/DataMetrics.tsx`,
+  `src/features/datos/DatosHeader.tsx`, `src/features/hero/ControlCenterPanel.tsx`,
+  `src/features/infraestructura/CapabilityCards.tsx`,
+  `src/features/infraestructura/InfraHeader.tsx`,
+  `src/features/infraestructura/InfraMetrics.tsx`,
+  `src/features/infraestructura/TacticalMap.tsx`,
+  `src/features/monitoreo/CommandConsole.tsx`,
+  `src/features/monitoreo/MonitoreoCapabilities.tsx`,
+  `src/features/monitoreo/MonitoreoHeader.tsx`,
+  `src/features/monitoreo/ReactionProtocol.tsx`,
+  `src/features/trayectoria/EvolutionTimeline.tsx`,
+  `src/features/trayectoria/TrustIndicators.tsx`
+
+## 2026:10:08 14:38
+
+**fix: change in the send email logic.** El formulario de cotización
+(`QuoteForm`) pasó a enviar por `mailto:` prellenado con los campos del
+formulario, repartiendo el destino entre las dos cuentas de ventas con un
+round-robin por navegador de arranque aleatorio (sin backend). Se documentó la
+decisión en el README.
+
+- `src/features/contacto/QuoteForm.tsx`, `README.md`
+
+## 2026:10:08 14:08
+
+**fix: added phone numbers.** Se agregaron los teléfonos de Ventas y Atención
+comercial como enlaces `tel:` en el footer (`SiteFooter`) y en el panel de
+contacto (`ContactPitch`).
+
+- `src/components/SiteFooter.tsx`, `src/features/contacto/ContactPitch.tsx`
+
+## 2026:10:08 13:26
+
+**fix: Address added to footer.** Se reemplazó el placeholder de dirección por la
+Matriz de Operaciones real (Eje 5 Nte 990, Santa Bárbara, Azcapotzalco, 02230
+Ciudad de México, CDMX), enlazada a Google Maps.
+
+- `src/components/SiteFooter.tsx`
+
+## 2026:10:08 13:18
+
+**fix: phase change.** En la línea cronológica (`EvolutionTimeline`) se
+intercambiaron la Fase I y la Fase IV, y se igualó el tamaño de las cuatro
+tarjetas sin importar el contenido.
+
+- `src/features/trayectoria/EvolutionTimeline.tsx`
+
+## 2026:10:08 12:55
+
+**fix: more removals.** Se retiró del panel Centro de Control del Hero
+(`ControlCenterPanel`) el visualizador de ruta "Corredor Estratégico" y los KPIs
+"Alertas Neutralizadas" y "Latencia Satelital"; en `ContactPitch` se ajustó la
+métrica/estado asociada.
+
+- `src/features/hero/ControlCenterPanel.tsx`, `src/features/contacto/ContactPitch.tsx`
+
+## 2026:10:08 12:45
+
+**fix: remove Alertas activas and Viajes monitoreados.** Se quitaron esos dos KPIs
+de la consola de comando (`CommandConsole`) y la rejilla quedó a una sola
+columna.
+
+- `src/features/monitoreo/CommandConsole.tsx`
+
+## 2026:10:08 12:35
+
+**fix: InfraMetrics adjustments.** En la fila de métricas de Infraestructura
+(`InfraMetrics`) se cambiaron dos cifras: "+250 patrullas en campo" y
+"3,250,000 km recorridos al mes".
+
+- `src/features/infraestructura/InfraMetrics.tsx`
+
+## 2026:10:08 12:21
+
+**fix: fix animated map.** Rework del mapa táctico (`TacticalMap`): contorno
+geográficamente fiel de México, nodos y corredores sobre coordenadas reales,
+puntos de radar fijos (CDMX, MTY, Tijuana) con ping expansivo relleno, waypoints
+adicionales (Torreón, Mazatlán, Hermosillo, Sonoyta) y retiro de las etiquetas
+HUD flotantes. Se añadió el keyframe `radar-ping` en `globals.css`.
+
+- `src/features/infraestructura/TacticalMap.tsx`, `src/styles/globals.css`
+
+## 2026:10:07 17:47
+
+**fix: remove protocolo operativo.** Se retiró la tarjeta "Protocolo Operativo /
+Grupo de Reacción" (`ReactionProtocol`) de la sección Monitoreo; la consola de
+comando pasó a ancho completo.
+
+- `src/features/monitoreo/Monitoreo.tsx`
+
+## 2026:10:07 17:41
+
+**fix: Datos section temporary remove.** Se desvinculó temporalmente la sección
+"Datos e IA" de la página: se quitó su render de `App.tsx` y su enlace de
+navegación en `SiteHeader`. Los archivos de la sección quedan intactos.
+
+- `src/App.tsx`, `src/components/SiteHeader.tsx`
+
 ## 2026:10:01 15:25
 
 **Resumen:** Se corrigió el scroll-spy para que no deje ningún enlace resaltado cuando estés en el Hero o antes de la primera sección.

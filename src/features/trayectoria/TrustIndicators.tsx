@@ -59,9 +59,9 @@ const indicadores: Indicador[] = [
     ),
     icono: <MapPin className="h-5 w-5" />,
     iconoColor: 'text-primary',
-    titulo: 'Cobertura nacional',
+    titulo: '',
     descripcion:
-      'Presencia operativa integral en los principales corredores logísticos, puertos mercantes y fronteras norte-sur.',
+      'Presencia operativa integral en los principales corredores establecidos de manera estratégica.',
     pie: (
       <span className="text-success flex items-center gap-1.5 font-mono text-[11px]">
         <span className="bg-success h-2 w-2 rounded-full" />
@@ -70,20 +70,16 @@ const indicadores: Indicador[] = [
     ),
   },
   {
-    cifra: (
-      <>
-        24/7 <span className="text-success text-2xl">C4</span>
-      </>
-    ),
+    cifra: <>24/7</>,
     icono: <MonitorSmartphone className="h-5 w-5" />,
     iconoColor: 'text-success',
     titulo: 'Centro de monitoreo propio',
     descripcion:
-      'Infraestructura redundante propia, enlazada en tiempo real a fuerzas de seguridad y protocolos C4/C5.',
+      'Infraestructura redundante propia, enlazada en tiempo real a fuerzas de seguridad.',
     pie: (
       <span className="text-primary flex items-center gap-1.5 font-mono text-[11px]">
         <span className="bg-primary h-2 w-2 animate-ping rounded-full" />
-        TELEMETRÍA EN VIVO ACTIVA
+        MONITOREO EN VIVO ACTIVO
       </span>
     ),
   },
@@ -96,9 +92,6 @@ export function TrustIndicators() {
         <span className="text-on-surface-variant font-mono text-xs tracking-wider uppercase">
           Indicadores institucionales de confianza
         </span>
-        <span className="text-on-surface-variant/60 font-mono text-[11px]">
-          DATOS AUDITADOS • CIERRE 2024
-        </span>
       </div>
 
       <Stagger className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -107,21 +100,23 @@ export function TrustIndicators() {
             key={ind.titulo}
             className="card-tactical bg-surface border-outline-variant flex h-full flex-col justify-between rounded border p-6"
           >
-            <div className="mb-4 flex items-start justify-between">
-              <span className="text-on-surface font-mono text-3xl font-extrabold tracking-tight lg:text-4xl">
-                {ind.cifra}
-              </span>
-              <div
-                className={`bg-surface-recessed border-outline-variant flex h-9 w-9 items-center justify-center rounded border ${ind.iconoColor}`}
-              >
-                {ind.icono}
+            <div>
+              <div className="flex items-start justify-between">
+                <span className="text-on-surface font-mono text-3xl font-extrabold tracking-tight lg:text-4xl">
+                  {ind.cifra}
+                </span>
+                <div
+                  className={`bg-surface-recessed border-outline-variant flex h-9 w-9 items-center justify-center rounded border ${ind.iconoColor}`}
+                >
+                  {ind.icono}
+                </div>
               </div>
+              <h5 className="text-on-surface mt-1.5 text-sm font-semibold">{ind.titulo}</h5>
             </div>
             <div>
-              <h5 className="text-on-surface mb-1 text-sm font-semibold">{ind.titulo}</h5>
               <p className="text-on-surface-variant text-xs leading-relaxed">{ind.descripcion}</p>
+              <div className="border-outline-variant/50 mt-4 border-t pt-3">{ind.pie}</div>
             </div>
-            <div className="border-outline-variant/50 mt-4 border-t pt-3">{ind.pie}</div>
           </StaggerItem>
         ))}
       </Stagger>
@@ -131,7 +126,6 @@ export function TrustIndicators() {
         <span>AI27 // PLATAFORMA DE SEGURIDAD PREDICTIVA • INFRAESTRUCTURA OPERATIVA</span>
         <div className="mt-2 flex items-center gap-4 sm:mt-0">
           <span>ENCRIPTACIÓN AES-256</span>
-          <span>LATENCIA PROMEDIO: 18ms</span>
         </div>
       </div>
     </div>
