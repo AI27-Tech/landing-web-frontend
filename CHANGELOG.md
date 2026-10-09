@@ -4,6 +4,34 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:10:09 00:30
+
+**feat: sección Clientes con muro de logos animado.** Nueva sección
+`src/features/clientes/` entre Trayectoria e Infraestructura (ancla
+`#clientes`; el enlace "Casos de Éxito" del footer apunta ahí). Una sola fila de
+logos que se desplaza en loop continuo hacia la derecha. La animación es CSS
+puro (keyframe `marquee-right` en `globals.css`), con loop sin costura por
+duplicado de la pista y traslación del 50%; queda cubierta por la guarda global
+de `reduced-motion`. Al pasar el cursor sobre la fila, el desplazamiento se
+pausa.
+
+Cada cliente pinta su logo (archivo en `public/clientes/`, servido desde la raíz
+por Vite) dentro de un `<img>` forzado a blanco con un filtro CSS
+(`brightness-0 invert`); el archivo debe tener fondo transparente. Si a una
+marca le falta el archivo, el chip cae de vuelta a su nombre como wordmark, de
+modo que un logo faltante no rompe la fila. Los logos flotan sin recuadro (sin
+fondo ni borde). Cada cliente admite un multiplicador `escala` para igualar el
+peso óptico de los logos compactos (Mattel y Herdez usan 1.5). Se muestran ocho
+clientes: Colgate, Mattel, Pfizer, GNP, Herdez, Zurich, Technicolor, Pirelli.
+Verificado: `typecheck`, `lint`, `build` y `format:check` (sobre los archivos
+nuevos) pasan.
+
+- `src/App.tsx`, `src/styles/globals.css`, `src/components/SiteFooter.tsx`,
+  `src/features/clientes/Clientes.tsx`,
+  `src/features/clientes/ClientesHeader.tsx`,
+  `src/features/clientes/ClientLogosMarquee.tsx`,
+  `src/features/clientes/clientes-data.ts`, `public/clientes/README.md`
+
 ## 2026:10:08 18:10
 
 **feat: favicon del sitio.** Se configuró el ícono de pestaña. El `favicon.ico`
