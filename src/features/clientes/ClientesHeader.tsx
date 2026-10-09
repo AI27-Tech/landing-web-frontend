@@ -1,7 +1,6 @@
 export function ClientesHeader() {
   return (
     <div className="flex flex-col items-center gap-4 text-center">
-
       <h2 className="text-on-surface text-3xl leading-[1.15] font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
         Las cadenas de suministro más importantes de México{' '}
         <span className="bg-gradient-to-r from-[#7c9df0] via-[#94b5ff] to-[#6ee7b7] bg-clip-text text-transparent">
