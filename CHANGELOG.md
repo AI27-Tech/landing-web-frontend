@@ -4,6 +4,63 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:10:08 18:10
+
+**feat: favicon del sitio.** Se configuró el ícono de pestaña. El `favicon.ico`
+se movió de la raíz del repo a `public/` (que es el `publicDir` de Vite y la
+única ruta que se copia tal cual a `dist/` y se sirve desde la raíz del sitio;
+desde la raíz del repo no se publicaba). Se añadió el enlace en `index.html`:
+`<link rel="icon" type="image/x-icon" href="/favicon.ico" />`. Verificado: el
+build copia `dist/favicon.ico` y el `<link>` queda en `dist/index.html`.
+
+- `index.html`, `public/favicon.ico`
+
+## 2026:10:08 18:02
+
+**fix: botón "Atención comercial" vuelve al diseño azul.** En `ContactPitch` el
+botón de "Atención comercial" recuperó el diseño primario (periwinkle) que
+tenía el botón de contacto anterior: ícono en `text-primary` y chrome
+`border-outline hover:border-primary bg-surface hover:bg-surface-bright
+text-on-surface` (`px-5 py-3`, `font-semibold`), en vez del estilo verde/mudo.
+Se conservan la funcionalidad (`tel:+525549090269`) y el número
+(55) 4909 0269.
+
+- `src/features/contacto/ContactPitch.tsx`
+
+## 2026:10:08 17:55
+
+**fix: título del KPI de la consola de monitoreo.** En `CommandConsole` la
+etiqueta del KPI "Unidades Activas" pasó a "Unidades en tránsito"; solo cambia
+el texto, no la cifra ni el estilo.
+
+- `src/features/monitoreo/CommandConsole.tsx`
+
+## 2026:10:08 17:48
+
+**feat: ruta Sur-Sureste en el mapa táctico.** En `TacticalMap` se agregó un
+sexto corredor troncal (CDMX → Oaxaca → Chiapas) con sus dos nodos nuevos:
+Oaxaca y Chiapas (Tuxtla Gutiérrez). Las coordenadas se calcularon con la misma
+proyección Mercator que el resto del mapa (Oaxaca en 621.1, 508.4; Chiapas en
+718.5, 517.4), por lo que quedan alineadas con el contorno del país. La ruta
+usa el degradado periwinkle→esmeralda ya existente (`routeGrad1`); Chiapas es la
+terminal esmeralda del corredor.
+
+- `src/features/infraestructura/TacticalMap.tsx`
+
+## 2026:10:08 17:35
+
+**fix: orden cronológico de la línea de evolución.** En `EvolutionTimeline` se
+corrigió el orden de las fases: la línea representa la historia de la empresa,
+así que ahora va en orden cronológico real, de la Fase I (el origen:
+"Seguimiento en tiempo real y grupo de reacción") a la Fase IV (la actual:
+"Predicción e inteligencia de datos", destacada con IA activa). Cada tarjeta
+conserva su contenido; solo se renumeraron las fases y se invirtió el orden
+visual. El eyebrow de la sección pasó de "Línea cronológica de evolución" a
+"Evolución de la empresa"; el subtítulo "De la reacción en campo a la
+anticipación algorítmica" se mantuvo igual.
+
+- `src/features/trayectoria/EvolutionTimeline.tsx`
+
 ## 2026:10:08 17:20
 
 **fix: UI fixes.** En las tarjetas de indicadores de confianza (`TrustIndicators`)

@@ -62,10 +62,10 @@ export function ContactPitch() {
             <span>Ventas: (55) 6082 7466</span>
           </a>
           <a
-            className="border-outline-variant hover:border-outline bg-background hover:bg-surface-recessed text-on-surface-variant hover:text-on-surface inline-flex items-center justify-center gap-2 rounded border px-4 py-3 text-center text-[13px] font-medium transition-all duration-150 active:scale-[0.99]"
+            className="border-outline hover:border-primary bg-surface hover:bg-surface-bright text-on-surface inline-flex items-center justify-center gap-2 rounded border px-5 py-3 text-center text-[13px] font-semibold transition-all duration-150 active:scale-[0.99]"
             href="tel:+525549090269"
           >
-            <Phone className="text-success h-[18px] w-[18px]" />
+            <Phone className="text-primary h-[18px] w-[18px]" />
             <span>Atención comercial: (55) 4909 0269</span>
           </a>
         </div>

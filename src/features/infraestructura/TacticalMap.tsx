@@ -149,6 +149,17 @@ export function TacticalMap() {
               strokeLinejoin="round"
               strokeWidth="1.8"
             />
+            {/* 6. Corredor Sur-Sureste: CDMX -> Oaxaca -> Tuxtla Gutierrez
+                 (Chiapas). Posiciones reales por la misma proyeccion:
+                 Oaxaca (621.1, 508.4), Chiapas (718.5, 517.4) */}
+            <path
+              d="M555.8 441.2 L621.1 508.4 L718.5 517.4"
+              filter="url(#glow-periwinkle)"
+              stroke="url(#routeGrad1)"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2.5"
+            />
 
             {/* Nodos estrategicos */}
             <g transform="translate(555.8, 441.2)">
@@ -284,6 +295,22 @@ export function TacticalMap() {
               <circle fill="#7c9df0" r="2" />
               <text fill="#e2e8f0" fontFamily="ui-monospace, monospace" fontSize="9" fontWeight="600" x="8" y="3">
                 TIJUANA
+              </text>
+            </g>
+            {/* OAXACA — nodo del Corredor Sur-Sureste */}
+            <g transform="translate(621.1, 508.4)">
+              <circle fill="#7c9df0" opacity="0.25" r="8" />
+              <circle fill="#7c9df0" r="4" />
+              <text fill="#94a3b8" fontFamily="ui-monospace, monospace" fontSize="9" x="8" y="12">
+                OAXACA
+              </text>
+            </g>
+            {/* CHIAPAS — terminal del Corredor Sur-Sureste (Tuxtla Gutierrez) */}
+            <g transform="translate(718.5, 517.4)">
+              <circle fill="#6ee7b7" opacity="0.3" r="9" />
+              <circle fill="#6ee7b7" r="4.5" />
+              <text fill="#6ee7b7" fontFamily="ui-monospace, monospace" fontSize="9.5" fontWeight="600" x="9" y="3">
+                CHIAPAS
               </text>
             </g>
 

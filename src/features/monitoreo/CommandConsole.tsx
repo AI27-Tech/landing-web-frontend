@@ -21,7 +21,7 @@ type Kpi = {
 
 const kpis: Kpi[] = [
   {
-    etiqueta: 'Unidades Activas',
+    etiqueta: 'Unidades en tránsito',
     icono: <Truck className="text-primary h-[15px] w-[15px]" />,
     valor: '4,892',
     puntoColor: 'bg-success',
