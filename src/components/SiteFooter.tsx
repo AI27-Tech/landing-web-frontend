@@ -25,10 +25,9 @@ const compania = [
 ];
 
 const enlacesLegales = [
-  { etiqueta: 'Privacidad', href: '#privacidad' },
-  { etiqueta: 'Términos y Condiciones', href: '#terminos' },
-  { etiqueta: 'Seguridad', href: '#seguridad' },
-  { etiqueta: 'Compliance', href: '#compliance' },
+  { etiqueta: 'Privacidad', href: '/legal/aviso_de_privacidad_AI27.html' },
+  { etiqueta: 'Términos y Condiciones', href: '/legal/terminos_y_condiciones_AI27.html' },
+  { etiqueta: 'Seguridad y Compliance', href: '/legal/politica_de_calidad_y_seguridad_AI27.pdf' },
 ] as const;
 
 export function SiteFooter() {
@@ -174,6 +173,8 @@ export function SiteFooter() {
                 key={href}
                 className="hover:text-primary transition-colors duration-150"
                 href={href}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 {etiqueta}
               </a>

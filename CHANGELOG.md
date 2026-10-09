@@ -4,6 +4,24 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:10:09 14:36
+
+**feat: enlazar documentos legales del footer.** En
+`SiteFooter` los enlaces legales dejaron de apuntar a fragmentos muertos
+(`#privacidad`, `#terminos`, `#seguridad`, `#compliance`) y ahora enlazan a los
+documentos reales en `public/legal/`, servidos como archivos estáticos (la
+página es de una sola ruta, sin router). Se fusionaron "Seguridad" y
+"Compliance" en un solo nodo "Seguridad y Compliance". Mapeo: Privacidad →
+`/legal/aviso_de_privacidad_AI27.html`, Términos y Condiciones →
+`/legal/terminos_y_condiciones_AI27.html`, Seguridad y Compliance →
+`/legal/politica_de_calidad_y_seguridad_AI27.pdf`. Los enlaces abren en pestaña
+nueva (`target="_blank"` + `rel="noopener noreferrer"`). Se agregaron los tres
+documentos al repo.
+
+- `src/components/SiteFooter.tsx`, `public/legal/aviso_de_privacidad_AI27.html`,
+  `public/legal/terminos_y_condiciones_AI27.html`,
+  `public/legal/politica_de_calidad_y_seguridad_AI27.pdf`
+
 ## 2026:10:09 00:30
 
 **feat: sección Clientes con muro de logos animado.** Nueva sección
