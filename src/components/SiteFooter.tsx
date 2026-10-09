@@ -20,7 +20,7 @@ import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 
 const compania = [
   { etiqueta: 'Quiénes Somos', href: '#' },
-  { etiqueta: 'Casos de Éxito', href: '#' },
+  { etiqueta: 'Casos de Éxito', href: '#clientes' },
   { etiqueta: 'Cobertura Nacional', href: '#infraestructura' },
 ];
 
