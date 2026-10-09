@@ -4,6 +4,63 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:10:08 18:10
+
+**feat: favicon del sitio.** Se configuró el ícono de pestaña. El `favicon.ico`
+se movió de la raíz del repo a `public/` (que es el `publicDir` de Vite y la
+única ruta que se copia tal cual a `dist/` y se sirve desde la raíz del sitio;
+desde la raíz del repo no se publicaba). Se añadió el enlace en `index.html`:
+`<link rel="icon" type="image/x-icon" href="/favicon.ico" />`. Verificado: el
+build copia `dist/favicon.ico` y el `<link>` queda en `dist/index.html`.
+
+- `index.html`, `public/favicon.ico`
+
+## 2026:10:08 18:02
+
+**fix: botón "Atención comercial" vuelve al diseño azul.** En `ContactPitch` el
+botón de "Atención comercial" recuperó el diseño primario (periwinkle) que
+tenía el botón de contacto anterior: ícono en `text-primary` y chrome
+`border-outline hover:border-primary bg-surface hover:bg-surface-bright
+text-on-surface` (`px-5 py-3`, `font-semibold`), en vez del estilo verde/mudo.
+Se conservan la funcionalidad (`tel:+525549090269`) y el número
+(55) 4909 0269.
+
+- `src/features/contacto/ContactPitch.tsx`
+
+## 2026:10:08 17:55
+
+**fix: título del KPI de la consola de monitoreo.** En `CommandConsole` la
+etiqueta del KPI "Unidades Activas" pasó a "Unidades en tránsito"; solo cambia
+el texto, no la cifra ni el estilo.
+
+- `src/features/monitoreo/CommandConsole.tsx`
+
+## 2026:10:08 17:48
+
+**feat: ruta Sur-Sureste en el mapa táctico.** En `TacticalMap` se agregó un
+sexto corredor troncal (CDMX → Oaxaca → Chiapas) con sus dos nodos nuevos:
+Oaxaca y Chiapas (Tuxtla Gutiérrez). Las coordenadas se calcularon con la misma
+proyección Mercator que el resto del mapa (Oaxaca en 621.1, 508.4; Chiapas en
+718.5, 517.4), por lo que quedan alineadas con el contorno del país. La ruta
+usa el degradado periwinkle→esmeralda ya existente (`routeGrad1`); Chiapas es la
+terminal esmeralda del corredor.
+
+- `src/features/infraestructura/TacticalMap.tsx`
+
+## 2026:10:08 17:35
+
+**fix: orden cronológico de la línea de evolución.** En `EvolutionTimeline` se
+corrigió el orden de las fases: la línea representa la historia de la empresa,
+así que ahora va en orden cronológico real, de la Fase I (el origen:
+"Seguimiento en tiempo real y grupo de reacción") a la Fase IV (la actual:
+"Predicción e inteligencia de datos", destacada con IA activa). Cada tarjeta
+conserva su contenido; solo se renumeraron las fases y se invirtió el orden
+visual. El eyebrow de la sección pasó de "Línea cronológica de evolución" a
+"Evolución de la empresa"; el subtítulo "De la reacción en campo a la
+anticipación algorítmica" se mantuvo igual.
+
+- `src/features/trayectoria/EvolutionTimeline.tsx`
+
 ## 2026:10:08 17:20
 
 **fix: UI fixes.** En las tarjetas de indicadores de confianza (`TrustIndicators`)
@@ -162,10 +219,11 @@ if (primera) {
 
 // Después:
 const primera = ids.find((id) => visibles.has(id));
-setActivo(primera ?? null);  // Devuelve null si no hay sección visible
+setActivo(primera ?? null); // Devuelve null si no hay sección visible
 ```
 
 **Resultado:**
+
 - En el Hero: ningún enlace resaltado ✓
 - Al bajar a Trayectoria: "Nosotros" se ilumina ✓
 - Al cambiar de sección: el resaltado se actualiza correctamente ✓
@@ -186,7 +244,7 @@ setActivo(primera ?? null);  // Devuelve null si no hay sección visible
 
 - **Problema:** El componente se desmontaba inmediatamente al cambiar el estado `abierto`, sin esperar a que la animación de `exit` terminara.
 - **Solución:** Se agregó `AnimatePresence` de `motion/react` alrededor del panel y los items del menú. Esto permite que Motion espere a que terminen las animaciones de salida antes de desmontar.
-- **Resultado:** 
+- **Resultado:**
   - Apertura: panel desliza hacia abajo, items entran con cascada ✓
   - Cierre: panel desliza hacia arriba, items salen con cascada, todo desaparece suavemente ✓
 
@@ -295,7 +353,7 @@ setActivo(primera ?? null);  // Devuelve null si no hay sección visible
 
 1. **Hero — Métricas de 3 columnas sin breakpoint responsive**
    - **Antes:** `grid grid-cols-3` (siempre 3 columnas) → se apretaban en móvil (iPhone SE 375px)
-   - **Después:** `grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3` → 1 col móvil, 2 tablet pequeño, 3 tablet+ 
+   - **Después:** `grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3` → 1 col móvil, 2 tablet pequeño, 3 tablet+
    - **Archivo:** `src/features/hero/HeroPitch.tsx`
 
 2. **Infraestructura — Ausencia de breakpoint `md:` en grid principal**
@@ -349,6 +407,7 @@ setActivo(primera ?? null);  // Devuelve null si no hay sección visible
 **Requisitos:** El secreto de repositorio `FIREBASE_SERVICE_ACCOUNT` debe existir y contener el JSON de la cuenta de servicio de Firebase. Si ya se utilizaba para `lan-wf-m`, no es necesario agregarlo de nuevo.
 
 **Flujo de despliegue:**
+
 - Cada push a `lan-wf-m` o `lan-wf-q` dispara el workflow.
 - Se ejecutan verificaciones (typecheck, lint, build); si todas pasan, se despliega.
 - Si alguna falla, no hay despliegue y el developer debe arreglar la rama y hacer push de nuevo.
@@ -770,6 +829,7 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 - `src/styles/globals.css`
 - `.kiro/steering/naming-conventions.md`
 - `.github/pull_request_template.md`
+
 ## 2026:10:01 15:45
 
 **Resumen:** Se auditoró y corrigió sistemáticamente el diseño responsivo en todos los breakpoints (375px a 1920px). Se eliminaron espacios fijos, se añadieron escalas de texto adaptativas, y se previno el solapamiento y hacinamiento de elementos en móvil.
@@ -779,6 +839,7 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 **Fixes por componente:**
 
 ### **CommandConsole.tsx** (Sección Monitoreo)
+
 - **Cabecera técnica:** Cambios de `text-[11px]` a `text-[10px] sm:text-[11px]` con espacios adaptativos (`gap-2 sm:gap-3`). Oculto "CABINA PRINCIPAL" en móvil.
 - **KPIs:** Grid de `grid-cols-1 sm:grid-cols-3` con `gap-2 sm:gap-3` y `truncate` en textos largos. Tamaños: `text-lg sm:text-xl` para valores.
 - **Log de eventos:** Contenedor con `lg:col-span-7`, espacios móviles `p-2.5 sm:p-3.5`, y texto con `line-clamp-2` para títulos y `line-clamp-1` para detalles.
@@ -786,11 +847,13 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 - **Barra de estado:** Reorganizada en `flex-col gap-2 sm:flex-row sm:gap-0` con texto comprimido ("DESPACHO:" sin "QUERÉTARO" en móvil).
 
 ### **Monitoreo.tsx** (Sección principal)
+
 - **Padding:** Añadido `px-3 sm:px-6` y `py-12 sm:py-16 md:py-24` para escalas verticales.
 - **Espacios internos:** Cambiados `space-y-14` a `space-y-10 sm:space-y-12 md:space-y-14`.
 - **Grid:** Espacios `gap-6 sm:gap-8` en la malla de CommandConsole + ReactionProtocol.
 
 ### **ReactionProtocol.tsx** (Protocolo del grupo de reacción)
+
 - **Cabecera:** Layout flexbox con `flex-col sm:flex-row` para acomodar en móvil.
 - **Título:** Reducido a `text-lg sm:text-xl` sin pérdida de legibilidad.
 - **Stepper:** Espacios `space-y-6 sm:space-y-8` entre pasos; pasos con `gap-3 sm:gap-4`.
@@ -798,6 +861,7 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 - **Banner:** Reorganizado con `flex-col sm:flex-row` y `gap-3 sm:gap-0` para flujo móvil.
 
 ### **InfraMetrics.tsx** (Métricas de infraestructura)
+
 - **Grid:** `grid-cols-2 gap-2 sm:gap-3 md:gap-4 md:grid-cols-4` para escala progresiva.
 - **Valores:** Tamaños `text-lg sm:text-2xl md:text-3xl lg:text-4xl` con `tabular-nums` preservado.
 - **Etiquetas:** `text-[8px] sm:text-[10px] md:text-[11px]` tracking-wider sin desbordamiento.
@@ -812,6 +876,7 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 5. **Visibilidad condicional:** `hidden sm:inline` para elementos innecesarios en móvil.
 
 **Breakpoints testeados:**
+
 - 375px (iPhone SE): Monitoreo, métricas, eventos sin solapamiento ✓
 - 390px (Android estándar): Idem ✓
 - 640px (sm): Transición a 2-3 columnas, espacios ampliados ✓
@@ -831,4 +896,3 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 - `CHANGELOG.md`
 
 **Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan sin errores. Dev server ejecutándose en http://localhost:5173.
-

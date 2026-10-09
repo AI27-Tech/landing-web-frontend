@@ -42,8 +42,7 @@ const capacidades: Capacidad[] = [
     icono: <Antenna className="h-5 w-5" />,
     iconoColor: 'text-primary',
     titulo: 'Coordinación con autoridades',
-    descripcion:
-      'Enlace operativo en tiempo real con todos los niveles de gobierno.',
+    descripcion: 'Enlace operativo en tiempo real con todos los niveles de gobierno.',
     etiqueta: 'ENLACE GUBERNAMENTAL DIRECTO',
     etiquetaColor: 'text-primary',
     codigo: 'ENLACE-FED-GN',
@@ -66,30 +65,32 @@ export function CapabilityCards() {
       {capacidades.map((cap) => (
         <StaggerItem
           key={cap.titulo}
-          className="group bg-surface-recessed hover:bg-surface border-outline-variant hover:border-outline flex flex-col justify-between rounded-sm border p-3 sm:p-4 transition-colors duration-200"
+          className="group bg-surface-recessed hover:bg-surface border-outline-variant hover:border-outline flex flex-col justify-between rounded-sm border p-3 transition-colors duration-200 sm:p-4"
         >
           <div className="flex items-start gap-2.5 sm:gap-3.5">
             <div
-              className={`bg-surface group-hover:bg-surface-bright border-outline-variant flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-sm border transition-colors ${cap.iconoColor}`}
+              className={`bg-surface group-hover:bg-surface-bright border-outline-variant flex h-8 w-8 shrink-0 items-center justify-center rounded-sm border transition-colors sm:h-9 sm:w-9 ${cap.iconoColor}`}
             >
               {cap.icono}
             </div>
             <div className="min-w-0">
-              <h3 className="text-on-surface text-sm sm:text-base font-semibold tracking-tight line-clamp-2">
+              <h3 className="text-on-surface line-clamp-2 text-sm font-semibold tracking-tight sm:text-base">
                 {cap.titulo}
               </h3>
-              <p className="text-on-surface-variant mt-1 sm:mt-1.5 text-[12px] sm:text-[13px] leading-relaxed line-clamp-3">
+              <p className="text-on-surface-variant mt-1 line-clamp-3 text-[12px] leading-relaxed sm:mt-1.5 sm:text-[13px]">
                 {cap.descripcion}
               </p>
             </div>
           </div>
-          <div className="border-outline-variant/70 mt-2.5 sm:mt-3.5 flex items-center justify-between gap-2 border-t pt-2">
+          <div className="border-outline-variant/70 mt-2.5 flex items-center justify-between gap-2 border-t pt-2 sm:mt-3.5">
             <span
-              className={`font-mono text-[8px] sm:text-[10px] font-semibold tracking-wider uppercase truncate ${cap.etiquetaColor}`}
+              className={`truncate font-mono text-[8px] font-semibold tracking-wider uppercase sm:text-[10px] ${cap.etiquetaColor}`}
             >
               {cap.etiqueta}
             </span>
-            <span className="text-on-surface-placeholder font-mono text-[8px] sm:text-[10px] flex-shrink-0">{cap.codigo}</span>
+            <span className="text-on-surface-placeholder flex-shrink-0 font-mono text-[8px] sm:text-[10px]">
+              {cap.codigo}
+            </span>
           </div>
         </StaggerItem>
       ))}

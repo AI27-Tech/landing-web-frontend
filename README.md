@@ -25,14 +25,14 @@ En esta etapa `src/App.tsx` es un **marcador de posición**, no la landing. Exis
 
 Vite 8 + React 19 + Tailwind 4 + TypeScript estricto. Sin router, sin data-fetching, sin librería de componentes, sin librería de estado.
 
-| Decisión                         | Por qué                                                                                                                                                          |
-| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Sin TanStack Router              | Una sola ruta con anclas. El router se paga en `routeTree.gen.ts` y code-splitting para una página. Si entran subpáginas legales, se agrega y se documenta aquí. |
-| Sin react-query / MSW            | El contenido es estático. No hay nada que pedirle a un servidor.                                                                                                 |
-| Sin librería de componentes      | Tailwind 4 sobre tokens propios. La landing no usa un solo componente de `@ai27-tech/ui`.                                                                        |
-| `lucide-react`                   | El único paquete de iconos en los repos de AI27. Los mocks usan Material Symbols, que es solo un artefacto del generador, no una decisión de código.             |
+| Decisión                         | Por qué                                                                                                                                                                         |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Sin TanStack Router              | Una sola ruta con anclas. El router se paga en `routeTree.gen.ts` y code-splitting para una página. Si entran subpáginas legales, se agrega y se documenta aquí.                |
+| Sin react-query / MSW            | El contenido es estático. No hay nada que pedirle a un servidor.                                                                                                                |
+| Sin librería de componentes      | Tailwind 4 sobre tokens propios. La landing no usa un solo componente de `@ai27-tech/ui`.                                                                                       |
+| `lucide-react`                   | El único paquete de iconos en los repos de AI27. Los mocks usan Material Symbols, que es solo un artefacto del generador, no una decisión de código.                            |
 | `motion` (motion.dev)            | Animaciones de scroll de la landing. Se admitió el 2026-09-30 para dar vida al scroll; sigue respetando `reduced-motion`. Ver abajo. El legacy `framer-motion` sigue prohibido. |
-| Una capa de indirección de color | Ver abajo.                                                                                                                                                       |
+| Una capa de indirección de color | Ver abajo.                                                                                                                                                                      |
 
 ## El sistema de color
 
@@ -129,11 +129,11 @@ En CI:
 
 Tres ramas de larga vida, con prefijo `lan-wf-`:
 
-| Rama       | Rol           | Despliegue automático                   |
-| ---------- | ------------- | --------------------------------------- |
-| `lan-wf-m` | principal     | `ai27-landing-page` (producción, live)  |
-| `lan-wf-d` | desarrollo    | No automatizado                         |
-| `lan-wf-q` | aseguramiento | `ai27-landing-page-qa` (QA)             |
+| Rama       | Rol           | Despliegue automático                  |
+| ---------- | ------------- | -------------------------------------- |
+| `lan-wf-m` | principal     | `ai27-landing-page` (producción, live) |
+| `lan-wf-d` | desarrollo    | No automatizado                        |
+| `lan-wf-q` | aseguramiento | `ai27-landing-page-qa` (QA)            |
 
 Todas las demás siguen GitHub Flow: `feat/hero`, `fix/anchors-nav`, `chore/tokens-sync`.
 

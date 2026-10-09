@@ -55,8 +55,7 @@ const metricas: Metrica[] = [
     valorColor: 'text-on-surface',
     hoverBorde: 'hover:border-primary/50',
     titulo: 'Tiempo Real',
-    descripcion:
-      'Procesamiento de eventos y distribución de datos hacia tu ERP/TMS corporativo.',
+    descripcion: 'Procesamiento de eventos y distribución de datos hacia tu ERP/TMS corporativo.',
   },
 ];
 

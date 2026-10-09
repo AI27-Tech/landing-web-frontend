@@ -1,6 +1,7 @@
 /*
- * Linea cronologica de evolucion: cuatro fases de AI27, de la reaccion en campo
- * a la anticipacion algoritmica. La Fase IV esta destacada (esmeralda, badge
+ * Linea cronologica de evolucion de la empresa: cuatro fases de AI27 en orden
+ * cronologico, de la reaccion en campo (Fase I, el origen) a la anticipacion
+ * algoritmica (Fase IV, la actual). La Fase IV esta destacada (esmeralda, badge
  * "IA activa" y nodo pulsante). Portada del mock Nocturne.
  *
  * La barra horizontal animada (timeline-stream) solo se muestra en desktop,
@@ -21,24 +22,15 @@ type Fase = {
 const fases: Fase[] = [
   {
     fase: 'Fase I',
-    categoria: 'IA generativa & predictiva',
-    titulo: 'Predicción e inteligencia de datos',
-    descripcion: 'Anticipación de riesgos.',
-    metaIzq: 'PREDICCIÓN ACTIVA',
-    metaDer: '99.84% EFICACIA',
-    destacada: true,
-  },
-  {
-    fase: 'Fase II',
-    categoria: 'Monitoreo',
-    titulo: 'Centro de monitoreo y GPS 24/7',
-    descripcion: 'Geocercas y seguimiento.',
-    metaIzq: 'SEGUIMIENTO GPS',
-    metaDer: 'NODO CENTRAL',
+    categoria: 'Origen',
+    titulo: 'Seguimiento en tiempo real y grupo de reacción',
+    descripcion: 'Custodia y respuesta en ruta.',
+    metaIzq: 'MODELO REACTIVO',
+    metaDer: 'TERRESTRE',
     destacada: false,
   },
   {
-    fase: 'Fase III',
+    fase: 'Fase II',
     categoria: 'Analítica',
     titulo: 'Datos y mapeo de riesgo',
     descripcion: 'Análisis de tramos críticos.',
@@ -47,13 +39,22 @@ const fases: Fase[] = [
     destacada: false,
   },
   {
-    fase: 'Fase IV',
-    categoria: 'Origen',
-    titulo: 'Seguimiento en tiempo real y grupo de reacción',
-    descripcion: 'Custodia y respuesta en ruta.',
-    metaIzq: 'MODELO REACTIVO',
-    metaDer: 'TERRESTRE',
+    fase: 'Fase III',
+    categoria: 'Monitoreo',
+    titulo: 'Centro de monitoreo y GPS 24/7',
+    descripcion: 'Geocercas y seguimiento.',
+    metaIzq: 'SEGUIMIENTO GPS',
+    metaDer: 'NODO CENTRAL',
     destacada: false,
+  },
+  {
+    fase: 'Fase IV',
+    categoria: 'IA generativa & predictiva',
+    titulo: 'Predicción e inteligencia de datos',
+    descripcion: 'Anticipación de riesgos.',
+    metaIzq: 'PREDICCIÓN ACTIVA',
+    metaDer: '99.84% EFICACIA',
+    destacada: true,
   },
 ];
 
@@ -126,7 +127,7 @@ export function EvolutionTimeline() {
       <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
         <div>
           <span className="text-primary font-mono text-xs tracking-wider uppercase">
-            Línea cronológica de evolución
+            Evolución de la empresa
           </span>
           <h3 className="text-on-surface text-xl font-bold tracking-tight">
             De la reacción en campo a la anticipación algorítmica
