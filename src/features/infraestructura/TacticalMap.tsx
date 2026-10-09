@@ -171,7 +171,14 @@ export function TacticalMap() {
               />
               <circle fill="#161b24" r="6" stroke="#7c9df0" strokeWidth="2" />
               <circle fill="#6ee7b7" r="2.5" />
-              <text fill="#e2e8f0" fontFamily="ui-monospace, monospace" fontSize="10" fontWeight="600" x="10" y="4">
+              <text
+                fill="#e2e8f0"
+                fontFamily="ui-monospace, monospace"
+                fontSize="10"
+                fontWeight="600"
+                x="10"
+                y="4"
+              >
                 CDMX
               </text>
             </g>
@@ -209,7 +216,14 @@ export function TacticalMap() {
             <g transform="translate(545.7, 204)">
               <circle fill="#6ee7b7" opacity="0.3" r="9" />
               <circle fill="#6ee7b7" r="4.5" />
-              <text fill="#6ee7b7" fontFamily="ui-monospace, monospace" fontSize="9.5" fontWeight="600" x="9" y="3">
+              <text
+                fill="#6ee7b7"
+                fontFamily="ui-monospace, monospace"
+                fontSize="9.5"
+                fontWeight="600"
+                x="9"
+                y="3"
+              >
                 N. LAREDO
               </text>
             </g>
@@ -261,7 +275,14 @@ export function TacticalMap() {
             <g transform="translate(415.6, 452.1)">
               <circle fill="#6ee7b7" opacity="0.2" r="6" />
               <circle fill="#6ee7b7" r="3.5" />
-              <text fill="#94a3b8" fontFamily="ui-monospace, monospace" fontSize="8.5" fontWeight="600" x="-58" y="4">
+              <text
+                fill="#94a3b8"
+                fontFamily="ui-monospace, monospace"
+                fontSize="8.5"
+                fontWeight="600"
+                x="-58"
+                y="4"
+              >
                 PTO. MZLO
               </text>
             </g>
@@ -285,7 +306,14 @@ export function TacticalMap() {
             <g transform="translate(358.7, 72.9)">
               <circle fill="#7c9df0" opacity="0" r="0" />
               <circle fill="#7c9df0" r="4" />
-              <text fill="#94a3b8" fontFamily="ui-monospace, monospace" fontSize="9" fontWeight="600" x="8" y="3">
+              <text
+                fill="#94a3b8"
+                fontFamily="ui-monospace, monospace"
+                fontSize="9"
+                fontWeight="600"
+                x="8"
+                y="3"
+              >
                 CD. JUÁREZ
               </text>
             </g>
@@ -293,7 +321,14 @@ export function TacticalMap() {
             <g transform="translate(71.8, 46.6)">
               <circle fill="#161b24" r="5" stroke="#7c9df0" strokeWidth="2" />
               <circle fill="#7c9df0" r="2" />
-              <text fill="#e2e8f0" fontFamily="ui-monospace, monospace" fontSize="9" fontWeight="600" x="8" y="3">
+              <text
+                fill="#e2e8f0"
+                fontFamily="ui-monospace, monospace"
+                fontSize="9"
+                fontWeight="600"
+                x="8"
+                y="3"
+              >
                 TIJUANA
               </text>
             </g>
@@ -309,7 +344,14 @@ export function TacticalMap() {
             <g transform="translate(718.5, 517.4)">
               <circle fill="#6ee7b7" opacity="0.3" r="9" />
               <circle fill="#6ee7b7" r="4.5" />
-              <text fill="#6ee7b7" fontFamily="ui-monospace, monospace" fontSize="9.5" fontWeight="600" x="9" y="3">
+              <text
+                fill="#6ee7b7"
+                fontFamily="ui-monospace, monospace"
+                fontSize="9.5"
+                fontWeight="600"
+                x="9"
+                y="3"
+              >
                 CHIAPAS
               </text>
             </g>

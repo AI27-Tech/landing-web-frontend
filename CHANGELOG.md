@@ -219,10 +219,11 @@ if (primera) {
 
 // Después:
 const primera = ids.find((id) => visibles.has(id));
-setActivo(primera ?? null);  // Devuelve null si no hay sección visible
+setActivo(primera ?? null); // Devuelve null si no hay sección visible
 ```
 
 **Resultado:**
+
 - En el Hero: ningún enlace resaltado ✓
 - Al bajar a Trayectoria: "Nosotros" se ilumina ✓
 - Al cambiar de sección: el resaltado se actualiza correctamente ✓
@@ -243,7 +244,7 @@ setActivo(primera ?? null);  // Devuelve null si no hay sección visible
 
 - **Problema:** El componente se desmontaba inmediatamente al cambiar el estado `abierto`, sin esperar a que la animación de `exit` terminara.
 - **Solución:** Se agregó `AnimatePresence` de `motion/react` alrededor del panel y los items del menú. Esto permite que Motion espere a que terminen las animaciones de salida antes de desmontar.
-- **Resultado:** 
+- **Resultado:**
   - Apertura: panel desliza hacia abajo, items entran con cascada ✓
   - Cierre: panel desliza hacia arriba, items salen con cascada, todo desaparece suavemente ✓
 
@@ -352,7 +353,7 @@ setActivo(primera ?? null);  // Devuelve null si no hay sección visible
 
 1. **Hero — Métricas de 3 columnas sin breakpoint responsive**
    - **Antes:** `grid grid-cols-3` (siempre 3 columnas) → se apretaban en móvil (iPhone SE 375px)
-   - **Después:** `grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3` → 1 col móvil, 2 tablet pequeño, 3 tablet+ 
+   - **Después:** `grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3` → 1 col móvil, 2 tablet pequeño, 3 tablet+
    - **Archivo:** `src/features/hero/HeroPitch.tsx`
 
 2. **Infraestructura — Ausencia de breakpoint `md:` en grid principal**
@@ -406,6 +407,7 @@ setActivo(primera ?? null);  // Devuelve null si no hay sección visible
 **Requisitos:** El secreto de repositorio `FIREBASE_SERVICE_ACCOUNT` debe existir y contener el JSON de la cuenta de servicio de Firebase. Si ya se utilizaba para `lan-wf-m`, no es necesario agregarlo de nuevo.
 
 **Flujo de despliegue:**
+
 - Cada push a `lan-wf-m` o `lan-wf-q` dispara el workflow.
 - Se ejecutan verificaciones (typecheck, lint, build); si todas pasan, se despliega.
 - Si alguna falla, no hay despliegue y el developer debe arreglar la rama y hacer push de nuevo.
@@ -827,6 +829,7 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 - `src/styles/globals.css`
 - `.kiro/steering/naming-conventions.md`
 - `.github/pull_request_template.md`
+
 ## 2026:10:01 15:45
 
 **Resumen:** Se auditoró y corrigió sistemáticamente el diseño responsivo en todos los breakpoints (375px a 1920px). Se eliminaron espacios fijos, se añadieron escalas de texto adaptativas, y se previno el solapamiento y hacinamiento de elementos en móvil.
@@ -836,6 +839,7 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 **Fixes por componente:**
 
 ### **CommandConsole.tsx** (Sección Monitoreo)
+
 - **Cabecera técnica:** Cambios de `text-[11px]` a `text-[10px] sm:text-[11px]` con espacios adaptativos (`gap-2 sm:gap-3`). Oculto "CABINA PRINCIPAL" en móvil.
 - **KPIs:** Grid de `grid-cols-1 sm:grid-cols-3` con `gap-2 sm:gap-3` y `truncate` en textos largos. Tamaños: `text-lg sm:text-xl` para valores.
 - **Log de eventos:** Contenedor con `lg:col-span-7`, espacios móviles `p-2.5 sm:p-3.5`, y texto con `line-clamp-2` para títulos y `line-clamp-1` para detalles.
@@ -843,11 +847,13 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 - **Barra de estado:** Reorganizada en `flex-col gap-2 sm:flex-row sm:gap-0` con texto comprimido ("DESPACHO:" sin "QUERÉTARO" en móvil).
 
 ### **Monitoreo.tsx** (Sección principal)
+
 - **Padding:** Añadido `px-3 sm:px-6` y `py-12 sm:py-16 md:py-24` para escalas verticales.
 - **Espacios internos:** Cambiados `space-y-14` a `space-y-10 sm:space-y-12 md:space-y-14`.
 - **Grid:** Espacios `gap-6 sm:gap-8` en la malla de CommandConsole + ReactionProtocol.
 
 ### **ReactionProtocol.tsx** (Protocolo del grupo de reacción)
+
 - **Cabecera:** Layout flexbox con `flex-col sm:flex-row` para acomodar en móvil.
 - **Título:** Reducido a `text-lg sm:text-xl` sin pérdida de legibilidad.
 - **Stepper:** Espacios `space-y-6 sm:space-y-8` entre pasos; pasos con `gap-3 sm:gap-4`.
@@ -855,6 +861,7 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 - **Banner:** Reorganizado con `flex-col sm:flex-row` y `gap-3 sm:gap-0` para flujo móvil.
 
 ### **InfraMetrics.tsx** (Métricas de infraestructura)
+
 - **Grid:** `grid-cols-2 gap-2 sm:gap-3 md:gap-4 md:grid-cols-4` para escala progresiva.
 - **Valores:** Tamaños `text-lg sm:text-2xl md:text-3xl lg:text-4xl` con `tabular-nums` preservado.
 - **Etiquetas:** `text-[8px] sm:text-[10px] md:text-[11px]` tracking-wider sin desbordamiento.
@@ -869,6 +876,7 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 5. **Visibilidad condicional:** `hidden sm:inline` para elementos innecesarios en móvil.
 
 **Breakpoints testeados:**
+
 - 375px (iPhone SE): Monitoreo, métricas, eventos sin solapamiento ✓
 - 390px (Android estándar): Idem ✓
 - 640px (sm): Transición a 2-3 columnas, espacios ampliados ✓
@@ -888,4 +896,3 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 - `CHANGELOG.md`
 
 **Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan sin errores. Dev server ejecutándose en http://localhost:5173.
-

@@ -60,42 +60,47 @@ const pasos: Paso[] = [
 export function ReactionProtocol() {
   return (
     <div className="space-y-3 sm:space-y-4 lg:col-span-5">
-      <div className="bg-surface border-outline-variant relative overflow-hidden rounded-lg border p-4 sm:p-6 shadow-xl shadow-black/40">
-        <div className="border-outline-variant flex flex-col items-start justify-between gap-3 border-b pb-3 sm:flex-row sm:items-center sm:pb-5 sm:gap-0">
+      <div className="bg-surface border-outline-variant relative overflow-hidden rounded-lg border p-4 shadow-xl shadow-black/40 sm:p-6">
+        <div className="border-outline-variant flex flex-col items-start justify-between gap-3 border-b pb-3 sm:flex-row sm:items-center sm:gap-0 sm:pb-5">
           <div>
-            <span className="text-primary block font-mono text-[9px] sm:text-[11px] tracking-wider uppercase">
+            <span className="text-primary block font-mono text-[9px] tracking-wider uppercase sm:text-[11px]">
               Protocolo Operativo
             </span>
-            <h3 className="text-on-surface text-lg sm:text-xl font-bold">Grupo de Reacción</h3>
+            <h3 className="text-on-surface text-lg font-bold sm:text-xl">Grupo de Reacción</h3>
           </div>
-          <div className="bg-surface-recessed border-outline-variant text-primary flex h-8 w-8 items-center justify-center rounded border flex-shrink-0">
+          <div className="bg-surface-recessed border-outline-variant text-primary flex h-8 w-8 flex-shrink-0 items-center justify-center rounded border">
             <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5" />
           </div>
         </div>
 
         {/* Stepper. La linea conectora no lleva variants, asi que el Stagger
             solo escalona los pasos; la linea aparece de una vez. */}
-        <Stagger className="relative mt-4 sm:mt-6 space-y-6 sm:space-y-8" each={0.12}>
+        <Stagger className="relative mt-4 space-y-6 sm:mt-6 sm:space-y-8" each={0.12}>
           {/* Linea vertical conectora */}
           <div className="absolute top-3 bottom-3 left-4 w-px bg-gradient-to-b from-[#7c9df0] via-[#2d3748] to-[#6ee7b7]" />
 
           {pasos.map((paso) => (
-            <StaggerItem key={paso.numero} className="group relative flex items-start gap-3 sm:gap-4">
+            <StaggerItem
+              key={paso.numero}
+              className="group relative flex items-start gap-3 sm:gap-4"
+            >
               <div
-                className={`bg-surface-recessed relative z-10 flex h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0 items-center justify-center rounded border font-mono text-xs font-bold transition-transform ${paso.numeroClase}`}
+                className={`bg-surface-recessed relative z-10 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded border font-mono text-xs font-bold transition-transform sm:h-8 sm:w-8 ${paso.numeroClase}`}
               >
                 {paso.numero}
               </div>
-              <div className="space-y-0.5 sm:space-y-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <h4 className="text-on-surface text-xs sm:text-sm font-semibold truncate">{paso.titulo}</h4>
+              <div className="min-w-0 space-y-0.5 sm:space-y-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h4 className="text-on-surface truncate text-xs font-semibold sm:text-sm">
+                    {paso.titulo}
+                  </h4>
                   <span
-                    className={`rounded border px-1 py-0.5 font-mono text-[8px] sm:text-[10px] flex-shrink-0 ${paso.badgeClase}`}
+                    className={`flex-shrink-0 rounded border px-1 py-0.5 font-mono text-[8px] sm:text-[10px] ${paso.badgeClase}`}
                   >
                     {paso.badge}
                   </span>
                 </div>
-                <p className="text-on-surface-variant text-[11px] sm:text-xs leading-relaxed line-clamp-3">
+                <p className="text-on-surface-variant line-clamp-3 text-[11px] leading-relaxed sm:text-xs">
                   {paso.descripcion}
                 </p>
               </div>
@@ -104,12 +109,14 @@ export function ReactionProtocol() {
         </Stagger>
 
         {/* Banner de cobertura */}
-        <div className="bg-surface-recessed border-outline-variant mt-6 sm:mt-8 flex flex-col items-start justify-between gap-3 rounded border p-3 sm:flex-row sm:items-center sm:p-3.5 text-xs">
+        <div className="bg-surface-recessed border-outline-variant mt-6 flex flex-col items-start justify-between gap-3 rounded border p-3 text-xs sm:mt-8 sm:flex-row sm:items-center sm:p-3.5">
           <div className="flex items-center gap-2 sm:gap-2.5">
-            <BadgeCheck className="text-primary h-4 w-4 sm:h-[18px] sm:w-[18px] flex-shrink-0" />
-            <span className="text-on-surface font-medium text-[11px] sm:text-xs">Ejes Carreteros Blindados</span>
+            <BadgeCheck className="text-primary h-4 w-4 flex-shrink-0 sm:h-[18px] sm:w-[18px]" />
+            <span className="text-on-surface text-[11px] font-medium sm:text-xs">
+              Ejes Carreteros Blindados
+            </span>
           </div>
-          <span className="text-success bg-success/10 border-success/20 rounded border px-1.5 py-0.5 font-mono text-[9px] sm:text-[11px] flex-shrink-0">
+          <span className="text-success bg-success/10 border-success/20 flex-shrink-0 rounded border px-1.5 py-0.5 font-mono text-[9px] sm:text-[11px]">
             99.2%
           </span>
         </div>

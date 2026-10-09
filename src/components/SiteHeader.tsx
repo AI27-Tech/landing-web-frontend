@@ -72,10 +72,12 @@ export function SiteHeader() {
           >
             Cotizar servicio
           </a>
-          <MobileNav enlaces={enlaces as unknown as Array<{ etiqueta: string; href: string }>} activo={activo} />
+          <MobileNav
+            enlaces={enlaces as unknown as Array<{ etiqueta: string; href: string }>}
+            activo={activo}
+          />
         </div>
       </div>
     </header>
   );
 }
-
