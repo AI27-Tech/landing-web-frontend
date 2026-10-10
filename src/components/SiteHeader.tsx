@@ -18,7 +18,8 @@ const enlaces = [
   { etiqueta: 'Nosotros', href: '#nosotros' },
   { etiqueta: 'Infraestructura', href: '#infraestructura' },
   { etiqueta: 'Monitoreo', href: '#monitoreo' },
-  { etiqueta: 'Datos', href: '#datos' },
+  // Enlace a '#datos' retirado temporalmente: la seccion Datos e IA quedo
+  // desvinculada de la pagina (ver App.tsx). Restaurar junto con <Datos />.
 ] as const;
 
 const ids = enlaces.map((enlace) => enlace.href.slice(1));
@@ -71,10 +72,12 @@ export function SiteHeader() {
           >
             Cotizar servicio
           </a>
-          <MobileNav enlaces={enlaces as unknown as Array<{ etiqueta: string; href: string }>} activo={activo} />
+          <MobileNav
+            enlaces={enlaces as unknown as Array<{ etiqueta: string; href: string }>}
+            activo={activo}
+          />
         </div>
       </div>
     </header>
   );
 }
-

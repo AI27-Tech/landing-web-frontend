@@ -110,7 +110,7 @@ const viajes: Viaje[] = [
     estado: (
       <span className="bg-surface text-success border-outline-variant inline-flex items-center gap-1 rounded border px-2 py-0.5 font-mono text-[11px]">
         <Check className="h-3 w-3" />
-        Telemetría nominal 100%
+        Monitoreo nominal 100%
       </span>
     ),
   },

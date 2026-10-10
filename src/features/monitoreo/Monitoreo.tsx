@@ -10,32 +10,29 @@ import { Reveal } from '@/components/motion/Reveal';
 import { CommandConsole } from '@/features/monitoreo/CommandConsole';
 import { MonitoreoCapabilities } from '@/features/monitoreo/MonitoreoCapabilities';
 import { MonitoreoHeader } from '@/features/monitoreo/MonitoreoHeader';
-import { ReactionProtocol } from '@/features/monitoreo/ReactionProtocol';
 
 export function Monitoreo() {
   return (
     <section
       id="monitoreo"
-      className="bg-engineering-grid-faint border-outline-variant/50 relative w-full overflow-hidden border-y py-12 px-4 sm:py-16 md:py-24 md:px-0"
+      className="bg-engineering-grid-faint border-outline-variant/50 relative w-full overflow-hidden border-y px-4 py-12 sm:py-16 md:px-0 md:py-24"
     >
       {/* Halos atmosfericos */}
       <div className="bg-primary/[0.035] pointer-events-none absolute top-10 left-1/4 h-[450px] w-[650px] -translate-x-1/2 rounded-full blur-[140px]" />
       <div className="bg-success/[0.025] pointer-events-none absolute right-10 bottom-1/4 h-[550px] w-[550px] rounded-full blur-[160px]" />
 
-      <div className="relative mx-auto max-w-7xl space-y-10 sm:space-y-12 md:space-y-14 px-3 sm:px-6">
+      <div className="relative mx-auto max-w-7xl space-y-10 px-3 sm:space-y-12 sm:px-6 md:space-y-14">
         <Reveal>
           <MonitoreoHeader />
         </Reveal>
 
-        <div className="grid grid-cols-1 items-start gap-6 sm:gap-8 lg:grid-cols-12">
-          <Reveal from="left" className="lg:col-span-7">
-            <CommandConsole />
-          </Reveal>
-          {/* ReactionProtocol (stepper con Stagger) y MonitoreoCapabilities
-              (grilla con Stagger) gestionan su propia entrada; no se envuelven
-              en Reveal para no solapar dos animaciones de opacidad. */}
-          <ReactionProtocol />
-        </div>
+        {/* La tarjeta "Protocolo Operativo / Grupo de Reaccion"
+            (ReactionProtocol) se retiro temporalmente; la consola de comando
+            ocupa el ancho completo. Restaurar reintroduciendo el grid de dos
+            columnas y <ReactionProtocol /> con col-span-5. */}
+        <Reveal from="left">
+          <CommandConsole />
+        </Reveal>
 
         <MonitoreoCapabilities />
       </div>

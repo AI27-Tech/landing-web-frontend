@@ -6,8 +6,8 @@
  */
 import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
+import { Clientes } from '@/features/clientes/Clientes';
 import { Contacto } from '@/features/contacto/Contacto';
-import { Datos } from '@/features/datos/Datos';
 import { Hero } from '@/features/hero/Hero';
 import { Infraestructura } from '@/features/infraestructura/Infraestructura';
 import { Monitoreo } from '@/features/monitoreo/Monitoreo';
@@ -20,9 +20,9 @@ export function App() {
       <main className="flex flex-grow flex-col">
         <Hero />
         <Trayectoria />
+        <Clientes />
         <Infraestructura />
         <Monitoreo />
-        <Datos />
         <Contacto />
       </main>
       <SiteFooter />

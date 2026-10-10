@@ -1,6 +1,7 @@
 /*
- * Linea cronologica de evolucion: cuatro fases de AI27, de la reaccion en campo
- * a la anticipacion algoritmica. La Fase IV esta destacada (esmeralda, badge
+ * Linea cronologica de evolucion de la empresa: cuatro fases de AI27 en orden
+ * cronologico, de la reaccion en campo (Fase I, el origen) a la anticipacion
+ * algoritmica (Fase IV, la actual). La Fase IV esta destacada (esmeralda, badge
  * "IA activa" y nodo pulsante). Portada del mock Nocturne.
  *
  * La barra horizontal animada (timeline-stream) solo se muestra en desktop,
@@ -22,7 +23,7 @@ const fases: Fase[] = [
   {
     fase: 'Fase I',
     categoria: 'Origen',
-    titulo: 'Seguridad física y grupo de reacción',
+    titulo: 'Seguimiento en tiempo real y grupo de reacción',
     descripcion: 'Custodia y respuesta en ruta.',
     metaIzq: 'MODELO REACTIVO',
     metaDer: 'TERRESTRE',
@@ -30,20 +31,20 @@ const fases: Fase[] = [
   },
   {
     fase: 'Fase II',
-    categoria: 'Monitoreo',
-    titulo: 'Centro de monitoreo y GPS 24/7',
-    descripcion: 'Geocercas y seguimiento.',
-    metaIzq: 'TELEMETRÍA GPS',
-    metaDer: 'NODO CENTRAL',
-    destacada: false,
-  },
-  {
-    fase: 'Fase III',
     categoria: 'Analítica',
     titulo: 'Datos y mapeo de riesgo',
     descripcion: 'Análisis de tramos críticos.',
     metaIzq: 'ANÁLISIS ESTADÍSTICO',
     metaDer: 'MAPEO NACIONAL',
+    destacada: false,
+  },
+  {
+    fase: 'Fase III',
+    categoria: 'Monitoreo',
+    titulo: 'Centro de monitoreo y GPS 24/7',
+    descripcion: 'Geocercas y seguimiento.',
+    metaIzq: 'SEGUIMIENTO GPS',
+    metaDer: 'NODO CENTRAL',
     destacada: false,
   },
   {
@@ -60,7 +61,7 @@ const fases: Fase[] = [
 function FaseCard({ fase }: { fase: Fase }) {
   if (fase.destacada) {
     return (
-      <div className="card-tactical bg-surface/90 border-success/50 ring-success/20 flex flex-col justify-between rounded border p-5 shadow-[0_0_15px_-3px_rgba(110,231,183,0.15)] ring-1 backdrop-blur-sm">
+      <div className="card-tactical bg-surface/90 border-success/50 ring-success/20 flex h-full min-h-[232px] flex-col justify-between rounded border p-5 shadow-[0_0_15px_-3px_rgba(110,231,183,0.15)] ring-1 backdrop-blur-sm">
         <div>
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -78,19 +79,21 @@ function FaseCard({ fase }: { fase: Fase }) {
           <div className="text-success mb-1 font-mono text-[11px] tracking-wider uppercase">
             {fase.categoria}
           </div>
-          <h4 className="text-on-surface mb-2 text-base font-semibold">{fase.titulo}</h4>
-          <p className="text-on-surface-variant text-sm leading-relaxed">{fase.descripcion}</p>
+          <h4 className="text-on-surface text-base font-semibold">{fase.titulo}</h4>
         </div>
-        <div className="border-outline-variant/60 mt-4 flex items-center justify-between border-t pt-3 font-mono text-[11px]">
-          <span className="text-on-surface-variant/70">{fase.metaIzq}</span>
-          <span className="text-success font-medium">{fase.metaDer}</span>
+        <div>
+          <p className="text-on-surface-variant text-sm leading-relaxed">{fase.descripcion}</p>
+          <div className="border-outline-variant/60 mt-4 flex items-center justify-between border-t pt-3 font-mono text-[11px]">
+            <span className="text-on-surface-variant/70">{fase.metaIzq}</span>
+            <span className="text-success font-medium">{fase.metaDer}</span>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="card-tactical group bg-surface/80 border-outline-variant flex flex-col justify-between rounded border p-5 backdrop-blur-sm">
+    <div className="card-tactical group bg-surface/80 border-outline-variant flex h-full min-h-[232px] flex-col justify-between rounded border p-5 backdrop-blur-sm">
       <div>
         <div className="mb-4 flex items-center justify-between">
           <span className="text-primary font-mono text-xl font-bold tracking-tight">
@@ -103,14 +106,16 @@ function FaseCard({ fase }: { fase: Fase }) {
         <div className="text-on-surface-variant mb-1 font-mono text-[11px] tracking-wider uppercase">
           {fase.categoria}
         </div>
-        <h4 className="text-on-surface group-hover:text-primary mb-2 text-base font-semibold transition-colors">
+        <h4 className="text-on-surface group-hover:text-primary text-base font-semibold transition-colors">
           {fase.titulo}
         </h4>
-        <p className="text-on-surface-variant text-sm leading-relaxed">{fase.descripcion}</p>
       </div>
-      <div className="border-outline-variant/60 text-on-surface-variant/70 mt-4 flex items-center justify-between border-t pt-3 font-mono text-[11px]">
-        <span>{fase.metaIzq}</span>
-        <span className="text-on-surface">{fase.metaDer}</span>
+      <div>
+        <p className="text-on-surface-variant text-sm leading-relaxed">{fase.descripcion}</p>
+        <div className="border-outline-variant/60 text-on-surface-variant/70 mt-4 flex items-center justify-between border-t pt-3 font-mono text-[11px]">
+          <span>{fase.metaIzq}</span>
+          <span className="text-on-surface">{fase.metaDer}</span>
+        </div>
       </div>
     </div>
   );
@@ -122,7 +127,7 @@ export function EvolutionTimeline() {
       <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
         <div>
           <span className="text-primary font-mono text-xs tracking-wider uppercase">
-            Línea cronológica de evolución
+            Evolución de la empresa
           </span>
           <h3 className="text-on-surface text-xl font-bold tracking-tight">
             De la reacción en campo a la anticipación algorítmica
@@ -130,7 +135,7 @@ export function EvolutionTimeline() {
         </div>
         <div className="text-on-surface-variant/70 flex items-center gap-2 font-mono text-xs">
           <span className="bg-success h-2 w-2 animate-pulse rounded-full" />
-          <span>FLUJO VECTORIAL DE TELEMETRÍA</span>
+          <span>FLUJO VECTORIAL DE DATOS</span>
         </div>
       </div>
 

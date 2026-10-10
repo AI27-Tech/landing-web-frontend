@@ -25,14 +25,14 @@ En esta etapa `src/App.tsx` es un **marcador de posición**, no la landing. Exis
 
 Vite 8 + React 19 + Tailwind 4 + TypeScript estricto. Sin router, sin data-fetching, sin librería de componentes, sin librería de estado.
 
-| Decisión                         | Por qué                                                                                                                                                          |
-| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Sin TanStack Router              | Una sola ruta con anclas. El router se paga en `routeTree.gen.ts` y code-splitting para una página. Si entran subpáginas legales, se agrega y se documenta aquí. |
-| Sin react-query / MSW            | El contenido es estático. No hay nada que pedirle a un servidor.                                                                                                 |
-| Sin librería de componentes      | Tailwind 4 sobre tokens propios. La landing no usa un solo componente de `@ai27-tech/ui`.                                                                        |
-| `lucide-react`                   | El único paquete de iconos en los repos de AI27. Los mocks usan Material Symbols, que es solo un artefacto del generador, no una decisión de código.             |
+| Decisión                         | Por qué                                                                                                                                                                         |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Sin TanStack Router              | Una sola ruta con anclas. El router se paga en `routeTree.gen.ts` y code-splitting para una página. Si entran subpáginas legales, se agrega y se documenta aquí.                |
+| Sin react-query / MSW            | El contenido es estático. No hay nada que pedirle a un servidor.                                                                                                                |
+| Sin librería de componentes      | Tailwind 4 sobre tokens propios. La landing no usa un solo componente de `@ai27-tech/ui`.                                                                                       |
+| `lucide-react`                   | El único paquete de iconos en los repos de AI27. Los mocks usan Material Symbols, que es solo un artefacto del generador, no una decisión de código.                            |
 | `motion` (motion.dev)            | Animaciones de scroll de la landing. Se admitió el 2026-09-30 para dar vida al scroll; sigue respetando `reduced-motion`. Ver abajo. El legacy `framer-motion` sigue prohibido. |
-| Una capa de indirección de color | Ver abajo.                                                                                                                                                       |
+| Una capa de indirección de color | Ver abajo.                                                                                                                                                                      |
 
 ## El sistema de color
 
@@ -129,11 +129,11 @@ En CI:
 
 Tres ramas de larga vida, con prefijo `lan-wf-`:
 
-| Rama       | Rol           | Despliegue automático                   |
-| ---------- | ------------- | --------------------------------------- |
-| `lan-wf-m` | principal     | `ai27-landing-page` (producción, live)  |
-| `lan-wf-d` | desarrollo    | No automatizado                         |
-| `lan-wf-q` | aseguramiento | `ai27-landing-page-qa` (QA)             |
+| Rama       | Rol           | Despliegue automático                  |
+| ---------- | ------------- | -------------------------------------- |
+| `lan-wf-m` | principal     | `ai27-landing-page` (producción, live) |
+| `lan-wf-d` | desarrollo    | No automatizado                        |
+| `lan-wf-q` | aseguramiento | `ai27-landing-page-qa` (QA)            |
 
 Todas las demás siguen GitHub Flow: `feat/hero`, `fix/anchors-nav`, `chore/tokens-sync`.
 
@@ -153,7 +153,7 @@ Si el build falla, no hay despliegue; el developer debe arreglar la rama y hacer
 
 ## Decisiones abiertas
 
-- **A dónde va el formulario de cotización.** Sigue sin resolverse. El formulario ya está portado en `src/features/contacto/QuoteForm.tsx`, y su handler `manejarEnvio` conserva el comportamiento del mock —`event.preventDefault()` y un `alert()`— como placeholder explícito. No hay backend. Hay que decidir entre un endpoint propio, un servicio de formularios, o `mailto:`. Cuando se decida, ese handler es el único punto que cambia.
+- **A dónde va el formulario de cotización.** Resuelto por ahora con `mailto:` (sin backend, el sitio sigue siendo estático). Al enviar, `manejarEnvio` en `src/features/contacto/QuoteForm.tsx` abre el cliente de correo del usuario con un mensaje prellenado a partir de los campos. El destino se reparte entre las dos cuentas de ventas (`DESTINOS = ['cmatus@ai27.com', 'esamper@ai27.com']`) con un **round-robin por navegador** (contador en `localStorage`, clave `ai27:cotizacion:contador`) de **arranque aleatorio**: cada visitante alterna estrictamente entre una cuenta y la otra, pero no todos empiezan por la misma, para que el reparto quede lo más parejo posible sin servidor. Limitación conocida: el reparto solo se cuenta por navegador, no hay un contador global; si en el futuro hay backend, `manejarEnvio` sigue siendo el único punto que cambia.
 - **`og:image` / `twitter:image`.** Está en el `TODO` de `index.html`. Necesita el recorte real de la marca, no una captura del mock.
 - **Contenido editable.** Hoy el copy vive en los mocks y al portarlo ira a los componentes. Si el copy va a cambiar seguido, la alternativa es un módulo `src/content/` con los textos separados del marcado. No se ha decidido.
 - **Si entran subpáginas** (Privacidad, Términos, Seguridad, Compliance — los cuatro enlaces del footer), hay que instalar TanStack Router. La decisión actual de no usar router es válida solo mientras sea una sola página.

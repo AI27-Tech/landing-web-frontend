@@ -25,10 +25,10 @@ const capacidades: Capacidad[] = [
     hoverBorde: 'hover:border-primary/50',
     hoverTitulo: 'group-hover:text-primary',
     titulo: '1. Visibilidad total del viaje',
-    badge: 'TELEMETRÍA',
+    badge: 'SEGUIMIENTO',
     badgeClase: 'text-on-surface-variant border-outline-variant',
     descripcion:
-      'Seguimiento granular y estado operativo de cada embarque en tiempo real, telemetría continua y trazabilidad de extremo a extremo.',
+      'Seguimiento granular y estado operativo de cada embarque en tiempo real, monitoreo continuo y trazabilidad de extremo a extremo.',
   },
   {
     icono: <BrainCircuit className="h-5 w-5" />,
@@ -71,28 +71,28 @@ export function DataCapabilities() {
       {capacidades.map((cap) => (
         <StaggerItem
           key={cap.titulo}
-          className={`group bg-surface hover:bg-surface-bright border-outline-variant relative rounded-lg border p-3 sm:p-4 md:p-5 shadow-sm transition-colors duration-200 ${cap.hoverBorde}`}
+          className={`group bg-surface hover:bg-surface-bright border-outline-variant relative rounded-lg border p-3 shadow-sm transition-colors duration-200 sm:p-4 md:p-5 ${cap.hoverBorde}`}
         >
           <div className="flex items-start gap-2.5 sm:gap-3.5 md:gap-4">
             <div
-              className={`bg-surface-recessed border-outline-variant flex h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10 flex-shrink-0 items-center justify-center rounded border transition-colors ${cap.iconoColor}`}
+              className={`bg-surface-recessed border-outline-variant flex h-8 w-8 flex-shrink-0 items-center justify-center rounded border transition-colors sm:h-9 sm:w-9 md:h-10 md:w-10 ${cap.iconoColor}`}
             >
               {cap.icono}
             </div>
             <div className="min-w-0 flex-1">
-              <div className="mb-1 sm:mb-1.5 flex items-start justify-between gap-2 flex-wrap">
+              <div className="mb-1 flex flex-wrap items-start justify-between gap-2 sm:mb-1.5">
                 <h3
-                  className={`text-on-surface text-sm sm:text-base font-semibold tracking-tight transition-colors ${cap.hoverTitulo} line-clamp-2`}
+                  className={`text-on-surface text-sm font-semibold tracking-tight transition-colors sm:text-base ${cap.hoverTitulo} line-clamp-2`}
                 >
                   {cap.titulo}
                 </h3>
                 <span
-                  className={`bg-surface-recessed shrink-0 rounded border px-1 py-0.5 font-mono text-[8px] sm:text-[10px] tracking-wider uppercase ${cap.badgeClase}`}
+                  className={`bg-surface-recessed shrink-0 rounded border px-1 py-0.5 font-mono text-[8px] tracking-wider uppercase sm:text-[10px] ${cap.badgeClase}`}
                 >
                   {cap.badge}
                 </span>
               </div>
-              <p className="text-on-surface-variant text-[12px] sm:text-[13px] leading-snug sm:leading-normal font-normal line-clamp-3">
+              <p className="text-on-surface-variant line-clamp-3 text-[12px] leading-snug font-normal sm:text-[13px] sm:leading-normal">
                 {cap.descripcion}
               </p>
             </div>
@@ -101,9 +101,9 @@ export function DataCapabilities() {
       ))}
 
       {/* Micro-badge de integracion (sin variants: aparece sin escalonar). */}
-      <div className="bg-surface-recessed/80 border-outline-variant/60 text-on-surface-variant mt-1.5 flex flex-col items-start justify-between rounded border px-2.5 py-2 sm:px-3 sm:flex-row sm:items-center font-mono text-[9px] sm:text-[11px] gap-2 sm:gap-0">
+      <div className="bg-surface-recessed/80 border-outline-variant/60 text-on-surface-variant mt-1.5 flex flex-col items-start justify-between gap-2 rounded border px-2.5 py-2 font-mono text-[9px] sm:flex-row sm:items-center sm:gap-0 sm:px-3 sm:text-[11px]">
         <span className="flex items-center gap-1.5 truncate">
-          <BadgeCheck className="text-success h-3 w-3 sm:h-3.5 sm:w-3.5 flex-shrink-0" />
+          <BadgeCheck className="text-success h-3 w-3 flex-shrink-0 sm:h-3.5 sm:w-3.5" />
           <span className="truncate">API Ready (SAP/Oracle)</span>
         </span>
         <span className="text-primary flex-shrink-0">REST</span>

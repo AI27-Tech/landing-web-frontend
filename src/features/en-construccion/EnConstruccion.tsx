@@ -20,8 +20,8 @@ export function EnConstruccion() {
         </h1>
 
         <p className="text-on-surface-variant text-base leading-relaxed sm:text-lg">
-          Estamos preparando esta página. Vuelve pronto para conocer el servicio
-          de seguridad para transporte de carga de AI27.
+          Estamos preparando esta página. Vuelve pronto para conocer el servicio de seguridad para
+          transporte de carga de AI27.
         </p>
       </div>
     </main>

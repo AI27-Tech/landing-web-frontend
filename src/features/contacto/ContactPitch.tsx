@@ -6,12 +6,10 @@
  * literales ("[telefono de contacto]"): son datos pendientes de definir, no se
  * inventan.
  */
-import { Headset, Phone } from 'lucide-react';
+import { Phone } from 'lucide-react';
 
 const metricas = [
-  { valor: '< 2 hrs', etiqueta: 'Respuesta de análisis', color: 'text-success' },
-  { valor: '99.8%', etiqueta: 'SLA neutralización', color: 'text-on-surface' },
-  { valor: 'API / TMS', etiqueta: 'Despliegue ágil', color: 'text-primary' },
+  { valor: '< 24 hrs', etiqueta: 'Respuesta de cotización', color: 'text-success' },
 ] as const;
 
 export function ContactPitch() {
@@ -30,12 +28,12 @@ export function ContactPitch() {
         <p className="text-on-surface-variant text-sm leading-relaxed sm:text-base">
           Integra analítica predictiva, custodia satelital 24/7 y reacción táctica inmediata en tus
           corredores logísticos. Obtén una propuesta personalizada para el volumen y riesgo de tu
-          operación en menos de 2 horas.
+          operación en menos de 24 horas.
         </p>
       </div>
 
       {/* Metricas de servicio */}
-      <div className="border-outline-variant/80 bg-background/30 grid grid-cols-3 gap-3 rounded border-y p-3">
+      <div className="border-outline-variant/80 bg-background/30 grid grid-cols-1 gap-3 rounded border-y p-3">
         {metricas.map((m, i) => (
           <div
             key={m.etiqueta}
@@ -57,25 +55,24 @@ export function ContactPitch() {
       <div className="space-y-4 pt-2">
         <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
           <a
-            className="border-outline hover:border-primary bg-surface hover:bg-surface-bright text-on-surface inline-flex items-center justify-center gap-2 rounded border px-5 py-3 text-center text-[13px] font-semibold transition-all duration-150 active:scale-[0.99]"
-            href="#contacto-directo"
-          >
-            <Headset className="text-primary h-[18px] w-[18px]" />
-            <span>Hablar con un asesor experto</span>
-          </a>
-          {/* TODO: numero real cuando se defina el dato de contacto (placeholder del mock). */}
-          <a
             className="border-outline-variant hover:border-outline bg-background hover:bg-surface-recessed text-on-surface-variant hover:text-on-surface inline-flex items-center justify-center gap-2 rounded border px-4 py-3 text-center text-[13px] font-medium transition-all duration-150 active:scale-[0.99]"
-            href="#contacto-directo"
+            href="tel:+525560827466"
           >
             <Phone className="text-success h-[18px] w-[18px]" />
-            <span>[teléfono de contacto]</span>
+            <span>Ventas: (55) 6082 7466</span>
+          </a>
+          <a
+            className="border-outline hover:border-primary bg-surface hover:bg-surface-bright text-on-surface inline-flex items-center justify-center gap-2 rounded border px-5 py-3 text-center text-[13px] font-semibold transition-all duration-150 active:scale-[0.99]"
+            href="tel:+525549090269"
+          >
+            <Phone className="text-primary h-[18px] w-[18px]" />
+            <span>Atención comercial: (55) 4909 0269</span>
           </a>
         </div>
 
         <div className="text-on-surface-variant flex items-center gap-2 text-xs">
           <span className="bg-success inline-block h-2 w-2 rounded-full" />
-          <span className="text-on-surface-subtle">Disponibilidad 24/7 C4:</span>
+          <span className="text-on-surface-subtle">Disponibilidad 24/7:</span>
           <span>Guardia táctica y despacho de custodias activas a nivel nacional</span>
         </div>
       </div>
