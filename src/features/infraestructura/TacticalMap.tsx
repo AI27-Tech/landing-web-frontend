@@ -1,7 +1,7 @@
 /*
- * Panel del mapa tactico de corredores troncales de Mexico. Portado fiel del
- * mock Nocturne: cabecera HUD, silueta SVG del pais con corredores primarios,
- * nodos con etiquetas y checkpoints, HUDs flotantes y leyenda.
+ * Panel del mapa tactico de corredores troncales de Mexico. Silueta nacional
+ * geograficamente fiel: contorno real del pais (proyeccion Mercator) con los
+ * corredores primarios dibujados sobre las posiciones reales de las ciudades.
  *
  * NOTA DE COLOR: como en el fondo del Hero, el SVG y sus filtros usan valores
  * hex directos porque un atributo `stroke`/`fill` no puede leer una utilidad de
@@ -9,9 +9,14 @@
  * outline #2d3748, surface-recessed #161b24). El landmass usa #181f2a, un tono
  * intermedio propio del mock sin rol equivalente; se conserva como valor.
  *
- * El barrido de radar y el pulso de nodos los apaga la guarda de reduced-motion.
+ * NOTA DE GEOMETRIA: el contorno (path "MX_OUTLINE") y las coordenadas de los
+ * nodos se generaron juntos con la misma proyeccion ajustada al viewBox
+ * 0 0 960 620, por lo que outline y ciudades quedan alineados.
  */
-import { Waypoints } from 'lucide-react';
+import type { CSSProperties } from 'react';
+
+const MX_OUTLINE =
+  'M134.5 40L106.7 42.4L86.9 44.2L75.2 45.4L69.3 46.0L68.9 47.1L69.4 49.9L71.4 54.7L73.9 55.8L74.9 61.4L76.1 63.9L78.3 64.7L78.8 66.7L82.4 68.9L81.7 71.0L79.5 70.3L78.7 71.2L81.2 74.0L80.4 77.3L82.4 79.8L84.2 81.2L90.5 89.3L90.0 96.1L92.0 97.1L94.2 99.4L97.7 101.3L98.0 103.3L97.7 109.9L96.0 110.2L96.0 111.5L98.0 112.3L99.4 115.1L100.7 115.6L102.0 114.0L104.5 116.6L104.2 119.3L105.2 122.9L104.4 127.8L105.8 128.1L107.5 130.8L107.1 134.1L112.1 138.1L114.8 139.3L119.8 141.7L120.5 144.2L127.1 146.0L131.6 151.4L135.3 155.3L137.8 159.0L141.3 160.9L144.4 165.9L146.2 168.1L148.7 168.3L148.4 169.5L150.1 171.9L151.4 174.3L149.8 180.5L151.6 181.7L147.5 187.1L144.7 190.9L141.0 193.9L138.1 193.8L126.4 191.5L123.9 191.9L124.8 195.8L127.2 197.4L129.6 199.6L131.7 200.2L131.8 201.6L135.8 203.7L139.8 206.5L139.9 211.7L142.0 213.6L144.4 215.1L146.6 215.8L147.0 214.6L149.9 215.4L152.4 218.4L154.4 220.1L155.4 219.1L157.1 220.1L159.1 221.4L160.3 225.0L164.7 228.3L167.2 227.3L168.2 225.4L171.4 226.0L172.7 227.5L178.2 230.4L188.5 239.3L190.6 239.7L194.0 242.1L196.0 241.6L197.5 242.6L198.9 247.0L201.3 248.0L203.8 254.3L204.4 259.9L203.6 271.7L199.2 284.6L201.0 286.4L202.1 285.6L203.6 287.3L203.0 287.9L203.0 289.2L204.9 291.6L206.4 292.7L206.8 291.6L206.1 290.7L205.2 288.9L205.5 286.9L207.8 287.0L209.9 287.5L212.1 290.7L212.1 292.3L210.7 292.2L207.5 292.4L207.3 293.4L213.4 297.0L215.3 299.6L216.8 298.5L218.8 298.1L222.2 299.0L227.1 301.2L232.4 304.5L241.6 313.9L245.6 317.5L251.6 320.3L254.5 324.0L257.0 328.6L259.3 338.6L262.5 341.7L264.5 341.7L266.5 340.8L267.8 339.3L269.5 338.2L270.7 337.0L274.1 335.6L276.9 332.6L277.7 329.5L278.2 326.9L278.1 324.6L276.6 322.4L276.9 321.3L275.8 320.5L270.6 318.2L270.5 314.3L268.2 311.5L266.7 309.6L267.7 307.7L266.8 306.2L265.0 306.8L262.6 306.6L262.2 303.2L257.1 299.5L256.1 297.7L254.4 297.3L252.8 298.2L252.5 300.2L253.5 302.6L251.0 302.5L248.0 301.8L246.1 300.3L244.9 298.7L244.2 296.6L243.9 294.2L242.6 292.1L242.7 290.1L243.1 288.5L244.9 286.4L244.6 283.8L242.2 278.8L241.0 277.1L240.3 276.9L239.2 276.0L238.1 274.1L238.0 272.7L236.9 271.1L237.1 269.6L235.9 268.0L234.8 265.0L235.1 262.9L232.8 262.4L231.6 261.8L232.0 261.0L230.6 260.3L229.6 257.5L229.3 256.4L228.2 256.1L227.1 255.2L227.3 253.7L226.6 253.2L226.5 251.6L225.8 250.5L226.3 249.5L226.3 247.7L227.0 246.3L228.3 245.7L228.2 244.3L227.5 244.1L226.9 245.1L226.1 244.9L224.8 241.1L225.1 239.9L224.7 238.0L222.8 235.9L223.4 233.5L223.2 232.3L220.1 231.6L220.3 227.5L212.7 221.1L211.7 221.9L212.3 224.5L212.6 226.9L213.5 228.7L216.4 231.3L214.9 231.7L212.6 228.6L212.0 227.2L211.9 225.9L211.9 224.8L211.7 223.6L211.1 222.3L210.4 220.6L208.6 218.9L208.9 217.8L210.3 218.0L211.3 217.6L210.0 215.5L207.5 214.5L203.2 211.9L203.5 210.9L202.1 208.8L200.2 205.3L198.8 201.0L194.0 198.0L190.0 195.3L188.2 191.7L186.8 184.7L187.4 181.7L185.4 178.8L185.9 174.5L184.8 173.1L182.1 173.3L178.8 172.2L175.7 162.9L174.3 161.4L172.2 162.7L171.3 159.7L169.6 158.2L168.2 154.5L166.6 153.2L164.1 151.1L165.0 149.8L163.7 148.0L158.2 142.3L147.5 132.9L145.1 132.9L144.0 131.0L143.8 128.4L143.6 126.1L142.4 125.5L141.5 123.8L138.7 122.5L137.2 120.5L137.2 117.2L137.5 110.2L136.0 107.0L135.3 96.6L132.6 94.8L132.5 93.1L130.8 90.0L131.1 85.0L131.7 78.0L133.5 74.1L137.1 74.7L138.1 72.7L140.7 75.0L146.3 78.2L151.6 79.8L154.1 79.4L155.9 76.4L162.3 79.4L163.4 82.2L163.0 83.8L163.7 85.3L176.1 88.7L179.1 91.1L178.6 93.9L176.9 91.9L177.6 95.9L176.7 100.0L177.4 103.8L180.6 109.7L184.2 114.3L184.1 118.0L186.8 120.3L186.5 123.7L187.2 125.5L187.2 129.3L189.1 129.9L191.5 135.3L195.5 140.5L196.8 143.1L196.1 145.9L197.4 147.7L199.2 148.8L199.5 147.7L200.9 148.1L201.4 150.2L200.0 149.7L198.3 150.0L196.2 150.4L194.7 151.2L194.0 154.2L194.0 158.9L191.4 160.9L193.8 163.1L197.5 165.0L200.3 167.0L200.7 166.0L201.8 164.9L201.5 162.7L202.8 160.4L203.9 159.1L207.7 162.9L208.3 165.0L212.9 169.4L215.1 174.1L221.7 177.3L225.3 182.9L229.0 188.6L231.6 190.4L235.0 190.9L236.4 192.6L238.6 193.3L240.1 191.5L242.1 191.4L245.3 193.2L244.9 195.3L244.5 198.3L244.6 202.5L245.3 207.4L245.3 209.4L249.7 211.1L252.5 214.3L257.1 215.7L261.2 216.8L263.5 219.6L264.4 223.6L266.7 227.5L270.9 229.0L272.7 228.5L276.4 229.3L280.2 232.6L281.0 236.9L279.8 242.3L276.7 247.5L276.6 252.1L277.0 257.8L277.5 260.1L280.8 260.4L284.5 263.0L288.4 266.5L295.8 268.4L303.3 271.3L305.4 274.8L308.5 277.7L311.0 282.8L313.9 285.7L315.0 288.3L320.9 294.2L340.5 308.6L345.6 314.6L347.5 318.7L355.5 328.1L357.6 332.2L359.3 333.3L368.3 342.9L375.5 350.4L378.9 361.6L378.9 366.9L384.6 378.2L388.9 381.2L390.6 381.9L391.1 383.0L389.8 384.7L390.0 387.1L389.8 390.2L390.3 393.3L389.5 394.1L388.1 395.1L382.6 401.3L382.2 403.4L383.1 403.4L385.4 404.0L388.0 403.8L388.4 405.2L390.2 406.6L389.9 408.3L387.8 409.4L382.1 410.1L378.6 411.8L377.6 413.7L381.2 419.0L382.0 422.7L389.2 434.3L393.5 438.6L395.4 441.5L395.6 442.7L401.8 447.0L405.0 449.0L411.7 451.3L414.1 451.4L414.6 453.0L425.7 458.8L431.7 464.2L431.2 465.6L434.5 467.6L437.0 472.9L457.8 480.6L466.7 482.7L472.8 485.0L476.8 483.3L483.5 486.1L486.6 490.9L489.1 493.1L490.7 493.5L492.2 494.3L492.4 495.7L499.2 498.8L503.1 502.9L524.7 510.5L532.3 514.1L535.4 516.6L541.9 519.6L548.1 520.1L563.3 524.2L564.8 523.3L566.1 524.6L570.8 530.4L580.6 533.0L592.9 540.1L599.8 540.7L604.8 540.7L611.1 543.9L616.7 546.5L620.0 546.9L626.2 548.9L629.1 547.8L633.4 548.4L642.5 543.8L653.7 540.7L657.6 538.9L658.6 536.9L662.5 534.6L667.3 533.8L676.3 533.3L683.6 534.9L691.2 537.9L696.5 539.8L711.6 549.9L731.4 569.1L736.9 575.3L742.3 580L742.6 579.8L742.8 579.1L743.7 578.6L743.9 577.2L744.7 576.3L744.6 574.5L744.0 573.9L744.3 573.2L743.7 571.2L744.1 570.4L744.8 569.9L744.7 567.0L745.1 566.3L745.9 566.3L747.0 564.6L742.9 559.3L755.9 536.6L790.6 536.5L791.2 535.8L790.4 535.9L790.4 535.2L791.0 535.2L791.1 534.7L790.7 534.5L791.2 534.0L790.5 533.5L790.4 532.4L791.1 532.0L790.5 531.7L790.6 531.3L791.2 531.4L790.9 530.8L790.8 530.1L791.7 529.9L791.7 529.4L792.0 529.2L792.4 529.1L791.9 528.7L791.7 528.9L791.6 528.4L792.0 528.2L792.4 528.4L792.8 528.2L791.9 527.7L792.2 527.0L791.7 527.2L791.4 526.7L789.7 526.6L789.8 525.8L789.4 525.8L788.8 525.4L788.4 525.8L787.9 525.5L787.9 525.1L786.9 525.4L786.6 525.0L785.8 525.2L785.5 525.0L786.2 524.8L786.1 524.1L785.4 524.2L785.3 522.9L785.7 522.5L785.5 522.0L785.3 522.4L784.7 522.1L785.1 521.8L784.8 520.5L783.7 518.9L783.2 518.1L781.1 516.8L781.0 516.2L779.5 516.0L778.8 515.5L777.8 515.4L777.3 514.5L776.5 514.3L776.8 513.3L776.2 513.2L776.1 514.4L774.9 513.5L773.7 513.2L773.9 512.6L772.6 511.1L772.3 510.5L771.1 510.2L769.9 508.7L769.4 507.5L768.3 507.4L768.2 506.3L768.6 505.8L767.0 505.3L766.5 506.0L766.2 505.9L766.0 505.1L764.3 504.5L763.8 503.4L776.0 503.4L776.0 487.4L793.0 487.5L810.0 487.4L825.6 487.4L825.6 483.5L826.1 483.2L826.2 482.9L826.4 482.8L826.7 483.0L827.2 482.6L828.2 482.1L829.1 481.9L829.5 482.3L829.8 482.8L830.1 483.7L830.3 483.4L831.2 483.4L831.6 484.0L832.0 484.6L832.3 484.6L832.7 484.9L833.3 485.2L833.6 485.1L833.6 484.2L834.3 483.6L834.8 483.4L835.6 482.5L835.5 482.2L835.9 482.0L836.1 481.2L837.4 480.4L837.4 480.1L838.0 479.9L838.2 478.7L838.8 478.3L838.8 477.8L839.2 477.5L839.3 476.9L839.7 476.5L839.8 475.8L840.1 475.8L840.5 475.2L840.6 473.9L840.4 473.8L842.1 471.8L842.0 471.5L842.5 470.5L842.7 469.1L843.6 468.3L844.1 468.2L844.5 468.3L844.7 468.6L845.2 468.3L845.9 468.1L846.4 468.3L846.8 468.5L847.1 468.3L848.0 468.2L848.3 468.3L848.4 468.2L849.3 468.2L850.2 467.0L851.0 466.4L852.0 464.7L852.2 463.4L853.1 461.9L854.1 461.0L854.8 459.5L855.5 459.7L856.1 461.1L855.8 462.0L856.2 463.7L854.9 465.1L855.1 466.3L854.4 467.4L854.5 468.5L855.5 469.2L858.2 469.9L858.2 470.9L858.9 471.6L859.1 472.6L859.3 474.5L859.3 476.9L859.8 477.4L860.3 476.5L860.5 476.5L860.6 477.0L860.9 476.9L861.1 477.0L861.4 477.0L861.4 475.6L862.2 472.9L863.6 470.8L863.5 468.3L864.9 462.9L865.9 461.1L867.1 456.5L869.2 451.5L869.8 448.1L871.0 446.4L872.4 444.4L871.3 443.5L870.4 443.4L869.6 444.2L868.0 444.9L866.3 447.5L865.9 447.4L866.8 443.5L868.6 442.1L868.7 442.5L869.7 442.5L870.6 441.6L872.3 440.2L873.0 438.0L872.9 436.3L872.1 435.7L871.8 436.3L870.5 436.1L869.1 436.1L868.7 437.2L867.5 437.2L866.2 437.9L866.0 437.0L866.1 436.1L866.6 434.4L867.6 432.8L869.0 431.1L870.3 431.7L871.3 431.6L872.0 430.4L872.5 428.6L872.1 426.8L871.6 425.4L871.3 424.0L871.6 420.8L873.5 417.8L876.8 412.0L880.2 409.3L884.7 404.9L885.6 403.0L887.1 401.4L888.0 399.6L889.2 395.6L890.0 395.4L890.6 393.0L891.1 392.0L890.0 391.7L889.5 390.9L889.5 389.2L889.1 388.0L889.7 386.9L889.8 385.1L889.5 383.9L888.4 383.7L888.5 384.8L888.8 386.0L888.3 386.7L887.8 388.2L887.6 386.6L887.1 384.6L886.6 383.7L885.7 381.9L885.1 380.6L884.1 379.1L881.3 378.2L880.1 378.5L878.3 379.7L876.1 380.0L874.7 379.5L872.7 381.1L873.3 381.6L874.8 380.9L877.8 381.2L879.3 380.5L880.6 380.4L880.5 381.7L880.2 382.4L879.3 382.3L878.9 383.0L878.2 382.9L877.9 383.6L877.3 383.2L875.4 383.0L872.3 382.1L871.0 382.3L870.6 381.8L863.0 380.0L857.8 378.1L856.4 378.1L855.0 377.9L853.4 377.7L851.8 378.1L849.3 379.4L848.0 379.5L846.6 379.3L842.1 380.2L839.7 380.9L837.5 382.6L835.6 383.5L832.2 384.3L820.7 386.0L814.5 386.9L807.2 388.4L805.3 389.0L802.3 390.7L800.0 391.1L794.4 394.4L792.7 396.4L791.4 400.0L791.1 402.4L790.1 404.9L790.3 406.3L789.2 409.6L788.9 411.1L789.3 413.2L789.1 415.0L789.2 417.6L789.1 419.8L789.0 421.5L789.4 423.8L790.1 426.2L789.0 428.1L786.6 429.5L784.6 431.3L783.3 433.6L783.3 434.8L783.5 435.8L783.1 438.1L783.3 439.6L782.9 442.2L782.3 444.0L778.0 448.1L771.9 452.5L764.4 456.4L763.7 457.6L760.1 460.1L757.5 461.4L753.9 462.9L752.6 463.3L752.6 464.2L752.3 464.2L751.3 463.6L750.7 462.2L748.7 461.8L741.4 462.4L733.0 463.6L729.4 464.3L727.3 467.4L723.1 469.3L717.9 469.0L710.2 469.2L699.9 472.2L685.7 476.7L680.8 477.1L678.7 475.3L678.0 473.1L675.1 470.4L672.6 466.1L667.4 465.7L664.5 462.5L661.8 461.2L655.3 461.5L650.1 460.4L645.6 458.3L642.4 455.9L641.5 451.4L639.0 450.9L638.6 449.4L638.0 447.4L635.9 445.8L633.4 444.6L632.8 441.8L632.3 439.4L631.3 437.8L629.6 431.6L628.5 428.8L625.8 425.0L617.8 415.3L609.5 406.0L609.0 403.4L603.2 390.9L602.6 388.1L603.9 384.5L605.4 380.1L604.3 378.1L599.3 373.9L595.2 368.4L592.9 361.7L592.8 359.3L591.4 356.6L590.9 350.1L592.2 345.2L593.6 340.3L593.1 329.1L593.9 316.8L595.5 293.0L600.2 276.9L605.5 265.2L609.2 257.5L609.6 249.9L609.2 250.1L609.2 249.9L608.7 249.7L608.4 250.0L607.9 249.8L607.6 249.9L607.4 249.8L606.8 250.2L606.0 250.1L605.8 249.9L605.7 250.0L606.0 250.6L605.6 250.6L605.3 250.5L605.2 250.8L605.0 250.6L604.6 251.1L604.5 250.9L604.4 251.1L604.4 250.7L604.1 250.8L603.7 251.2L603.3 251.3L603.5 251.5L603.6 251.9L603.9 252.0L603.4 252.2L603.8 252.3L603.7 252.6L603.3 253.0L603.5 253.1L603.4 253.5L603.1 253.3L602.9 253.5L602.5 253.6L602.7 253.4L602.6 253.1L602.5 253.2L602.4 252.8L602.3 253.5L601.7 253.1L601.3 253.0L601.4 252.5L601.2 252.6L601.2 252.2L600.7 252.4L600.8 252.0L600.4 252.3L600.4 252.1L600.1 252.2L600.0 251.7L599.4 252.0L599.2 251.1L599.0 251.1L598.9 250.7L598.7 250.9L598.5 250.6L598.2 250.8L598.1 250.6L597.8 250.6L598.1 250.1L597.8 250.3L597.8 249.8L597.3 250.0L597.0 249.8L597.0 249.4L596.7 249.1L596.3 248.9L596.8 248.9L596.8 248.5L596.6 248.7L596.5 248.5L596.4 248.6L596.0 248.4L596.3 248.2L596.1 247.8L595.9 248.2L595.5 248.0L595.6 247.6L595.3 247.6L595.3 247.9L594.8 247.7L594.8 248.0L594.4 247.5L594.1 247.9L594.0 247.7L593.1 247.9L592.8 247.2L592.5 247.7L592.0 247.5L592.1 247.1L591.7 246.9L591.5 247.3L591.3 246.9L590.9 247.2L590.4 247.1L590.0 246.8L589.0 246.9L588.3 246.8L588.2 247.0L587.7 246.9L587.4 247.2L587.0 246.7L585.7 246.7L585.5 247.3L584.5 247.5L584.3 246.7L583.1 246.7L582.9 246.4L582.4 247.1L581.7 246.6L581.2 247.0L580.4 246.4L579.6 246.5L578.8 245.5L579.2 245.0L578.4 245.1L578.3 245.6L577.6 244.9L577.4 244.3L577.2 243.6L577.0 244.1L576.6 243.5L576.5 243.9L576.0 243.9L575.7 243.3L574.6 242.5L574.4 241.9L573.5 242.0L573.4 242.5L573.3 242.2L572.8 242.3L572.7 241.8L572.1 241.7L571.5 241.1L571.7 241.5L571.3 241.8L571.3 241.5L570.8 241.5L570.7 240.9L569.8 241.1L569.6 240.8L569.3 241.4L568.3 241.5L568.1 240.8L567.1 240.4L567.5 240.1L566.9 239.8L566.4 240.0L566.1 239.4L566.5 239.5L566.1 238.8L565.2 238.7L564.6 237.5L563.8 237.7L563.3 237.6L562.2 237.8L561.3 236.8L561.1 237.5L560.6 237.1L560.2 236.6L559.2 236.8L558.4 236.2L557.5 236.7L556.4 235.7L557.0 234.3L556.1 233.0L554.8 232.3L554.5 230.3L553.6 226.8L553.0 225.9L552.4 223.7L551.5 222.7L550.7 222.1L550.6 220.9L549.7 220.7L548.8 219.8L549.0 219.3L548.5 218.3L547.6 218.0L547.3 216.4L547.8 215.7L547.4 215.3L547.8 214.6L547.6 214.0L547.8 213.7L547.8 212.2L547.4 211.7L547.5 211.4L547.5 210.7L546.9 210.3L546.5 210.5L546.0 210.3L546.2 209.6L546.0 209.1L545.6 209.2L545.0 209.1L544.9 208.7L545.6 208.3L545.7 208.0L545.8 207.5L546.1 206.9L546.2 206.0L546.1 204.8L546.5 204.0L546.4 203.6L545.9 203.2L545.2 203.3L545.5 201.2L544.8 199.8L543.6 200.1L543.9 199.7L543.4 199.0L542.6 198.9L542.4 199.4L541.6 199.0L541.6 198.6L540.8 198.3L540.3 198.6L538.7 196.3L537.9 195.9L537.2 194.7L536.7 195.1L536.4 194.3L535.8 194.2L535.8 192.9L535.1 191.9L535.1 190.7L534.1 189.8L534.2 188.5L532.5 188.1L532.0 186.0L531.4 185.5L530.9 184.8L530.1 183.4L526.8 182.0L526.4 180.8L525.8 180.9L524.5 179.4L524.7 178.6L523.0 175.6L523.4 174.7L522.6 173.3L523.5 172.7L522.1 172.1L521.4 171.3L521.7 170.1L520.4 169.3L520.4 168.5L519.8 168.1L518.8 167.4L518.6 165.2L518.1 164.7L517.6 162.7L516.9 162.4L516.3 161.1L516.2 160.4L515.2 160.1L515.3 159.7L514.9 159.0L514.7 156.3L514.1 154.0L511.5 152.0L511.7 151.6L511.3 150.7L510.7 149.4L508.8 148.7L508.3 147.8L506.8 146.5L505.1 145.9L503.9 143.1L501.6 142.4L500.5 141.2L498.4 140.9L498.8 139.6L498.6 138.1L497.9 137.9L497.5 139.5L497.0 138.6L497.3 137.0L496.2 136.5L495.7 137.0L495.3 135.6L494.7 135.0L494.4 134.0L494.5 133.3L493.3 133.8L493.2 132.8L491.0 133.6L490.8 132.1L490.0 132.4L489.7 133.3L488.5 133.4L488.0 133.8L487.4 133.3L486.3 133.5L484.7 132.8L483.7 132.8L483.3 132.1L483.0 132.6L482.3 132.3L480.8 132.4L480.5 132.8L479.6 132.5L478.9 131.8L478.7 132.4L477.3 132.4L477.1 132.7L475.9 132.7L474.8 132.3L473.4 131.5L473.4 130.8L473.1 131.0L471.9 130.9L471.6 130.4L471.3 130.7L471.0 130.3L469.7 130.0L469.6 130.4L469.3 130.3L468.7 130.7L468.0 132.8L468.0 133.6L465.3 132.9L464.4 133.0L464.6 133.3L463.4 134.1L462.9 133.3L462.8 133.8L461.9 134.0L461.6 134.4L460.7 134.5L460.2 134.1L459.7 134.7L459.5 135.6L459.4 136.3L458.2 137.3L458.4 137.9L458.2 138.7L457.6 138.7L457.7 139.3L457.4 139.5L457.5 140.2L456.4 141.0L456.5 141.8L456.1 143.2L455.9 144.2L456.3 144.9L455.5 145.5L455.5 146.1L454.5 146.3L454.4 147.5L454.3 148.0L454.0 148.6L453.8 149.2L454.8 149.6L454.8 150.4L454.1 150.7L453.7 150.4L453.5 151.2L452.9 151.3L452.9 151.7L451.8 151.5L451.3 151.7L451.0 152.9L450.3 154.0L449.9 154.0L449.2 154.4L449.0 154.9L448.9 155.5L448.8 155.2L448.5 155.6L448.7 156.4L448.1 157.1L448.3 157.6L447.1 158.0L445.2 157.5L444.5 157.8L444.2 157.4L443.6 157.9L443.5 157.2L442.9 157.0L442.9 156.4L442.4 156.6L442.1 156.3L442.4 155.9L442.0 155.7L441.8 156.6L441.0 156.5L439.8 155.9L439.1 155.1L438.5 155.1L438.6 154.6L437.8 153.8L437.2 153.5L437.2 152.9L436.5 152.7L436.4 152.3L435.4 152.5L434.9 152.2L434.0 152.2L433.6 152.0L432.0 151.6L431.0 150.4L430.8 150.0L430.3 150.4L430.3 149.5L430.0 149.0L429.6 149.2L429.3 148.8L428.7 148.7L425.1 148.0L422.8 147.0L421.3 145.7L419.6 144.7L419.3 143.9L418.6 143.2L418.5 142.2L418.1 142.3L417.8 141.8L416.8 141.2L415.7 140.7L415.2 141.1L413.9 140.3L413.5 139.5L411.6 137.9L410.5 137.4L409.6 136.1L409.9 135.9L409.6 135.5L409.5 134.5L408.9 133.9L408.7 132.7L407.7 131.7L407.6 131.1L406.9 130.1L406.5 129.1L405.9 128.5L405.9 127.6L405.5 127.0L405.6 126.3L405.6 125.6L405.3 125.5L405.3 125.2L405.2 124.4L405.6 123.7L405.5 122.7L405.7 121.0L405.2 119.6L404.6 118.4L403.7 117.7L403.7 116.7L402.3 115.5L402.1 114.6L401.1 114.0L401.2 113.1L400.5 110.1L399.7 108.0L399.1 107.3L397.9 107.0L397.5 105.4L397.0 104.7L396.8 104.7L396.1 104.6L395.6 104.7L395.4 104.2L395.1 104.2L394.1 102.7L392.9 102.6L392.7 101.9L392.5 102.0L392.1 101.4L391.4 101.5L391.4 100.9L390.2 101.2L389.2 100.2L388.7 100.6L388.5 100.2L387.7 99.7L386.6 99.4L386.3 98.3L384.0 96.6L383.6 95.8L382.4 95.4L381.7 94.4L381.5 93.2L380.6 91.9L380.0 91.7L379.7 91.3L378.0 90.4L377.3 89.7L376.2 89.5L376.1 88.6L373.5 85.6L373.1 85.5L372.8 85.0L371.9 84.8L371.4 83.3L371.0 83.2L370.0 82.3L368.1 82.2L367.3 81.4L366.8 81.5L365.5 80.4L364.5 79.9L363.5 77.6L362.6 77.0L362.0 75.2L360.8 72.7L360.2 72.2L359.9 71.6L357.9 70.6L357.0 71.1L356.5 70.6L355.8 69.9L310.6 69.9L310.5 84.2L233.0 84.3L131.8 47.1L132.6 45.2L132.0 45.3L132.3 44.3L132.1 43.0L132.6 43.2L133.2 42.5L134.5 40Z';
 
 export function TacticalMap() {
   return (
@@ -78,60 +83,18 @@ export function TacticalMap() {
                 <stop offset="100%" stopColor="#6ee7b7" />
               </linearGradient>
             </defs>
-
-            {/* Silueta: Baja California */}
             <path
-              d="M78 62 L132 128 L170 196 L195 248 L220 310 L204 330 L180 270 L146 210 L108 140 L68 76 Z"
-              fill="#1c222e"
-              stroke="#2d3748"
-              strokeLinejoin="round"
-              strokeWidth="1.5"
-            />
-            <path
-              d="M222 318 L244 374 L258 418 L242 414 L226 360 Z"
-              fill="#1c222e"
-              stroke="#2d3748"
-              strokeWidth="1.2"
-            />
-            {/* Mexico continental */}
-            <path
-              d="M210 92 L310 94 L378 126 L468 120 L532 168 L608 174 L662 258 L636 294 L590 286 L530 338 L544 380 L618 398 L690 410 L742 432 L788 438 L834 402 L888 386 L912 414 L894 456 L830 464 L796 502 L748 518 L686 480 L622 474 L554 498 L474 482 L426 448 L374 406 L320 334 L266 250 L234 162 Z"
+              d={MX_OUTLINE}
               fill="#181f2a"
               stroke="#2d3748"
               strokeLinejoin="round"
               strokeWidth="1.8"
             />
-            {/* Peninsula de Yucatan */}
-            <path
-              d="M788 438 L840 398 L896 384 L916 414 L884 452 L830 460 Z"
-              fill="#1c222e"
-              stroke="#2d3748"
-              strokeWidth="1.2"
-            />
-            {/* Divisiones regionales internas */}
-            <path
-              d="M378 126 L380 240 L450 310"
-              stroke="#242e3d"
-              strokeDasharray="3 3"
-              strokeWidth="1"
-            />
-            <path
-              d="M532 168 L530 260 L480 340"
-              stroke="#242e3d"
-              strokeDasharray="3 3"
-              strokeWidth="1"
-            />
-            <path
-              d="M608 174 L576 270 L580 380"
-              stroke="#242e3d"
-              strokeDasharray="3 3"
-              strokeWidth="1"
-            />
 
             {/* Corredores troncales primarios */}
-            {/* 1. Corredor Centro - NAFTA */}
+            {/* 1. Corredor Centro - NAFTA: CDMX -> QRO -> SLP -> MTY -> N. Laredo */}
             <path
-              d="M544 380 L526 352 L518 304 L576 242 L606 182"
+              d="M555.8 441.2 L521.8 408 L505.7 362.5 L523.8 258.1 L545.7 204"
               filter="url(#glow-periwinkle)"
               stroke="#7c9df0"
               strokeLinecap="round"
@@ -139,62 +102,73 @@ export function TacticalMap() {
               strokeWidth="3"
             />
             <path
-              d="M544 380 L526 352 L518 304 L576 242 L606 182"
+              d="M555.8 441.2 L521.8 408 L505.7 362.5 L523.8 258.1 L545.7 204"
               opacity="0.8"
               stroke="#ffffff"
               strokeDasharray="6 4"
               strokeLinecap="round"
               strokeWidth="1"
             />
-            {/* 2. Corredor Pacifico & Bajio */}
+            {/* 2. Corredor Pacifico & Bajio: CDMX -> GDL -> Manzanillo */}
             <path
-              d="M544 380 L470 366 L422 360 L388 400"
+              d="M555.8 441.2 L441.8 405.9 L415.6 452.1"
               filter="url(#glow-emerald)"
               stroke="#6ee7b7"
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2.5"
             />
+            {/* 3. Corredor Golfo & Sureste: CDMX -> Puebla -> Veracruz */}
             <path
-              d="M470 366 L410 312 L350 246"
-              opacity="0.7"
-              stroke="#7c9df0"
-              strokeDasharray="4 3"
-              strokeLinecap="round"
-              strokeWidth="2"
-            />
-            {/* 3. Corredor Golfo & Sureste */}
-            <path
-              d="M544 380 L582 392 L640 404 L716 432 L788 440"
+              d="M555.8 441.2 L580.9 452.4 L636.9 448.7"
               filter="url(#glow-periwinkle)"
               stroke="url(#routeGrad1)"
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2.5"
             />
-            {/* 4. Enlace Norte Centro */}
+            {/* 4. Enlace Norte: SLP -> MTY -> Torreon -> Cd. Juarez. */}
             <path
-              d="M518 304 L490 248 L460 210 L378 128"
+              d="M505.7 362.5 L523.8 258.1 L440.3 212.4 L358.7 72.9"
               opacity="0.85"
               stroke="#7c9df0"
+              strokeDasharray="5 4"
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
             />
-            {/* 5. Corredor Noroeste */}
+            {/* 5. Corredor Noroeste: GDL -> Hermosillo -> Sonoyta -> Tijuana.
+                 Mazatlan (359.1, 330.5), Hermosillo (236.2, 155) y Sonoyta
+                 (184.9, 67.5) son waypoints reales */}
             <path
-              d="M470 366 L350 246 L278 174 L170 120 L84 66"
-              opacity="0.65"
+              d="M441.8 405.9 L359.1 330.5 L236.2 155 L184.9 77.5 L71.8 46.6"
+              opacity="0.6"
               stroke="#7c9df0"
               strokeDasharray="5 4"
               strokeLinecap="round"
+              strokeLinejoin="round"
               strokeWidth="1.8"
+            />
+            {/* 6. Corredor Sur-Sureste: CDMX -> Oaxaca -> Tuxtla Gutierrez
+                 (Chiapas). Posiciones reales por la misma proyeccion:
+                 Oaxaca (621.1, 508.4), Chiapas (718.5, 517.4) */}
+            <path
+              d="M555.8 441.2 L621.1 508.4 L718.5 517.4"
+              filter="url(#glow-periwinkle)"
+              stroke="url(#routeGrad1)"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2.5"
             />
 
             {/* Nodos estrategicos */}
-            {/* CDMX */}
-            <g transform="translate(544, 380)">
-              <circle className="animate-node-pulse" fill="#7c9df0" opacity="0.2" r="12" />
+            <g transform="translate(555.8, 441.2)">
+              <circle
+                className="animate-radar-ping"
+                fill="#6ee7b7"
+                r="6"
+                style={{ '--radar-reach': 16 } as CSSProperties}
+              />
               <circle fill="#161b24" r="6" stroke="#7c9df0" strokeWidth="2" />
               <circle fill="#6ee7b7" r="2.5" />
               <text
@@ -202,48 +176,45 @@ export function TacticalMap() {
                 fontFamily="ui-monospace, monospace"
                 fontSize="10"
                 fontWeight="600"
-                letterSpacing="0.05em"
                 x="10"
                 y="4"
               >
-                CDMX [C5/HQ]
+                CDMX
               </text>
             </g>
-            {/* Queretaro */}
-            <g transform="translate(526, 352)">
+            {/* QRO */}
+            <g transform="translate(521.8, 408)">
               <circle fill="#7c9df0" opacity="0.25" r="9" />
               <circle fill="#7c9df0" r="4" />
               <text fill="#94a3b8" fontFamily="ui-monospace, monospace" fontSize="9" x="8" y="-4">
                 QRO
               </text>
             </g>
-            {/* San Luis Potosi */}
-            <g transform="translate(518, 304)">
+            {/* SLP */}
+            <g transform="translate(505.7, 362.5)">
               <circle fill="#6ee7b7" opacity="0.2" r="8" />
               <circle fill="#6ee7b7" r="4" />
               <text fill="#94a3b8" fontFamily="ui-monospace, monospace" fontSize="9" x="8" y="3">
                 SLP
               </text>
             </g>
-            {/* Monterrey */}
-            <g transform="translate(576, 242)">
-              <circle className="animate-node-pulse" fill="#7c9df0" opacity="0.2" r="10" />
-              <circle fill="#161b24" r="5" stroke="#7c9df0" strokeWidth="1.8" />
+            {/* MTY — punto de radar fijo con ping expansivo */}
+            <g transform="translate(523.8, 258.1)">
+              <circle
+                className="animate-radar-ping"
+                fill="#7c9df0"
+                r="5"
+                style={{ '--radar-reach': 13 } as CSSProperties}
+              />
+              <circle fill="#161b24" r="5" stroke="#7c9df0" strokeWidth="2" />
               <circle fill="#7c9df0" r="2" />
-              <text
-                fill="#e2e8f0"
-                fontFamily="ui-monospace, monospace"
-                fontSize="9.5"
-                fontWeight="600"
-                x="10"
-                y="3"
-              >
+              <text fill="#e2e8f0" fontFamily="ui-monospace, monospace" fontSize="9.5" x="10" y="3">
                 MTY
               </text>
             </g>
-            {/* Nuevo Laredo */}
-            <g transform="translate(606, 182)">
-              <circle className="animate-node-pulse" fill="#6ee7b7" opacity="0.3" r="9" />
+            {/* N. LAREDO */}
+            <g transform="translate(545.7, 204)">
+              <circle fill="#6ee7b7" opacity="0.3" r="9" />
               <circle fill="#6ee7b7" r="4.5" />
               <text
                 fill="#6ee7b7"
@@ -256,112 +227,152 @@ export function TacticalMap() {
                 N. LAREDO
               </text>
             </g>
-            {/* Guadalajara */}
-            <g transform="translate(470, 366)">
+            {/* TORREON — waypoint del Enlace Norte (MTY -> Torreon -> Cd. Juarez) */}
+            <g transform="translate(440.3, 212.4)">
+              <circle fill="#7c9df0" opacity="0.25" r="8" />
+              <circle fill="#7c9df0" r="4" />
+              <text fill="#94a3b8" fontFamily="ui-monospace, monospace" fontSize="9" x="-54" y="3">
+                TORREÓN
+              </text>
+            </g>
+            {/* HERMOSILLO — punto de radar fijo con ping expansivo */}
+            <g transform="translate(236.2, 155)">
+              <circle
+                className="animate-radar-ping"
+                fill="#7c9df0"
+                r="5"
+                style={{ '--radar-reach': 20 } as CSSProperties}
+              />
+              <circle fill="#161b24" r="5" stroke="#7c9df0" strokeWidth="2" />
+              <circle fill="#7c9df0" r="2" />
+              <text fill="#94a3b8" fontFamily="ui-monospace, monospace" fontSize="9" x="8" y="3">
+                HERMOSILLO
+              </text>
+            </g>
+            {/* SONOYTA — waypoint del Noroeste, sin etiqueta */}
+            <g transform="translate(184.9, 77.5)">
+              <circle fill="#7c9df0" opacity="0.25" r="7" />
+              <circle fill="#7c9df0" r="3.5" />
+            </g>
+            {/* MAZATLAN — waypoint del Noroeste (GDL -> Mazatlan -> Hermosillo -> ...) */}
+            <g transform="translate(359.1, 330.5)">
+              <circle fill="#7c9df0" opacity="0.25" r="8" />
+              <circle fill="#7c9df0" r="4" />
+              <text fill="#94a3b8" fontFamily="ui-monospace, monospace" fontSize="9" x="-62" y="3">
+                MAZATLÁN
+              </text>
+            </g>
+            {/* GDL */}
+            <g transform="translate(441.8, 405.9)">
               <circle fill="#7c9df0" opacity="0.2" r="9" />
-              <circle fill="#161b24" r="4.5" stroke="#7c9df0" strokeWidth="1.8" />
+              <circle fill="#161b24" r="4.5" stroke="#7c9df0" strokeWidth="2" />
               <circle fill="#7c9df0" r="2" />
               <text fill="#e2e8f0" fontFamily="ui-monospace, monospace" fontSize="9" x="-32" y="14">
                 GDL
               </text>
             </g>
-            {/* Manzanillo */}
-            <g transform="translate(388, 400)">
+            {/* PTO. MZLO */}
+            <g transform="translate(415.6, 452.1)">
               <circle fill="#6ee7b7" opacity="0.2" r="6" />
               <circle fill="#6ee7b7" r="3.5" />
               <text
                 fill="#94a3b8"
                 fontFamily="ui-monospace, monospace"
                 fontSize="8.5"
+                fontWeight="600"
                 x="-58"
                 y="4"
               >
                 PTO. MZLO
               </text>
             </g>
-            {/* Puebla */}
-            <g transform="translate(582, 392)">
+            {/* PUE */}
+            <g transform="translate(580.9, 452.4)">
+              <circle fill="#7c9df0" opacity="0" r="0" />
               <circle fill="#7c9df0" r="3.5" />
               <text fill="#94a3b8" fontFamily="ui-monospace, monospace" fontSize="8.5" x="7" y="10">
                 PUE
               </text>
             </g>
-            {/* Veracruz */}
-            <g transform="translate(640, 404)">
+            {/* VER */}
+            <g transform="translate(636.9, 448.7)">
               <circle fill="#6ee7b7" opacity="0.3" r="5" />
               <circle fill="#6ee7b7" r="3.5" />
               <text fill="#94a3b8" fontFamily="ui-monospace, monospace" fontSize="8.5" x="8" y="2">
                 VER
               </text>
             </g>
-            {/* Ciudad Juarez */}
-            <g transform="translate(378, 128)">
+            {/* CD. JUAREZ */}
+            <g transform="translate(358.7, 72.9)">
+              <circle fill="#7c9df0" opacity="0" r="0" />
               <circle fill="#7c9df0" r="4" />
-              <text fill="#94a3b8" fontFamily="ui-monospace, monospace" fontSize="9" x="8" y="3">
+              <text
+                fill="#94a3b8"
+                fontFamily="ui-monospace, monospace"
+                fontSize="9"
+                fontWeight="600"
+                x="8"
+                y="3"
+              >
                 CD. JUÁREZ
               </text>
             </g>
-            {/* Tijuana */}
-            <g transform="translate(84, 66)">
-              <circle fill="#7c9df0" r="4" />
-              <text fill="#94a3b8" fontFamily="ui-monospace, monospace" fontSize="9" x="8" y="3">
+            {/* TIJUANA */}
+            <g transform="translate(71.8, 46.6)">
+              <circle fill="#161b24" r="5" stroke="#7c9df0" strokeWidth="2" />
+              <circle fill="#7c9df0" r="2" />
+              <text
+                fill="#e2e8f0"
+                fontFamily="ui-monospace, monospace"
+                fontSize="9"
+                fontWeight="600"
+                x="8"
+                y="3"
+              >
                 TIJUANA
+              </text>
+            </g>
+            {/* OAXACA — nodo del Corredor Sur-Sureste */}
+            <g transform="translate(621.1, 508.4)">
+              <circle fill="#7c9df0" opacity="0.25" r="8" />
+              <circle fill="#7c9df0" r="4" />
+              <text fill="#94a3b8" fontFamily="ui-monospace, monospace" fontSize="9" x="8" y="12">
+                OAXACA
+              </text>
+            </g>
+            {/* CHIAPAS — terminal del Corredor Sur-Sureste (Tuxtla Gutierrez) */}
+            <g transform="translate(718.5, 517.4)">
+              <circle fill="#6ee7b7" opacity="0.3" r="9" />
+              <circle fill="#6ee7b7" r="4.5" />
+              <text
+                fill="#6ee7b7"
+                fontFamily="ui-monospace, monospace"
+                fontSize="9.5"
+                fontWeight="600"
+                x="9"
+                y="3"
+              >
+                CHIAPAS
               </text>
             </g>
 
             {/* Checkpoints intermedios (rombos) */}
-            <g transform="translate(535, 366)">
+            <g transform="translate(538.8, 424.6)">
               <polygon fill="#6ee7b7" points="0,-3 3,0 0,3 -3,0" />
             </g>
-            <g transform="translate(550, 270)">
+            <g transform="translate(512.9, 320.7)">
               <polygon fill="#6ee7b7" points="0,-3 3,0 0,3 -3,0" />
             </g>
-            <g transform="translate(591, 212)">
+            <g transform="translate(534.8, 231.1)">
               <polygon fill="#6ee7b7" points="0,-3 3,0 0,3 -3,0" />
             </g>
-            <g transform="translate(608, 398)">
+            <g transform="translate(568.3, 446.8)">
               <polygon fill="#6ee7b7" points="0,-3 3,0 0,3 -3,0" />
             </g>
-            <g transform="translate(444, 363)">
+            <g transform="translate(498.8, 423.6)">
               <polygon fill="#6ee7b7" points="0,-3 3,0 0,3 -3,0" />
             </g>
           </svg>
-
-          {/* HUDs flotantes */}
-          <div className="bg-background/90 border-outline-variant absolute top-10 right-4 hidden items-center space-x-2 rounded-sm border px-2.5 py-1.5 shadow-lg backdrop-blur sm:right-6 sm:flex">
-            <span className="bg-primary h-1.5 w-1.5 rounded-full" />
-            <span className="text-on-surface font-mono text-[10px] tracking-tight">
-              CORREDOR NAFTA: VIGILADO
-            </span>
-          </div>
-          <div className="bg-background/90 border-outline-variant absolute bottom-16 left-4 flex items-center space-x-2 rounded-sm border px-2.5 py-1.5 shadow-lg backdrop-blur sm:left-6">
-            <span className="bg-success h-1.5 w-1.5 rounded-full" />
-            <span className="text-on-surface font-mono text-[10px] tracking-tight">
-              CHECKPOINT KM 148: DESPEJADO
-            </span>
-          </div>
-          <div className="bg-background/90 border-outline-variant absolute right-4 bottom-28 hidden items-center space-x-2 rounded-sm border px-2.5 py-1.5 shadow-lg backdrop-blur sm:right-10 md:flex">
-            <Waypoints className="text-primary h-3 w-3" />
-            <span className="text-on-surface font-mono text-[10px] tracking-tight">
-              CONEXIÓN C4/C5: SINCRONIZADA
-            </span>
-          </div>
-        </div>
-
-        {/* Leyenda */}
-        <div className="border-outline-variant text-on-surface-variant relative z-10 mt-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t pt-3.5 font-mono text-[11px]">
-          <div className="flex items-center space-x-2">
-            <span className="bg-primary inline-block h-1 w-3 rounded-sm shadow-[0_0_6px_#7c9df0]" />
-            <span>Ruta troncal primaria</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className="bg-success inline-block h-2 w-2 rounded-full shadow-[0_0_6px_#6ee7b7]" />
-            <span>Punto de verificación activo</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className="border-primary/60 bg-primary/20 inline-block h-2 w-2 rounded-sm border" />
-            <span>Zona de cobertura inmediata</span>
-          </div>
         </div>
       </div>
     </div>

@@ -42,18 +42,14 @@ export function MobileNav({ enlaces, activo }: MobileNavProps) {
         animate={{ rotate: abierto ? 90 : 0 }}
         transition={{ duration: 0.2 }}
       >
-        {abierto ? (
-          <X className="h-5 w-5" />
-        ) : (
-          <Menu className="h-5 w-5" />
-        )}
+        {abierto ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </motion.button>
 
       {/* Panel desplegable con AnimatePresence para animar salida */}
       <AnimatePresence>
         {abierto && (
           <motion.div
-            className="border-outline-variant bg-background absolute top-16 left-0 right-0 z-40 border-b shadow-lg"
+            className="border-outline-variant bg-background absolute top-16 right-0 left-0 z-40 border-b shadow-lg"
             initial={reducirMovimiento ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reducirMovimiento ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}

@@ -12,7 +12,7 @@ export function MonitoreoHeader() {
         </span>
         <span className="text-on-surface font-semibold">Operación 24/7</span>
         <span className="text-outline">//</span>
-        <span className="tracking-widest">Cabina C4 &amp; Fuerza Operativa</span>
+        <span className="tracking-widest">Cabina de Monitoreo &amp; Fuerza Operativa</span>
       </div>
 
       <h2 className="text-on-surface text-3xl leading-tight font-extrabold tracking-[-0.02em] sm:text-4xl lg:text-5xl">

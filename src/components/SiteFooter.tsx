@@ -18,27 +18,16 @@
 import { Mail, MapPin, PhoneCall } from 'lucide-react';
 import { Stagger, StaggerItem } from '@/components/motion/Stagger';
 
-const plataforma = [
-  'Centro de Monitoreo C4',
-  'Grupo de Reacción Propio',
-  'Corredores de Seguridad',
-  'Datos e IA Predictiva',
-  'Integración API / TMS',
-];
-
 const compania = [
-  'Quiénes Somos',
-  '25 Años de Trayectoria',
-  'Casos de Éxito',
-  'Cobertura Nacional',
-  'Sala de Prensa',
+  { etiqueta: 'Quiénes Somos', href: '#' },
+  { etiqueta: 'Casos de Éxito', href: '#clientes' },
+  { etiqueta: 'Cobertura Nacional', href: '#infraestructura' },
 ];
 
 const enlacesLegales = [
-  { etiqueta: 'Privacidad', href: '#privacidad' },
-  { etiqueta: 'Términos y Condiciones', href: '#terminos' },
-  { etiqueta: 'Seguridad', href: '#seguridad' },
-  { etiqueta: 'Compliance', href: '#compliance' },
+  { etiqueta: 'Privacidad', href: '/legal/aviso_de_privacidad_AI27.html' },
+  { etiqueta: 'Términos y Condiciones', href: '/legal/terminos_y_condiciones_AI27.html' },
+  { etiqueta: 'Seguridad y Compliance', href: '/legal/politica_de_calidad_y_seguridad_AI27.pdf' },
 ] as const;
 
 export function SiteFooter() {
@@ -61,43 +50,27 @@ export function SiteFooter() {
           </div>
           <p className="text-on-surface-variant max-w-md text-[13px] leading-relaxed">
             Seguridad e inteligencia de datos para el transporte de carga en México. Más de 25 años
-            anticipando el riesgo en ruta con telemetría en tiempo real y capacidad de reacción
+            anticipando el riesgo en ruta con monitoreo en tiempo real y capacidad de reacción
             inmediata en autopistas federales.
           </p>
           <div className="bg-surface-recessed border-outline-variant text-on-surface inline-flex items-center gap-2 rounded border px-3 py-1.5 text-xs">
             <span className="bg-success status-pulse h-2 w-2 rounded-full" />
             <span className="text-[12px] font-medium">
-              Todos los servicios y cabinas C4 operativos
+              Todos los servicios y cabinas operativos
             </span>
           </div>
         </StaggerItem>
 
-        {/* Plataforma & Red */}
-        <StaggerItem className="space-y-3 lg:col-span-2">
-          <h3 className="text-on-surface text-xs font-semibold tracking-wider uppercase">
-            Plataforma &amp; Red
-          </h3>
-          <ul className="space-y-2 text-[13px]">
-            {plataforma.map((item) => (
-              <li key={item}>
-                <a className="hover:text-primary transition-colors duration-150" href="#">
-                  {item}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </StaggerItem>
-
-        {/* Compania */}
-        <StaggerItem className="space-y-3 lg:col-span-2">
+        {/* Compania (empieza en la col 8 para empujar este grupo a la derecha) */}
+        <StaggerItem className="space-y-3 lg:col-span-2 lg:col-start-8">
           <h3 className="text-on-surface text-xs font-semibold tracking-wider uppercase">
             Compañía
           </h3>
           <ul className="space-y-2 text-[13px]">
-            {compania.map((item) => (
-              <li key={item}>
-                <a className="hover:text-primary transition-colors duration-150" href="#">
-                  {item}
+            {compania.map(({ etiqueta, href }) => (
+              <li key={etiqueta}>
+                <a className="hover:text-primary transition-colors duration-150" href={href}>
+                  {etiqueta}
                 </a>
               </li>
             ))}
@@ -112,17 +85,28 @@ export function SiteFooter() {
           <div className="space-y-2.5 text-[13px]">
             <div className="flex items-start gap-2.5">
               <PhoneCall className="text-primary mt-0.5 h-[17px] w-[17px] shrink-0" />
-              <div>
+              <div className="space-y-1">
                 <span className="text-on-surface-variant block text-[11px] tracking-wider uppercase">
-                  Línea C4 Nacional 24/7:
+                  Teléfonos de contacto:
                 </span>
-                {/* TODO: numero real cuando se defina el dato de contacto. */}
-                <a
-                  className="text-on-surface hover:text-primary font-semibold transition-colors"
-                  href="#"
-                >
-                  [teléfono de contacto]
-                </a>
+                <div className="text-on-surface-variant text-xs">
+                  Ventas:{' '}
+                  <a
+                    className="text-on-surface hover:text-primary transition-colors"
+                    href="tel:+525560827466"
+                  >
+                    (55) 6082 7466
+                  </a>
+                </div>
+                <div className="text-on-surface-variant text-xs">
+                  Atención comercial:{' '}
+                  <a
+                    className="text-on-surface hover:text-primary transition-colors"
+                    href="tel:+525549090269"
+                  >
+                    (55) 4909 0269
+                  </a>
+                </div>
               </div>
             </div>
             <div className="flex items-start gap-2.5">
@@ -157,8 +141,20 @@ export function SiteFooter() {
                 <span className="text-on-surface-variant block text-[11px] tracking-wider uppercase">
                   Matriz de Operaciones:
                 </span>
-                {/* TODO: direccion real cuando se defina el dato de contacto. */}
-                <span className="text-on-surface-variant text-xs">[dirección]</span>
+                <address className="text-xs not-italic">
+                  <a
+                    className="text-on-surface-variant hover:text-primary transition-colors"
+                    href="https://www.google.com/maps/place/AI27+Predictive+Intelligence/@19.5032909,-99.1778381,17z/data=!3m1!4b1!4m6!3m5!1s0x85d1f31db4b6a31b:0xfeda91cb25f61590!8m2!3d19.5032909!4d-99.1778381!16s%2Fg%2F11gnpv6bgy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Eje 5 Nte 990,
+                    <br />
+                    Santa Bárbara, Azcapotzalco,
+                    <br />
+                    02230 Ciudad de México, CDMX
+                  </a>
+                </address>
               </div>
             </div>
           </div>
@@ -177,6 +173,8 @@ export function SiteFooter() {
                 key={href}
                 className="hover:text-primary transition-colors duration-150"
                 href={href}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 {etiqueta}
               </a>

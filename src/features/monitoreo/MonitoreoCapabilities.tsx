@@ -28,10 +28,10 @@ const capacidades: Capacidad[] = [
     icono: <Monitor className="h-6 w-6" />,
     titulo: 'Monitoreo privado 24/7',
     descripcion:
-      'Instalaciones blindadas de comando C4 con operadores certificados en turnos continuos, monitoreo biométrico y redundancia satelital total sin interrupciones.',
+      'Instalaciones blindadas de comando con operadores certificados en turnos continuos, monitoreo biométrico y redundancia satelital total sin interrupciones.',
     pieIcono: <CircleCheck className="h-3.5 w-3.5" />,
     pieColor: 'text-primary',
-    pie: 'Certificación de analistas C4',
+    pie: 'Certificación de analistas',
   },
   {
     icono: <ShieldAlert className="h-6 w-6" />,
@@ -56,22 +56,26 @@ const capacidades: Capacidad[] = [
 export function MonitoreoCapabilities() {
   return (
     <>
-      <Stagger className="grid grid-cols-1 gap-4 sm:gap-6 pt-3 sm:pt-4 md:grid-cols-3">
+      <Stagger className="grid grid-cols-1 gap-4 pt-3 sm:gap-6 sm:pt-4 md:grid-cols-3">
         {capacidades.map((cap) => (
           <StaggerItem
             key={cap.titulo}
-            className="group bg-surface border-outline-variant hover:border-outline hover:bg-surface-bright/80 flex h-full flex-col space-y-3 sm:space-y-4 rounded-lg border p-4 sm:p-6 transition-colors duration-200"
+            className="group bg-surface border-outline-variant hover:border-outline hover:bg-surface-bright/80 flex h-full flex-col space-y-3 rounded-lg border p-4 transition-colors duration-200 sm:space-y-4 sm:p-6"
           >
-            <div className="bg-surface-recessed border-outline-variant text-primary group-hover:border-primary flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded border transition-colors flex-shrink-0">
+            <div className="bg-surface-recessed border-outline-variant text-primary group-hover:border-primary flex h-10 w-10 flex-shrink-0 items-center justify-center rounded border transition-colors sm:h-12 sm:w-12">
               {cap.icono}
             </div>
             <div className="space-y-1.5 sm:space-y-2">
-              <h3 className="text-on-surface group-hover:text-primary text-base sm:text-lg font-bold tracking-tight transition-colors line-clamp-2">
+              <h3 className="text-on-surface group-hover:text-primary line-clamp-2 text-base font-bold tracking-tight transition-colors sm:text-lg">
                 {cap.titulo}
               </h3>
-              <p className="text-on-surface-variant text-xs sm:text-sm leading-relaxed line-clamp-4">{cap.descripcion}</p>
+              <p className="text-on-surface-variant line-clamp-4 text-xs leading-relaxed sm:text-sm">
+                {cap.descripcion}
+              </p>
             </div>
-            <div className={`flex items-center gap-1.5 sm:gap-2 pt-1 sm:pt-2 font-mono text-[9px] sm:text-[11px] ${cap.pieColor}`}>
+            <div
+              className={`flex items-center gap-1.5 pt-1 font-mono text-[9px] sm:gap-2 sm:pt-2 sm:text-[11px] ${cap.pieColor}`}
+            >
               {cap.pieIcono}
               <span className="truncate">{cap.pie}</span>
             </div>
@@ -80,16 +84,16 @@ export function MonitoreoCapabilities() {
       </Stagger>
 
       {/* Micro-footer / barra de metadatos */}
-      <div className="border-outline-variant text-on-surface-variant flex flex-col items-start justify-between gap-3 border-t pt-4 sm:pt-6 font-mono text-[9px] sm:text-[11px] sm:flex-row sm:items-center">
+      <div className="border-outline-variant text-on-surface-variant flex flex-col items-start justify-between gap-3 border-t pt-4 font-mono text-[9px] sm:flex-row sm:items-center sm:pt-6 sm:text-[11px]">
         <div className="flex items-center gap-2">
-          <span className="bg-primary h-1.5 w-1.5 sm:h-2 sm:w-2 rounded flex-shrink-0" />
-          <span className="tracking-wide truncate sm:truncate-none">
+          <span className="bg-primary h-1.5 w-1.5 flex-shrink-0 rounded sm:h-2 sm:w-2" />
+          <span className="sm:truncate-none truncate tracking-wide">
             AI27 // PROTOCOLO // SEGURIDAD
           </span>
         </div>
-        <div className="bg-surface-recessed border-outline-variant text-on-surface flex flex-col items-start gap-1 rounded border px-2 py-1 sm:px-3 sm:flex-row sm:items-center sm:gap-2">
+        <div className="bg-surface-recessed border-outline-variant text-on-surface flex flex-col items-start gap-1 rounded border px-2 py-1 sm:flex-row sm:items-center sm:gap-2 sm:px-3">
           <span className="text-on-surface-variant text-[8px] sm:text-[11px]">RESPUESTA:</span>
-          <span className="text-success font-bold text-[10px] sm:text-[11px]">&lt; 4 MIN</span>
+          <span className="text-success text-[10px] font-bold sm:text-[11px]">&lt; 4 MIN</span>
         </div>
       </div>
     </>

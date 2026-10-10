@@ -1,7 +1,7 @@
 /*
  * Seccion 6 (parte 1): panel tactico de contacto y cotizacion. Portado del mock
  * Nocturne: banda de estado superior, dos columnas (propuesta + formulario) y
- * strip de telemetria inferior, sobre el fondo de rejilla y halos del mock.
+ * strip de estado inferior, sobre el fondo de rejilla y halos del mock.
  *
  * El id "cotizar" es el destino del boton "Cotizar servicio" de la barra
  * superior y del Hero.
@@ -33,8 +33,7 @@ export function Contacto() {
             </div>
             <div className="text-on-surface-variant hidden items-center gap-6 font-mono text-[10px] sm:flex">
               <span>CANAL: SSL/TLS AES-256</span>
-              <span>LATENCIA: 14ms</span>
-              <span className="text-primary">MODO: RESPUESTA DIRECTA C4</span>
+              <span className="text-primary">MODO: RESPUESTA DIRECTA</span>
             </div>
           </div>
 
@@ -48,7 +47,7 @@ export function Contacto() {
             </Reveal>
           </div>
 
-          {/* Strip de telemetria inferior */}
+          {/* Strip de estado inferior */}
           <div className="border-outline-variant bg-background/80 text-on-surface-variant flex flex-wrap items-center justify-between gap-4 border-t px-6 py-3 text-[11px]">
             <div className="flex items-center gap-4">
               <span className="text-on-surface flex items-center gap-1.5">

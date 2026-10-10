@@ -22,8 +22,7 @@ export function InfraHeader() {
       <p className="text-on-surface-variant mt-5 max-w-3xl text-base leading-relaxed sm:text-lg">
         AI27 ha construido una sólida infraestructura de seguridad integrada: corredores troncales,
         puntos de control y estaciones de verificación continua a lo largo del territorio nacional,
-        operando en estrecha coordinación y enlace directo con autoridades federales, estatales y
-        municipales.
+        operando en estrecha coordinación y enlace directo con todos los niveles de gobierno.
       </p>
     </div>
   );

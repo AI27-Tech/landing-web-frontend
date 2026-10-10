@@ -4,6 +4,248 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:10:09 14:36
+
+**feat: enlazar documentos legales del footer.** En
+`SiteFooter` los enlaces legales dejaron de apuntar a fragmentos muertos
+(`#privacidad`, `#terminos`, `#seguridad`, `#compliance`) y ahora enlazan a los
+documentos reales en `public/legal/`, servidos como archivos estáticos (la
+página es de una sola ruta, sin router). Se fusionaron "Seguridad" y
+"Compliance" en un solo nodo "Seguridad y Compliance". Mapeo: Privacidad →
+`/legal/aviso_de_privacidad_AI27.html`, Términos y Condiciones →
+`/legal/terminos_y_condiciones_AI27.html`, Seguridad y Compliance →
+`/legal/politica_de_calidad_y_seguridad_AI27.pdf`. Los enlaces abren en pestaña
+nueva (`target="_blank"` + `rel="noopener noreferrer"`). Se agregaron los tres
+documentos al repo.
+
+- `src/components/SiteFooter.tsx`, `public/legal/aviso_de_privacidad_AI27.html`,
+  `public/legal/terminos_y_condiciones_AI27.html`,
+  `public/legal/politica_de_calidad_y_seguridad_AI27.pdf`
+
+## 2026:10:09 00:30
+
+**feat: sección Clientes con muro de logos animado.** Nueva sección
+`src/features/clientes/` entre Trayectoria e Infraestructura (ancla
+`#clientes`; el enlace "Casos de Éxito" del footer apunta ahí). Una sola fila de
+logos que se desplaza en loop continuo hacia la derecha. La animación es CSS
+puro (keyframe `marquee-right` en `globals.css`), con loop sin costura por
+duplicado de la pista y traslación del 50%; queda cubierta por la guarda global
+de `reduced-motion`. Al pasar el cursor sobre la fila, el desplazamiento se
+pausa.
+
+Cada cliente pinta su logo (archivo en `public/clientes/`, servido desde la raíz
+por Vite) dentro de un `<img>` forzado a blanco con un filtro CSS
+(`brightness-0 invert`); el archivo debe tener fondo transparente. Si a una
+marca le falta el archivo, el chip cae de vuelta a su nombre como wordmark, de
+modo que un logo faltante no rompe la fila. Los logos flotan sin recuadro (sin
+fondo ni borde). Cada cliente admite un multiplicador `escala` para igualar el
+peso óptico de los logos compactos (Mattel y Herdez usan 1.5). Se muestran ocho
+clientes: Colgate, Mattel, Pfizer, GNP, Herdez, Zurich, Technicolor, Pirelli.
+Verificado: `typecheck`, `lint`, `build` y `format:check` (sobre los archivos
+nuevos) pasan.
+
+- `src/App.tsx`, `src/styles/globals.css`, `src/components/SiteFooter.tsx`,
+  `src/features/clientes/Clientes.tsx`,
+  `src/features/clientes/ClientesHeader.tsx`,
+  `src/features/clientes/ClientLogosMarquee.tsx`,
+  `src/features/clientes/clientes-data.ts`, `public/clientes/README.md`
+
+## 2026:10:08 18:10
+
+**feat: favicon del sitio.** Se configuró el ícono de pestaña. El `favicon.ico`
+se movió de la raíz del repo a `public/` (que es el `publicDir` de Vite y la
+única ruta que se copia tal cual a `dist/` y se sirve desde la raíz del sitio;
+desde la raíz del repo no se publicaba). Se añadió el enlace en `index.html`:
+`<link rel="icon" type="image/x-icon" href="/favicon.ico" />`. Verificado: el
+build copia `dist/favicon.ico` y el `<link>` queda en `dist/index.html`.
+
+- `index.html`, `public/favicon.ico`
+
+## 2026:10:08 18:02
+
+**fix: botón "Atención comercial" vuelve al diseño azul.** En `ContactPitch` el
+botón de "Atención comercial" recuperó el diseño primario (periwinkle) que
+tenía el botón de contacto anterior: ícono en `text-primary` y chrome
+`border-outline hover:border-primary bg-surface hover:bg-surface-bright
+text-on-surface` (`px-5 py-3`, `font-semibold`), en vez del estilo verde/mudo.
+Se conservan la funcionalidad (`tel:+525549090269`) y el número
+(55) 4909 0269.
+
+- `src/features/contacto/ContactPitch.tsx`
+
+## 2026:10:08 17:55
+
+**fix: título del KPI de la consola de monitoreo.** En `CommandConsole` la
+etiqueta del KPI "Unidades Activas" pasó a "Unidades en tránsito"; solo cambia
+el texto, no la cifra ni el estilo.
+
+- `src/features/monitoreo/CommandConsole.tsx`
+
+## 2026:10:08 17:48
+
+**feat: ruta Sur-Sureste en el mapa táctico.** En `TacticalMap` se agregó un
+sexto corredor troncal (CDMX → Oaxaca → Chiapas) con sus dos nodos nuevos:
+Oaxaca y Chiapas (Tuxtla Gutiérrez). Las coordenadas se calcularon con la misma
+proyección Mercator que el resto del mapa (Oaxaca en 621.1, 508.4; Chiapas en
+718.5, 517.4), por lo que quedan alineadas con el contorno del país. La ruta
+usa el degradado periwinkle→esmeralda ya existente (`routeGrad1`); Chiapas es la
+terminal esmeralda del corredor.
+
+- `src/features/infraestructura/TacticalMap.tsx`
+
+## 2026:10:08 17:35
+
+**fix: orden cronológico de la línea de evolución.** En `EvolutionTimeline` se
+corrigió el orden de las fases: la línea representa la historia de la empresa,
+así que ahora va en orden cronológico real, de la Fase I (el origen:
+"Seguimiento en tiempo real y grupo de reacción") a la Fase IV (la actual:
+"Predicción e inteligencia de datos", destacada con IA activa). Cada tarjeta
+conserva su contenido; solo se renumeraron las fases y se invirtió el orden
+visual. El eyebrow de la sección pasó de "Línea cronológica de evolución" a
+"Evolución de la empresa"; el subtítulo "De la reacción en campo a la
+anticipación algorítmica" se mantuvo igual.
+
+- `src/features/trayectoria/EvolutionTimeline.tsx`
+
+## 2026:10:08 17:20
+
+**fix: UI fixes.** En las tarjetas de indicadores de confianza (`TrustIndicators`)
+se reacomodó el contenido: la etiqueta (titulo) pasó a ir justo debajo de la
+cifra, como valor secundario, y la descripción y el pie bajaron al bloque
+inferior de la tarjeta (antes el titulo quedaba separado al centro). Además, en
+la línea cronológica (`EvolutionTimeline`) se ajustó el título de la Fase I a
+"Seguimiento en tiempo real y grupo de reacción".
+
+- `src/features/trayectoria/TrustIndicators.tsx`,
+  `src/features/trayectoria/EvolutionTimeline.tsx`
+
+## 2026:10:08 17:01
+
+**fix: avoid routes in the event log.** En el log de eventos de la consola de
+monitoreo (`CommandConsole`) se quitó la especificación de ruta/ubicación de los
+títulos de los tres eventos (Autopista México–Puebla, Arco Norte, Corredor
+Bajío y sus marcadores de km); quedan solo el motivo del incidente (robo con
+violencia, cierre total de la circulación, desvío no programado) y sus mensajes
+complementarios.
+
+- `src/features/monitoreo/CommandConsole.tsx`
+
+## 2026:10:08 16:51
+
+**fix: removed unused labels.** Limpieza del footer (`SiteFooter`): se retiraron
+elementos de lista sobrantes y quedó la columna de Compañía con "Cobertura
+Nacional" enlazada a `#infraestructura`; se eliminó código muerto resultante.
+
+- `src/components/SiteFooter.tsx`
+
+## 2026:10:08 16:22
+
+**fix: removed telemetría, C4/C5, and latencia texts.** Barrido de copy en toda la
+landing: se quitaron o reescribieron todas las referencias visibles a "C4/C5",
+"telemetría" y "latencia" (etiquetas, badges, descripciones, strips de estado y
+el indicador LAT/LEO), más los comentarios internos equivalentes. No se tocó
+`tokens.css` (espejo de la librería) ni los mocks.
+
+- `src/components/SiteFooter.tsx`, `src/features/contacto/ContactPitch.tsx`,
+  `src/features/contacto/Contacto.tsx`, `src/features/datos/AnalyticsDashboard.tsx`,
+  `src/features/datos/DataCapabilities.tsx`, `src/features/datos/DataMetrics.tsx`,
+  `src/features/datos/DatosHeader.tsx`, `src/features/hero/ControlCenterPanel.tsx`,
+  `src/features/infraestructura/CapabilityCards.tsx`,
+  `src/features/infraestructura/InfraHeader.tsx`,
+  `src/features/infraestructura/InfraMetrics.tsx`,
+  `src/features/infraestructura/TacticalMap.tsx`,
+  `src/features/monitoreo/CommandConsole.tsx`,
+  `src/features/monitoreo/MonitoreoCapabilities.tsx`,
+  `src/features/monitoreo/MonitoreoHeader.tsx`,
+  `src/features/monitoreo/ReactionProtocol.tsx`,
+  `src/features/trayectoria/EvolutionTimeline.tsx`,
+  `src/features/trayectoria/TrustIndicators.tsx`
+
+## 2026:10:08 14:38
+
+**fix: change in the send email logic.** El formulario de cotización
+(`QuoteForm`) pasó a enviar por `mailto:` prellenado con los campos del
+formulario, repartiendo el destino entre las dos cuentas de ventas con un
+round-robin por navegador de arranque aleatorio (sin backend). Se documentó la
+decisión en el README.
+
+- `src/features/contacto/QuoteForm.tsx`, `README.md`
+
+## 2026:10:08 14:08
+
+**fix: added phone numbers.** Se agregaron los teléfonos de Ventas y Atención
+comercial como enlaces `tel:` en el footer (`SiteFooter`) y en el panel de
+contacto (`ContactPitch`).
+
+- `src/components/SiteFooter.tsx`, `src/features/contacto/ContactPitch.tsx`
+
+## 2026:10:08 13:26
+
+**fix: Address added to footer.** Se reemplazó el placeholder de dirección por la
+Matriz de Operaciones real (Eje 5 Nte 990, Santa Bárbara, Azcapotzalco, 02230
+Ciudad de México, CDMX), enlazada a Google Maps.
+
+- `src/components/SiteFooter.tsx`
+
+## 2026:10:08 13:18
+
+**fix: phase change.** En la línea cronológica (`EvolutionTimeline`) se
+intercambiaron la Fase I y la Fase IV, y se igualó el tamaño de las cuatro
+tarjetas sin importar el contenido.
+
+- `src/features/trayectoria/EvolutionTimeline.tsx`
+
+## 2026:10:08 12:55
+
+**fix: more removals.** Se retiró del panel Centro de Control del Hero
+(`ControlCenterPanel`) el visualizador de ruta "Corredor Estratégico" y los KPIs
+"Alertas Neutralizadas" y "Latencia Satelital"; en `ContactPitch` se ajustó la
+métrica/estado asociada.
+
+- `src/features/hero/ControlCenterPanel.tsx`, `src/features/contacto/ContactPitch.tsx`
+
+## 2026:10:08 12:45
+
+**fix: remove Alertas activas and Viajes monitoreados.** Se quitaron esos dos KPIs
+de la consola de comando (`CommandConsole`) y la rejilla quedó a una sola
+columna.
+
+- `src/features/monitoreo/CommandConsole.tsx`
+
+## 2026:10:08 12:35
+
+**fix: InfraMetrics adjustments.** En la fila de métricas de Infraestructura
+(`InfraMetrics`) se cambiaron dos cifras: "+250 patrullas en campo" y
+"3,250,000 km recorridos al mes".
+
+- `src/features/infraestructura/InfraMetrics.tsx`
+
+## 2026:10:08 12:21
+
+**fix: fix animated map.** Rework del mapa táctico (`TacticalMap`): contorno
+geográficamente fiel de México, nodos y corredores sobre coordenadas reales,
+puntos de radar fijos (CDMX, MTY, Tijuana) con ping expansivo relleno, waypoints
+adicionales (Torreón, Mazatlán, Hermosillo, Sonoyta) y retiro de las etiquetas
+HUD flotantes. Se añadió el keyframe `radar-ping` en `globals.css`.
+
+- `src/features/infraestructura/TacticalMap.tsx`, `src/styles/globals.css`
+
+## 2026:10:07 17:47
+
+**fix: remove protocolo operativo.** Se retiró la tarjeta "Protocolo Operativo /
+Grupo de Reacción" (`ReactionProtocol`) de la sección Monitoreo; la consola de
+comando pasó a ancho completo.
+
+- `src/features/monitoreo/Monitoreo.tsx`
+
+## 2026:10:07 17:41
+
+**fix: Datos section temporary remove.** Se desvinculó temporalmente la sección
+"Datos e IA" de la página: se quitó su render de `App.tsx` y su enlace de
+navegación en `SiteHeader`. Los archivos de la sección quedan intactos.
+
+- `src/App.tsx`, `src/components/SiteHeader.tsx`
+
 ## 2026:10:01 15:25
 
 **Resumen:** Se corrigió el scroll-spy para que no deje ningún enlace resaltado cuando estés en el Hero o antes de la primera sección.
@@ -23,10 +265,11 @@ if (primera) {
 
 // Después:
 const primera = ids.find((id) => visibles.has(id));
-setActivo(primera ?? null);  // Devuelve null si no hay sección visible
+setActivo(primera ?? null); // Devuelve null si no hay sección visible
 ```
 
 **Resultado:**
+
 - En el Hero: ningún enlace resaltado ✓
 - Al bajar a Trayectoria: "Nosotros" se ilumina ✓
 - Al cambiar de sección: el resaltado se actualiza correctamente ✓
@@ -47,7 +290,7 @@ setActivo(primera ?? null);  // Devuelve null si no hay sección visible
 
 - **Problema:** El componente se desmontaba inmediatamente al cambiar el estado `abierto`, sin esperar a que la animación de `exit` terminara.
 - **Solución:** Se agregó `AnimatePresence` de `motion/react` alrededor del panel y los items del menú. Esto permite que Motion espere a que terminen las animaciones de salida antes de desmontar.
-- **Resultado:** 
+- **Resultado:**
   - Apertura: panel desliza hacia abajo, items entran con cascada ✓
   - Cierre: panel desliza hacia arriba, items salen con cascada, todo desaparece suavemente ✓
 
@@ -156,7 +399,7 @@ setActivo(primera ?? null);  // Devuelve null si no hay sección visible
 
 1. **Hero — Métricas de 3 columnas sin breakpoint responsive**
    - **Antes:** `grid grid-cols-3` (siempre 3 columnas) → se apretaban en móvil (iPhone SE 375px)
-   - **Después:** `grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3` → 1 col móvil, 2 tablet pequeño, 3 tablet+ 
+   - **Después:** `grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3` → 1 col móvil, 2 tablet pequeño, 3 tablet+
    - **Archivo:** `src/features/hero/HeroPitch.tsx`
 
 2. **Infraestructura — Ausencia de breakpoint `md:` en grid principal**
@@ -210,6 +453,7 @@ setActivo(primera ?? null);  // Devuelve null si no hay sección visible
 **Requisitos:** El secreto de repositorio `FIREBASE_SERVICE_ACCOUNT` debe existir y contener el JSON de la cuenta de servicio de Firebase. Si ya se utilizaba para `lan-wf-m`, no es necesario agregarlo de nuevo.
 
 **Flujo de despliegue:**
+
 - Cada push a `lan-wf-m` o `lan-wf-q` dispara el workflow.
 - Se ejecutan verificaciones (typecheck, lint, build); si todas pasan, se despliega.
 - Si alguna falla, no hay despliegue y el developer debe arreglar la rama y hacer push de nuevo.
@@ -631,6 +875,7 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 - `src/styles/globals.css`
 - `.kiro/steering/naming-conventions.md`
 - `.github/pull_request_template.md`
+
 ## 2026:10:01 15:45
 
 **Resumen:** Se auditoró y corrigió sistemáticamente el diseño responsivo en todos los breakpoints (375px a 1920px). Se eliminaron espacios fijos, se añadieron escalas de texto adaptativas, y se previno el solapamiento y hacinamiento de elementos en móvil.
@@ -640,6 +885,7 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 **Fixes por componente:**
 
 ### **CommandConsole.tsx** (Sección Monitoreo)
+
 - **Cabecera técnica:** Cambios de `text-[11px]` a `text-[10px] sm:text-[11px]` con espacios adaptativos (`gap-2 sm:gap-3`). Oculto "CABINA PRINCIPAL" en móvil.
 - **KPIs:** Grid de `grid-cols-1 sm:grid-cols-3` con `gap-2 sm:gap-3` y `truncate` en textos largos. Tamaños: `text-lg sm:text-xl` para valores.
 - **Log de eventos:** Contenedor con `lg:col-span-7`, espacios móviles `p-2.5 sm:p-3.5`, y texto con `line-clamp-2` para títulos y `line-clamp-1` para detalles.
@@ -647,11 +893,13 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 - **Barra de estado:** Reorganizada en `flex-col gap-2 sm:flex-row sm:gap-0` con texto comprimido ("DESPACHO:" sin "QUERÉTARO" en móvil).
 
 ### **Monitoreo.tsx** (Sección principal)
+
 - **Padding:** Añadido `px-3 sm:px-6` y `py-12 sm:py-16 md:py-24` para escalas verticales.
 - **Espacios internos:** Cambiados `space-y-14` a `space-y-10 sm:space-y-12 md:space-y-14`.
 - **Grid:** Espacios `gap-6 sm:gap-8` en la malla de CommandConsole + ReactionProtocol.
 
 ### **ReactionProtocol.tsx** (Protocolo del grupo de reacción)
+
 - **Cabecera:** Layout flexbox con `flex-col sm:flex-row` para acomodar en móvil.
 - **Título:** Reducido a `text-lg sm:text-xl` sin pérdida de legibilidad.
 - **Stepper:** Espacios `space-y-6 sm:space-y-8` entre pasos; pasos con `gap-3 sm:gap-4`.
@@ -659,6 +907,7 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 - **Banner:** Reorganizado con `flex-col sm:flex-row` y `gap-3 sm:gap-0` para flujo móvil.
 
 ### **InfraMetrics.tsx** (Métricas de infraestructura)
+
 - **Grid:** `grid-cols-2 gap-2 sm:gap-3 md:gap-4 md:grid-cols-4` para escala progresiva.
 - **Valores:** Tamaños `text-lg sm:text-2xl md:text-3xl lg:text-4xl` con `tabular-nums` preservado.
 - **Etiquetas:** `text-[8px] sm:text-[10px] md:text-[11px]` tracking-wider sin desbordamiento.
@@ -673,6 +922,7 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 5. **Visibilidad condicional:** `hidden sm:inline` para elementos innecesarios en móvil.
 
 **Breakpoints testeados:**
+
 - 375px (iPhone SE): Monitoreo, métricas, eventos sin solapamiento ✓
 - 390px (Android estándar): Idem ✓
 - 640px (sm): Transición a 2-3 columnas, espacios ampliados ✓
@@ -692,4 +942,3 @@ Para no romper los grids de dos columnas, el `lg:col-span-*` se movió de la ra�
 - `CHANGELOG.md`
 
 **Verificación:** `pnpm typecheck`, `pnpm lint` y `pnpm build` pasan sin errores. Dev server ejecutándose en http://localhost:5173.
-

@@ -380,20 +380,27 @@
   animation: radar-rotate 16s linear infinite;
 }
 
-/* Pulso de nodo del mapa: halo que crece y se atenua (opacity + scale). */
-@keyframes node-pulse {
-  0%,
-  100% {
-    opacity: 0.8;
-    transform: scale(1);
+/*
+ * Ping de radar de los nodos fijos.
+ */
+@keyframes radar-ping {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.4);
   }
-  50% {
-    opacity: 0.3;
-    transform: scale(1.4);
+  85% {
+    opacity: 0;
+    transform: scale(var(--radar-reach, 12));
+  }
+  100% {
+    opacity: 0;
+    transform: scale(var(--radar-reach, 12));
   }
 }
-.animate-node-pulse {
-  animation: node-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+.animate-radar-ping {
+  /* --radar-reach: factor de escala final del anillo. */
+  animation: radar-ping 3.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+  transform-box: fill-box;
   transform-origin: center;
 }
 
@@ -439,4 +446,32 @@
 }
 .status-pulse {
   animation: pulse-emerald 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/*
+ * ── Seccion Clientes (muro de logos animado) ──────────────────────────────
+ * Una sola fila de logos que se desplaza en loop continuo hacia la DERECHA.s
+ */
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  flex-wrap: nowrap;
+}
+.animate-marquee-right {
+  animation: marquee-right var(--marquee-duration, 40s) linear infinite;
+}
+/*
+ * Al pasar el cursor sobre una fila, el desplazamiento se pausa para que se
+ * pueda leer una marca concreta.
+ */
+.marquee-row:hover .marquee-track {
+  animation-play-state: paused;
 }
