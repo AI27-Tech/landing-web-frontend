@@ -4,6 +4,14 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:10:28 15:49
+
+**fix: quitar a Mattel de la sección Clientes.** Se eliminó a Mattel de la lista
+de clientes del muro de logos y todo lo asociado a esa marca: la entrada en
+`clientes-data.ts` y el archivo de logo `public/clientes/mattel.png`.
+
+- `src/features/clientes/clientes-data.ts`, `public/clientes/mattel.png`
+
 ## 2026:10:09 14:36
 
 **feat: enlazar documentos legales del footer.** En

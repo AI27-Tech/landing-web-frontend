@@ -21,7 +21,6 @@ export type Cliente = {
 
 export const clientes: Cliente[] = [
   { nombre: 'Colgate', logo: '/clientes/colgate.svg' },
-  { nombre: 'Mattel', logo: '/clientes/mattel.png', escala: 1.5 },
   { nombre: 'Pfizer', logo: '/clientes/pfizer.svg' },
   { nombre: 'GNP', logo: '/clientes/gnp.svg' },
   { nombre: 'Herdez', logo: '/clientes/herdez.png', escala: 1.5 },
