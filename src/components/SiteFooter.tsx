@@ -22,6 +22,7 @@ const compania = [
   { etiqueta: 'Quiénes Somos', href: '#' },
   { etiqueta: 'Casos de Éxito', href: '#clientes' },
   { etiqueta: 'Cobertura Nacional', href: '#infraestructura' },
+  { etiqueta: 'Newsletter', href: '#newsletter' },
 ];
 
 const enlacesLegales = [

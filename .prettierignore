@@ -11,3 +11,9 @@ docs/mock
 # deja de mostrar solo las diferencias intencionales y este archivo pierde su
 # unica propiedad util: saber que cambio de verdad diverge.
 src/styles/tokens.css
+
+# Archivo estatico del newsletter: paginas HTML autocontenidas que entrega el
+# equipo (estilos y scripts en linea). Se sirven tal cual desde public/ y se
+# reemplazan reexportando desde su fuente; reformatearlas solo genera ruido y
+# arriesga romper la plantilla en linea. Mismo criterio que docs/mock.
+public/newsletter

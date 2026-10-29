@@ -4,6 +4,50 @@ Todo cambio relevante en este proyecto se registra aquí, en español, con la
 entrada más reciente primero. El formato y la obligatoriedad los fija
 `.kiro/steering/changelog.md`.
 
+## 2026:10:28 18:05
+
+**feat: sección Newsletter con el informe de octubre como archivo estático.** Se
+agregó la sección `Newsletter` a la landing, con una grilla de tarjetas (una por
+edición; por ahora solo Octubre 2026). Cada tarjeta enlaza al informe, que se
+sirve como **archivo estático** desde `public/`, mismo patrón que
+`public/legal/`.
+
+Del paquete que entregó el equipo (una plantilla web completa de 24 MB) se
+conservó solo lo que las páginas realmente usan: las dos páginas HTML
+autocontenidas (`index-spa.html`, `index-eng.html`), sus dos PDF y las ~18
+imágenes referenciadas. Se descartaron `css/`, `js/` y `fonts/` (ninguno
+referenciado: los estilos y scripts van en línea y las fuentes vienen de Google
+Fonts), las imágenes sin usar, `mapa-estados.html` y los `.DS_Store`. El total
+bajó de 24 MB a 7 MB.
+
+Se corrigió un enlace roto de las páginas: el botón "Descargar PDF" apuntaba a
+`images/INFORME_JULIO_2026.pdf` (inexistente); ahora apunta al PDF real de cada
+idioma (`pdf-esp.pdf` / `pdf-ing.pdf`).
+
+Enlaces a la sección (ancla `#newsletter`): nuevo ítem "Newsletter" en el header
+(desktop y móvil, con scroll-spy) y en la columna "Compañía" del footer.
+
+El archivo estático del newsletter se añadió a `.prettierignore` (mismo criterio
+que `docs/mock`): es material que se reexporta desde su fuente y reformatearlo
+solo genera ruido.
+
+- `src/features/newsletter/Newsletter.tsx`,
+  `src/features/newsletter/NewsletterCard.tsx`,
+  `src/features/newsletter/newsletter-data.ts`,
+  `src/features/newsletter/README.md`, `src/App.tsx`,
+  `src/components/SiteHeader.tsx`, `src/components/SiteFooter.tsx`,
+  `public/newsletter/octubre-2026/**`, `.prettierignore`
+
+## 2026:10:28 16:00
+
+**chore: crear folder de la feature `newsletter`.** Se agregó
+`src/features/newsletter/` como espacio para la próxima sección de suscripción
+al newsletter, siguiendo la convención de `src/features/` (un folder plano por
+feature). Por ahora solo contiene un `README.md` que documenta el propósito del
+folder y los archivos sugeridos; aún no hay componentes ni comportamiento.
+
+- `src/features/newsletter/README.md`
+
 ## 2026:10:28 15:49
 
 **fix: quitar a Mattel de la sección Clientes.** Se eliminó a Mattel de la lista

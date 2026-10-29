@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 84 61">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-1, .cls-2 {
+        stroke-width: 0px;
+      }
+
+      .cls-3 {
+        clip-path: url(#clippath);
+      }
+
+      .cls-2 {
+        fill: #001f40;
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="cls-1" x=".65" y=".61" width="82.04" height="53.05"/>
+    </clipPath>
+  </defs>
+  <g>
+    <path class="cls-2" d="M.65.61v45.47h82.04V.61H.65ZM81.52,45.15H1.61V1.55h79.91v43.6Z"/>
+    <g id="Grupo_10" data-name="Grupo 10">
+      <g class="cls-3">
+        <g id="Grupo_9" data-name="Grupo 9">
+          <rect id="Rectángulo_9" data-name="Rectángulo 9" class="cls-2" x="3.5" y="3.69" width="9.37" height="9.19"/>
+          <rect id="Rectángulo_10" data-name="Rectángulo 10" class="cls-2" x="15.22" y="3.69" width="9.37" height="9.19"/>
+          <rect id="Rectángulo_11" data-name="Rectángulo 11" class="cls-2" x="3.5" y="15.24" width="9.37" height="9.19"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <rect class="cls-2" x="40" y="46" width="4" height="9"/>
+  <path class="cls-2" d="M40,53.66l-9,5.34h1.44s7.56-3,8.56-3h1l1-3-3,.66Z"/>
+  <path class="cls-2" d="M44.04,53.66l9,5.34h-1.44s-7.56-3-8.56-3h-1s-1-3-1-3l3,.66Z"/>
+</svg>

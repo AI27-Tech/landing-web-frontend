@@ -18,6 +18,7 @@ const enlaces = [
   { etiqueta: 'Nosotros', href: '#nosotros' },
   { etiqueta: 'Infraestructura', href: '#infraestructura' },
   { etiqueta: 'Monitoreo', href: '#monitoreo' },
+  { etiqueta: 'Newsletter', href: '#newsletter' },
   // Enlace a '#datos' retirado temporalmente: la seccion Datos e IA quedo
   // desvinculada de la pagina (ver App.tsx). Restaurar junto con <Datos />.
 ] as const;

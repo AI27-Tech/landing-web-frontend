@@ -11,6 +11,7 @@ import { Contacto } from '@/features/contacto/Contacto';
 import { Hero } from '@/features/hero/Hero';
 import { Infraestructura } from '@/features/infraestructura/Infraestructura';
 import { Monitoreo } from '@/features/monitoreo/Monitoreo';
+import { Newsletter } from '@/features/newsletter/Newsletter';
 import { Trayectoria } from '@/features/trayectoria/Trayectoria';
 
 export function App() {
@@ -23,6 +24,7 @@ export function App() {
         <Clientes />
         <Infraestructura />
         <Monitoreo />
+        <Newsletter />
         <Contacto />
       </main>
       <SiteFooter />

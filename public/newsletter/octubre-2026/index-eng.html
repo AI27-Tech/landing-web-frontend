@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#001f40">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AI27">
+<link rel="apple-touch-icon" href="images/favicon.png">
+<title>AI27 · Monthly Security Report — October 2026</title>
+<link rel="icon" href="images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- =====================================================================
+     ESTILOS GLOBALES  (solo lo que comparten varias secciones)
+     ===================================================================== -->
+<style>
+  :root{
+    --navy:#001f40;
+    --blue:#005be3;
+    --blue-soft:#4d7adf;
+    --ink:#1c2b3a;
+    --muted:#5b6b7d;
+    --paper:#ffffff;
+    --mist:#eef3fc;
+    --mist-2:rgba(77,122,223,.14);
+    --mist-3:rgba(77,122,223,.30);
+    --red:#e2231a;
+    --amber:#e79b0e;
+    --green:#1aa15c;
+    --line:#e3e9f3;
+    --maxw:1480px;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  html.is-loading{overflow:hidden;}
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  section{padding:78px 0;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  h1,h2,h3,h4{font-family:'Poppins',sans-serif;margin:0;color:var(--navy);}
+
+  .section-title{
+    text-align:center;
+    font-size:clamp(34px,4.6vw,50px);
+    line-height:1.02;
+    margin-bottom:10px;
+  }
+  .section-title b{font-weight:800;}
+  .section-title span{font-weight:300;color:#7a8aa0;}
+  .bar-under{width:64px;height:5px;background:var(--blue);margin:0 auto 46px auto;border-radius:3px;}
+  .eyebrow-band{background:var(--mist-3);padding:26px 0;text-align:center;}
+  .eyebrow-band h3{font-size:clamp(30px,4vw,40px);line-height:1.02;}
+  .eyebrow-band h3 span{font-weight:300;color:#3c5a8f;}
+  .lead{max-width:900px;margin:0 auto;color:var(--ink);font-size:20.5px;line-height:1.55;text-align:justify;}
+
+  /* Imagen con degradado blanco inferior (tramo y mapas de calor) */
+  .img-fade{position:relative;overflow:hidden;}
+  .img-fade::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:45%;
+    background:linear-gradient(to top, rgba(255,255,255,.4), rgba(255,255,255,0));
+    pointer-events:none;
+  }
+
+  /* Animación de aparición al hacer scroll */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  .reveal-title{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal-title.in{opacity:1;transform:translateY(0);}
+</style>
+
+<!-- =====================================================================
+     UTILIDADES GLOBALES (JS)  ·  las usan todas las secciones
+       AI27.reveal(selector)      → activa la animación .reveal / .reveal-title
+       AI27.onView(id, función)   → ejecuta la función cuando la sección entra en pantalla
+       AI27.start()               → la llama el loader cuando termina de cargar
+     ===================================================================== -->
+<script>
+window.AI27 = (function(){
+  let start;
+  const ready = new Promise(res => { start = res; });
+
+  const revealIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){ e.target.classList.add('in'); revealIO.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+
+  return {
+    start,
+    reveal(root){
+      ready.then(() => {
+        const r = typeof root === 'string' ? document.querySelector(root) : root;
+        if(!r) return;
+        r.querySelectorAll('.reveal, .reveal-title').forEach(el => revealIO.observe(el));
+      });
+    },
+    onView(id, fn){
+      let ran = false;
+      const run = () => { if(ran) return; ran = true; fn(); };
+      ready.then(() => {
+        const el = document.getElementById(id);
+        if(!el) return;
+        const io = new IntersectionObserver(entries => {
+          entries.forEach(e => { if(e.isIntersecting){ run(); io.unobserve(e.target); } });
+        }, {threshold:0.2});
+        io.observe(el);
+        setTimeout(run, 1500); // respaldo si el observer nunca dispara
+      });
+    }
+  };
+})();
+</script>
+</head>
+<body>
+
+
+<!-- =====================================================================
+     0 · ANIMACIÓN DE CARGA  (desktop y responsive)
+     ===================================================================== -->
+<div id="loader" role="status" aria-live="polite">
+  <img src="images/responsive-logo.png" class="ld-logo" alt="AI27">
+  <div class="ld-spin"></div>
+  <div class="ld-text">Loading…</div>
+</div>
+<noscript><style>#loader{display:none !important;}html.is-loading{overflow:auto !important;}</style></noscript>
+
+<style>
+  #loader{
+    position:fixed;inset:0;z-index:9999;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
+    background:linear-gradient(135deg,#001233 0%,#0a2a63 55%,#1b3f9a 100%);
+    transition:opacity .5s ease, visibility .5s ease;
+  }
+  #loader.hide{opacity:0;visibility:hidden;}
+  .ld-logo{width:220px;max-width:55vw;}
+  .ld-spin{
+    width:46px;height:46px;border-radius:50%;
+    border:4px solid rgba(255,255,255,.18);border-top-color:var(--blue-soft);
+    animation:ldSpin .9s linear infinite;
+  }
+  .ld-text{color:#cfd9ea;font-family:'Poppins',sans-serif;font-weight:300;font-size:14px;letter-spacing:3px;text-transform:uppercase;}
+  @keyframes ldSpin{to{transform:rotate(360deg);}}
+  @media (max-width:900px){
+    .ld-logo{width:150px;}
+    .ld-spin{width:38px;height:38px;}
+    .ld-text{font-size:12.5px;}
+  }
+</style>
+
+<script>
+(function(){
+  const loader = document.getElementById('loader');
+  const root = document.documentElement;
+  const t0 = Date.now();
+  let closed = false;
+  root.classList.add('is-loading');
+
+  function closeLoader(){
+    if(closed) return;
+    closed = true;
+    loader.classList.add('hide');
+    root.classList.remove('is-loading');
+    AI27.start();
+    setTimeout(() => loader.remove(), 600);
+  }
+  // Se cierra cuando carga la página (mínimo 500 ms visible) o a los 8 s como respaldo
+  window.addEventListener('load', () => setTimeout(closeLoader, Math.max(0, 500 - (Date.now() - t0))));
+  setTimeout(closeLoader, 8000);
+})();
+</script>
+
+
+<!-- =====================================================================
+     1 · MENÚ PRINCIPAL  (desktop: barra superior · responsive: ver bloque 1b)
+     ===================================================================== -->
+<header class="nav">
+  <div class="wrap nav-row">
+    <nav class="links" id="navLinks">
+      <a href="#indice">Index</a>
+      <a href="#resumen">Month Summary</a>
+      <a href="#transporte">Most Stolen Transport</a>
+      <a href="#horarios">Theft Times</a>
+      <a href="#producto">Most Stolen Product</a>
+      <a href="#tramo">Road Section</a>
+      <a href="#calor">Hotspot Maps</a>
+      <a href="#recomendaciones">Recommendations</a>
+      <a class="lang-btn" href="index-spa.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3c2.6 2.6 4 5.7 4 9s-1.4 6.4-4 9c-2.6-2.6-4-5.7-4-9s1.4-6.4 4-9z"></path></svg>
+        Spanish version
+      </a>
+      <a class="dl-btn" href="pdf-ing.pdf" target="_blank">Download PDF</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    border-bottom:1px solid rgba(255,255,255,0);
+    transition:border-color .35s ease;
+  }
+  header.nav::before{
+    content:"";position:absolute;inset:0;z-index:-1;
+    background:rgba(0,17,38,0);
+    -webkit-backdrop-filter:blur(0px);
+    backdrop-filter:blur(0px);
+    transition:background .35s ease, backdrop-filter .35s ease, -webkit-backdrop-filter .35s ease;
+  }
+  header.nav.nav-scrolled{border-bottom:1px solid rgba(255,255,255,.08);}
+  header.nav.nav-scrolled::before{
+    background:rgba(0,31,64,.7);
+    -webkit-backdrop-filter:blur(10px);
+    backdrop-filter:blur(10px);
+  }
+  .nav-row{display:flex;align-items:center;justify-content:space-between;height:72px;}
+  nav.links{display:flex;align-items:center;gap:28px;margin-left:auto;}
+  nav.links a{
+    color:#cfd9ea;text-decoration:none;font-size:13px;font-weight:400;
+    letter-spacing:.3px;transition:color .2s;
+  }
+  nav.links a:hover{color:#fff;}
+  nav.links .lang-btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:8px 16px;border-radius:30px;
+    border:1px solid rgba(255,255,255,.55);color:#fff;font-weight:600;
+    transition:background .2s, border-color .2s;
+  }
+  nav.links .lang-btn:hover{background:rgba(255,255,255,.14);border-color:#fff;}
+  .dl-btn{
+    background:var(--blue);color:#fff !important;padding:9px 18px;border-radius:30px;
+    font-weight:600 !important;
+  }
+  /* En responsive la barra superior desaparece: lo sustituye el menú inferior (bloque 1b) */
+  @media (max-width:900px){
+    header.nav{display:none;}
+  }
+</style>
+
+<script>
+(function(){
+  const nav = document.querySelector('header.nav');
+  function onScroll(){ nav.classList.toggle('nav-scrolled', window.scrollY > 40); }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+
+
+<!-- =====================================================================
+     1b · SOLO RESPONSIVE (≤ 900 px)
+          · Botón píldora de pantalla completa (cristal tipo iPhone) + botón de salir
+          · Menú inferior tipo app de iPhone (dock de cristal) en lugar del menú hamburguesa
+          · Hoja "Más" con todas las secciones como iconos de app
+     ===================================================================== -->
+<button class="fs-pill glass" id="fsPill" type="button" aria-pressed="false" aria-label="Enter full screen">
+  <span class="fs-ico fs-ico-in"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></span>
+  <span class="fs-ico fs-ico-out"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+  <span class="fs-label" id="fsLabel">Full screen</span>
+</button>
+<div class="fs-toast glass" id="fsToast" role="status" aria-live="polite">On iPhone the browser can’t hide its toolbar. Tap Share → “Add to Home Screen” to open this as an app.</div>
+
+<nav class="dock glass" id="dock" aria-label="Main menu">
+  <span class="dock-bubble" aria-hidden="true"></span>
+  <a class="dock-item" href="#inicio" data-tab="inicio">
+    <svg viewBox="0 0 24 24"><path d="M3.5 11.5L12 4l8.5 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg>
+    <span>Home</span>
+  </a>
+  <a class="dock-item" href="#resumen" data-tab="resumen">
+    <svg viewBox="0 0 24 24"><rect x="4.5" y="3.5" width="15" height="17" rx="3"/><path d="M8.5 9h7M8.5 13h7M8.5 17h4"/></svg>
+    <span>Summary</span>
+  </a>
+  <a class="dock-item" href="#transporte" data-tab="transporte">
+    <svg viewBox="0 0 24 24"><path d="M2.5 6.5h11v9h-11z"/><path d="M13.5 9.5h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/></svg>
+    <span>Transport</span>
+  </a>
+  <a class="dock-item" href="#horarios" data-tab="horarios">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+    <span>Times</span>
+  </a>
+  <button class="dock-item" id="dockMore" type="button" data-tab="more" aria-haspopup="dialog" aria-expanded="false">
+    <svg viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="2"/></svg>
+    <span>More</span>
+  </button>
+</nav>
+
+<div class="sheet-backdrop" id="sheetBackdrop"></div>
+<div class="sheet glass" id="sheet" role="dialog" aria-modal="true" aria-label="Sections" aria-hidden="true">
+  <div class="sheet-grip" id="sheetGrip"><i></i></div>
+  <div class="sheet-title">Sections</div>
+  <div class="sheet-grid">
+    <a class="tile" href="#indice"><span class="tile-ico" style="--g1:#5b86e6;--g2:#1b4fc9"><svg viewBox="0 0 24 24"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="4.8" cy="6.5" r="1"/><circle cx="4.8" cy="12" r="1"/><circle cx="4.8" cy="17.5" r="1"/></svg></span><span>Index</span></a>
+    <a class="tile" href="#quienes-somos"><span class="tile-ico" style="--g1:#9b86f0;--g2:#5a45c9"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.2"/><circle cx="12" cy="7.9" r=".7" fill="#fff"/></svg></span><span>About us</span></a>
+    <a class="tile" href="#resumen"><span class="tile-ico" style="--g1:#2a5db0;--g2:#0a2a63"><svg viewBox="0 0 24 24"><rect x="4.5" y="3.5" width="15" height="17" rx="3"/><path d="M8.5 9h7M8.5 13h7M8.5 17h4"/></svg></span><span>Summary</span></a>
+    <a class="tile" href="#transporte"><span class="tile-ico" style="--g1:#f7bf4a;--g2:#e2781a"><svg viewBox="0 0 24 24"><path d="M2.5 6.5h11v9h-11z"/><path d="M13.5 9.5h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/></svg></span><span>Transport</span></a>
+    <a class="tile" href="#horarios"><span class="tile-ico" style="--g1:#2fc9b3;--g2:#0b7f9c"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span><span>Theft times</span></a>
+    <a class="tile" href="#producto"><span class="tile-ico" style="--g1:#3fcf86;--g2:#128a4b"><svg viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span><span>Product</span></a>
+    <a class="tile" href="#horario-mayor"><span class="tile-ico" style="--g1:#5b86e6;--g2:#1b4fc9"><svg viewBox="0 0 24 24"><path d="M3 19c3 0 4-12 9-12s6 12 9 12"/><path d="M3 19.5h18"/></svg></span><span>Peak hours</span></a>
+    <a class="tile" href="#tramo"><span class="tile-ico" style="--g1:#f26b5e;--g2:#c4231a"><svg viewBox="0 0 24 24"><path d="M8.5 3L5 21M15.5 3L19 21"/><path d="M12 4v3M12 10.5v3M12 17v3"/></svg></span><span>Road sections</span></a>
+    <a class="tile" href="#calor"><span class="tile-ico" style="--g1:#9b86f0;--g2:#5a45c9"><svg viewBox="0 0 24 24"><path d="M9 4L3.5 6v14L9 18l6 2 5.5-2V4L15 6z"/><path d="M9 4v14M15 6v14"/></svg></span><span>Hotspot maps</span></a>
+    <a class="tile" href="#recomendaciones"><span class="tile-ico" style="--g1:#2a5db0;--g2:#0a2a63"><svg viewBox="0 0 24 24"><path d="M12 3l8 3.5V12c0 4.5-3.2 7.4-8 9-4.8-1.6-8-4.5-8-9V6.5z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span><span>Recommendations</span></a>
+    <a class="tile" href="index-spa.html"><span class="tile-ico glass-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.4 2.4 3.6 5.3 3.6 8.5s-1.2 6.1-3.6 8.5c-2.4-2.4-3.6-5.3-3.6-8.5S9.6 5.9 12 3.5z"/></svg></span><span>Español</span></a>
+    <a class="tile" href="pdf-ing.pdf" target="_blank"><span class="tile-ico" style="--g1:#5b86e6;--g2:#1b4fc9"><svg viewBox="0 0 24 24"><path d="M12 4v11"/><path d="M7.5 11l4.5 4.5 4.5-4.5"/><path d="M5 19.5h14"/></svg></span><span>PDF</span></a>
+  </div>
+</div>
+
+<style>
+  .fs-pill,.fs-toast,.dock,.sheet,.sheet-backdrop{display:none;}
+
+  @media (max-width:900px){
+    html.sheet-open{overflow:hidden;}
+    .back-to-top{display:none !important;}
+    .lead{text-align:left;}
+    footer{padding-bottom:calc(128px + env(safe-area-inset-bottom)) !important;}
+
+    /* ---------- Cristal tipo iPhone (Liquid Glass) ---------- */
+    .glass{
+      position:fixed;
+      background:linear-gradient(180deg, rgba(60,100,170,.24), rgba(8,28,66,.38));
+      -webkit-backdrop-filter:blur(18px) saturate(210%) brightness(1.08);
+      backdrop-filter:blur(18px) saturate(210%) brightness(1.08);
+      border:1px solid rgba(255,255,255,.38);
+      box-shadow:
+        0 14px 36px -14px rgba(0,16,50,.45),
+        inset 0 1px 0 rgba(255,255,255,.65),
+        inset 0 -1px 0 rgba(255,255,255,.08),
+        inset 0 0 22px rgba(255,255,255,.05);
+      color:#fff;
+      text-shadow:0 1px 5px rgba(0,16,50,.7);
+    }
+    .glass::before{               /* brillo especular superior */
+      content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+      background:linear-gradient(180deg, rgba(255,255,255,.38), rgba(255,255,255,0) 45%);
+      -webkit-mask:linear-gradient(#000,transparent 80%);mask:linear-gradient(#000,transparent 80%);
+    }
+    @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+      .glass{background:rgba(10,32,74,.85);}
+    }
+
+    /* ---------- Píldora de pantalla completa ---------- */
+    .fs-pill{
+      display:inline-flex;align-items:center;gap:8px;
+      top:calc(10px + env(safe-area-inset-top));right:12px;z-index:75;
+      height:42px;min-width:42px;padding:0 16px 0 12px;border-radius:21px;
+      font:600 12.5px/1 'Inter',sans-serif;letter-spacing:.2px;cursor:pointer;
+      -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+      transition:padding .35s cubic-bezier(.3,1,.4,1), background .3s ease, transform .2s ease;
+    }
+    .fs-pill:active{transform:scale(.94);}
+    .fs-pill .fs-ico{width:18px;height:18px;display:flex;flex:0 0 18px;position:relative;z-index:1;}
+    .fs-pill .fs-ico svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+    .fs-pill .fs-ico-out{display:none;}
+    .fs-pill .fs-label{position:relative;z-index:1;white-space:nowrap;max-width:140px;overflow:hidden;transition:max-width .35s cubic-bezier(.3,1,.4,1), opacity .25s ease, margin .35s ease;}
+    /* se encoge a círculo cuando se baja en la página */
+    .fs-pill.compact{padding:0 12px;}
+    .fs-pill.compact .fs-label{max-width:0;opacity:0;margin-left:-8px;}
+    /* pantalla completa activa → botón de salir */
+    html.is-fs .fs-pill .fs-ico-in{display:none;}
+    html.is-fs .fs-pill .fs-ico-out{display:flex;}
+    html.is-fs .fs-pill{
+      background:linear-gradient(180deg, rgba(235,70,60,.58), rgba(150,20,18,.62));
+      border-color:rgba(255,255,255,.34);
+    }
+    html.standalone .fs-pill{display:none;}   /* ya abierta como app: no hace falta */
+
+    .fs-toast{
+      display:block;top:calc(62px + env(safe-area-inset-top));left:12px;right:12px;z-index:74;
+      padding:13px 16px;border-radius:20px;font:500 12.5px/1.45 'Inter',sans-serif;
+      opacity:0;transform:translateY(-8px);pointer-events:none;
+      transition:opacity .35s ease, transform .35s ease;
+    }
+    .fs-toast.show{opacity:1;transform:none;}
+
+    /* ---------- Menú inferior tipo app de iPhone ---------- */
+    .dock{
+      display:grid;grid-template-columns:repeat(5,1fr);
+      left:50%;bottom:calc(12px + env(safe-area-inset-bottom));
+      width:min(calc(100% - 24px),432px);height:72px;padding:6px;
+      transform:translateX(-50%);border-radius:38px;z-index:70;
+      --pad:6px;--i:0;
+    }
+    .dock-bubble{
+      position:absolute;top:var(--pad);bottom:var(--pad);left:var(--pad);
+      width:calc((100% - var(--pad)*2)/5);border-radius:32px;
+      background:linear-gradient(180deg, rgba(255,255,255,.26), rgba(255,255,255,.10));
+      box-shadow:inset 0 1px 1px rgba(255,255,255,.55), 0 6px 16px -6px rgba(0,10,40,.45);
+      transform:translateX(calc(var(--i) * 100%));
+      transition:transform .5s cubic-bezier(.3,1.35,.5,1);
+    }
+    .dock-item{
+      position:relative;z-index:1;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+      background:none;border:0;padding:0;margin:0;cursor:pointer;
+      color:rgba(255,255,255,.95);text-decoration:none;
+      font:600 10.5px/1 'Inter',sans-serif;letter-spacing:.1px;
+      -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+      transition:color .25s ease, transform .2s ease;
+    }
+    .dock-item svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+    .dock-item:active{transform:scale(.9);}
+    .dock-item.active{color:#fff;}
+
+    /* ---------- Hoja "Más": secciones como iconos de app ---------- */
+    .sheet-backdrop{
+      display:block;position:fixed;inset:0;z-index:80;
+      background:rgba(0,10,30,.5);
+      -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+      opacity:0;visibility:hidden;
+      transition:opacity .35s ease, visibility .35s ease;
+    }
+    .sheet-backdrop.show{opacity:1;visibility:visible;}
+    .sheet{
+      display:block;left:50%;bottom:calc(10px + env(safe-area-inset-bottom));z-index:90;
+      width:min(calc(100% - 20px),452px);max-height:80vh;overflow-y:auto;
+      padding:8px 18px 22px;border-radius:38px;
+      transform:translate(-50%,115%);visibility:hidden;
+      transition:transform .5s cubic-bezier(.22,.9,.3,1), visibility 0s linear .5s;
+      overscroll-behavior:contain;
+    }
+    .sheet.open{transform:translate(-50%,0);visibility:visible;transition:transform .5s cubic-bezier(.22,.9,.3,1), visibility 0s;}
+    .sheet-grip{position:relative;z-index:1;display:flex;justify-content:center;padding:6px 0 10px;touch-action:none;cursor:grab;}
+    .sheet-grip i{width:40px;height:5px;border-radius:3px;background:rgba(255,255,255,.45);display:block;}
+    .sheet-title{
+      position:relative;z-index:1;text-align:center;margin:2px 0 16px;
+      font:600 12px/1 'Inter',sans-serif;letter-spacing:2.4px;text-transform:uppercase;color:rgba(255,255,255,.72);
+    }
+    .sheet-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:18px 8px;}
+    .tile{
+      display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none;color:#fff;
+      font:500 11.5px/1.2 'Inter',sans-serif;text-align:center;
+      -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+      opacity:0;transform:translateY(14px) scale(.9);
+      transition:opacity .4s ease var(--d,0s), transform .45s cubic-bezier(.3,1.3,.5,1) var(--d,0s);
+    }
+    .sheet.open .tile{opacity:1;transform:none;}
+    .tile:active .tile-ico{transform:scale(.9);}
+    .tile-ico{
+      width:60px;height:60px;border-radius:17px;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(160deg,var(--g1,#4d7adf),var(--g2,#1b4fc9));
+      box-shadow:0 8px 18px -8px rgba(0,10,40,.6), inset 0 1px 0 rgba(255,255,255,.45), inset 0 -1px 0 rgba(0,0,0,.12);
+      transition:transform .2s ease;
+    }
+    .tile-ico svg{width:28px;height:28px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+    .tile-ico.glass-ico{background:rgba(255,255,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.5), 0 8px 18px -8px rgba(0,10,40,.5);}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .dock-bubble,.sheet,.tile,.fs-pill,.fs-pill .fs-label{transition-duration:.01s !important;transition-delay:0s !important;}
+  }
+</style>
+
+<script>
+(function(){
+  const root = document.documentElement;
+  const IN_TXT = "Full screen", OUT_TXT = "Exit";
+  const ARIA_IN = "Enter full screen", ARIA_OUT = "Exit full screen";
+
+  /* ---------- Pantalla completa ---------- */
+  const pill  = document.getElementById('fsPill');
+  const label = document.getElementById('fsLabel');
+  const toast = document.getElementById('fsToast');
+  const standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+  if(standalone) root.classList.add('standalone');
+
+  const canNative = !!(root.requestFullscreen || root.webkitRequestFullscreen) &&
+                    (document.fullscreenEnabled !== false) && (document.webkitFullscreenEnabled !== false);
+  let pseudo = false;        // modo "app" cuando el navegador no permite pantalla completa real (iPhone / Safari)
+  let toastTimer;
+
+  const nativeFs = () => document.fullscreenElement || document.webkitFullscreenElement;
+  function sync(){
+    const on = !!nativeFs() || pseudo;
+    root.classList.toggle('is-fs', on);
+    pill.setAttribute('aria-pressed', on ? 'true' : 'false');
+    pill.setAttribute('aria-label', on ? ARIA_OUT : ARIA_IN);
+    label.textContent = on ? OUT_TXT : IN_TXT;
+  }
+  function showToast(){
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 7000);
+  }
+  async function enterFs(){
+    if(canNative){
+      try{
+        if(root.requestFullscreen) await root.requestFullscreen({navigationUI:'hide'});
+        else root.webkitRequestFullscreen();
+      }catch(err){ pseudo = true; showToast(); }
+    }else{
+      pseudo = true; showToast();
+    }
+    sync();
+  }
+  async function exitFs(){
+    pseudo = false;
+    toast.classList.remove('show');
+    try{
+      if(document.fullscreenElement && document.exitFullscreen) await document.exitFullscreen();
+      else if(document.webkitFullscreenElement && document.webkitExitFullscreen) document.webkitExitFullscreen();
+    }catch(err){}
+    sync();
+  }
+  pill.addEventListener('click', () => (root.classList.contains('is-fs') ? exitFs() : enterFs()));
+  document.addEventListener('fullscreenchange', sync);
+  document.addEventListener('webkitfullscreenchange', sync);
+  sync();
+
+  // La píldora se encoge a círculo al bajar en la página
+  function pillScroll(){ pill.classList.toggle('compact', window.scrollY > 140); }
+  window.addEventListener('scroll', pillScroll, {passive:true});
+  pillScroll();
+
+  /* ---------- Menú inferior (dock) ---------- */
+  const dock  = document.getElementById('dock');
+  const items = Array.from(dock.querySelectorAll('.dock-item'));
+  const tabs  = ['inicio','resumen','transporte','horarios','more'];
+  const tabOf = {'inicio':'inicio','indice':'inicio','quienes-somos':'inicio','resumen':'resumen','transporte':'transporte',
+                 'horarios':'horarios','producto':'horarios','horario-mayor':'horarios'};
+  const ids   = ['inicio','indice','quienes-somos','resumen','transporte','horarios','producto','horario-mayor','tramo','calor','recomendaciones'];
+  let activeTab = null, raf = 0;
+
+  function setActive(tab){
+    if(tab === activeTab) return;
+    activeTab = tab;
+    dock.style.setProperty('--i', Math.max(0, tabs.indexOf(tab)));
+    items.forEach(it => {
+      const on = it.dataset.tab === tab;
+      it.classList.toggle('active', on);
+      if(on) it.setAttribute('aria-current','true'); else it.removeAttribute('aria-current');
+    });
+  }
+  function spy(){
+    raf = 0;
+    const limit = window.innerHeight * 0.4;
+    let cur = 'inicio';
+    for(const id of ids){
+      const el = document.getElementById(id);
+      if(el && el.getBoundingClientRect().top <= limit) cur = id;
+    }
+    setActive(tabOf[cur] || 'more');
+  }
+  function queueSpy(){ if(!raf) raf = requestAnimationFrame(spy); }
+  window.addEventListener('scroll', queueSpy, {passive:true});
+  window.addEventListener('resize', queueSpy);
+  spy();
+
+  function goTo(id){
+    if(id === 'inicio'){ window.scrollTo({top:0, behavior:'smooth'}); return; }
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  items.forEach(it => {
+    if(it.tagName !== 'A') return;
+    it.addEventListener('click', e => { e.preventDefault(); goTo(it.getAttribute('href').slice(1)); });
+  });
+
+  /* ---------- Hoja "Más" ---------- */
+  const more = document.getElementById('dockMore');
+  const sheet = document.getElementById('sheet');
+  const backdrop = document.getElementById('sheetBackdrop');
+  const grip = document.getElementById('sheetGrip');
+  const tiles = Array.from(sheet.querySelectorAll('.tile'));
+  tiles.forEach((t,i) => t.style.setProperty('--d', (0.08 + i*0.035) + 's'));
+
+  function setSheet(open){
+    sheet.classList.toggle('open', open);
+    backdrop.classList.toggle('show', open);
+    root.classList.toggle('sheet-open', open);
+    sheet.setAttribute('aria-hidden', open ? 'false' : 'true');
+    more.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  more.addEventListener('click', () => setSheet(!sheet.classList.contains('open')));
+  backdrop.addEventListener('click', () => setSheet(false));
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') setSheet(false); });
+  tiles.forEach(t => t.addEventListener('click', e => {
+    const href = t.getAttribute('href') || '';
+    if(href.charAt(0) !== '#') { setSheet(false); return; }      // enlaces externos (idioma, PDF) siguen normal
+    e.preventDefault();
+    setSheet(false);
+    setTimeout(() => goTo(href.slice(1)), 60);
+  }));
+
+  // Arrastrar hacia abajo para cerrar
+  let startY = null, dy = 0;
+  grip.addEventListener('touchstart', e => { startY = e.touches[0].clientY; dy = 0; sheet.style.transition = 'none'; }, {passive:true});
+  grip.addEventListener('touchmove', e => {
+    if(startY === null) return;
+    dy = Math.max(0, e.touches[0].clientY - startY);
+    sheet.style.transform = 'translate(-50%,' + dy + 'px)';
+  }, {passive:true});
+  grip.addEventListener('touchend', () => {
+    if(startY === null) return;
+    sheet.style.transition = ''; sheet.style.transform = '';
+    if(dy > 80) setSheet(false);
+    startY = null; dy = 0;
+  });
+
+  // Si se agranda la ventana (desktop) se cierra todo
+  window.matchMedia('(min-width:901px)').addEventListener('change', e => { if(e.matches){ setSheet(false); toast.classList.remove('show'); } });
+})();
+</script>
+
+
+<!-- =====================================================================
+     2 · BOTÓN SUBIR AL INICIO
+     ===================================================================== -->
+<button id="backToTop" class="back-to-top" aria-label="Back to top" title="Back to top">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path></svg>
+</button>
+
+<style>
+  .back-to-top{
+    position:fixed;left:24px;bottom:24px;z-index:60;
+    width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--blue);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 24px -8px rgba(0,40,100,.5);
+    opacity:0;visibility:hidden;transform:translateY(12px);
+    transition:opacity .3s ease, transform .3s ease, visibility .3s, background .2s ease;
+  }
+  .back-to-top.show{opacity:1;visibility:visible;transform:translateY(0);}
+  .back-to-top:hover{background:var(--navy);}
+  @media (max-width:700px){
+    .back-to-top{left:16px;bottom:16px;width:44px;height:44px;}
+  }
+</style>
+
+<script>
+(function(){
+  const btn = document.getElementById('backToTop');
+  function onScroll(){ btn.classList.toggle('show', window.scrollY > 500); }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  btn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+})();
+</script>
+
+
+<!-- =====================================================================
+     3 · HERO
+     ===================================================================== -->
+<section class="hero" id="inicio">
+  <div class="hero-inner">
+    <div class="hero-box">
+      <img src="images/responsive-logo.png" class="hero-logo" alt="AI27">
+      <h1><span class="thin reveal-title">MONTHLY</span><span class="bold reveal-title">SECURITY REPORT</span></h1>
+      <p class="hero-sub">Updated Information October 2026</p>
+      <div class="hero-line"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:flex-end;
+    background:
+      linear-gradient(120deg, rgba(0,15,40,.55), rgba(76,60,150,.35)),
+      url('images/nw/portada_web_baja.png') center 20%/cover no-repeat,
+      linear-gradient(135deg,#001233 0%, #0a2a63 40%, #4d5fc7 75%, #a48fe0 100%);
+    color:#fff;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:62%;
+    background:linear-gradient(to top, rgba(255,255,255,.8), rgba(255,255,255,0));
+    pointer-events:none;
+  }
+  .hero-inner{
+    width:100%;padding:64px 28px 70px;
+    display:flex;justify-content:flex-end;
+    position:relative;z-index:2;
+  }
+  .hero-box{max-width:520px;text-align:right;}
+  .hero-logo{width:220px;margin:48px 0 22px auto;opacity:.95;}
+  .hero-box h1{font-size:clamp(30px,4.4vw,44px);line-height:1.15;color:#fff;}
+  .hero-box h1 .thin{font-weight:100;display:block;letter-spacing:1.5px;color:var(--navy);}
+  .hero-box h1 .bold{font-weight:800;color:var(--navy);}
+  .hero-sub{margin-top:14px;color:var(--navy);font-size:15px;letter-spacing:.4px;}
+  .hero-line{height:12px;width:120px;background:var(--blue);margin:20px 0 0 auto;border-radius:2px;}
+
+  @media (max-width:900px){
+    .hero-inner{justify-content:center;}
+    .hero-box{text-align:center;}
+    .hero-logo{width:150px;margin:40px auto 22px;}
+    .hero-line{margin:20px auto 0;}
+  }
+</style>
+
+<script>
+  AI27.reveal('.hero');
+</script>
+
+
+<!-- =====================================================================
+     4 · ÍNDICE
+     ===================================================================== -->
+<section id="indice" class="tight">
+  <div class="wrap">
+    <div class="index-card reveal">
+      <h2>Index</h2>
+      <div class="bar-under left"></div>
+      <div class="index-list">
+        <ol>
+          <li>About Us</li>
+          <li>Month Summary</li>
+          <li>Most Stolen Transport by Vehicle Type</li>
+          <li class="sub">Theft Rate</li>
+          <li>Theft by Time Range</li>
+          <li>Most Stolen Product</li>
+          <li>Most Stolen Time Frames</li>
+          <li class="sub">Types of Merchandise Stolen According to Time of Day</li>
+          <li>Thefts by Road Section</li>
+          <li>Hotspot Maps</li>
+          <li class="sub">SESNSP Cargo Theft</li>
+          <li class="sub">AI27 Cargo Theft</li>
+          <li>General Recommendations</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #indice.tight{padding:40px 0;}
+  .bar-under.left{margin:0 0 30px 0;}
+  .index-card{
+    max-width:1000px;margin:-60px auto 0;position:relative;z-index:5;
+    background:#fff;border-radius:var(--radius);
+    box-shadow:0 30px 60px -20px rgba(0,20,60,.25);
+    padding:48px 52px;
+  }
+  .index-card h2{font-size:33px;font-weight:800;}
+  .index-list{margin-top:22px;}
+  .index-list ol{list-style:none;margin:0;padding:0;counter-reset:idx;}
+  .index-list li{
+    counter-increment:idx;
+    padding:10px 0;font-size:19.5px;font-weight:600;color:var(--navy);
+    border-bottom:1px dashed var(--line);
+    display:flex;gap:10px;
+  }
+  .index-list li::before{content:counter(idx) ".";color:var(--blue);font-weight:800;min-width:20px;}
+  .index-list li.sub{
+    counter-increment:none;
+    padding-left:30px;font-weight:500;color:var(--blue);font-size:18px;border-bottom:none;
+  }
+  .index-list li.sub::before{content:"–";color:var(--blue);}
+
+  @media (max-width:900px){
+    .index-card{padding:34px 24px;margin-top:-40px;}
+  }
+</style>
+
+<script>
+  AI27.reveal('#indice');
+</script>
+
+
+<!-- =====================================================================
+     5 · ¿QUIÉNES SOMOS?
+     ===================================================================== -->
+<section id="quienes-somos">
+  <div class="wrap qs-hero">
+    <h2 class="section-title reveal-title"><b>ABOUT</b> <span>US</span></h2>
+    <div class="bar-under"></div>
+    <div class="qs-badge"><b>25</b> years of experience</div>
+  </div>
+
+  <div class="qs-rows wrap">
+    <div class="qs-row reveal">
+      <div class="qs-icon"><img src="images/nw/nwicons-29.svg" alt=""></div>
+      <p>We are a company with more than <b>25 years of experience</b>, specialized in providing logistics security solutions for cargo transportation.</p>
+    </div>
+    <div class="qs-row reveal">
+      <div class="qs-icon"><img src="images/nw/nwicons-30.svg" alt=""></div>
+      <p>We have a <b>Private Monitoring Center</b> and our own <b>Reaction Group</b>, which allow us to act immediately on unexpected events in coordination with the authorities.</p>
+    </div>
+    <div class="qs-row reveal">
+      <div class="qs-icon"><img src="images/nw/nwicons-30-31.svg" alt=""></div>
+      <p>Our experience has allowed us to build a wide-reaching <b>security infrastructure</b>, implementing corridors and establishing control and verification checkpoints throughout the country, in coordination with federal, state and municipal authorities.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .qs-hero{text-align:center;padding-top:96px;}
+  .qs-badge{
+    display:inline-flex;align-items:center;gap:14px;background:var(--mist);
+    padding:14px 26px;border-radius:50px;margin-top:22px;font-weight:700;color:var(--navy);
+  }
+  .qs-badge b{font-size:29px;color:var(--blue);}
+  .qs-rows{margin-top:50px;display:flex;flex-direction:column;gap:22px;}
+  .qs-row{
+    display:flex;align-items:center;gap:30px;padding:26px 40px;
+    border-radius:70px;
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .qs-row:nth-child(1){background:rgba(77,122,223,.10);}
+  .qs-row:nth-child(2){background:rgba(77,122,223,.20);}
+  .qs-row:nth-child(3){background:rgba(77,122,223,.30);}
+  .qs-row:hover{transform:translateY(-4px);box-shadow:0 16px 30px -18px rgba(0,40,100,.35);}
+  .qs-icon{
+    flex:0 0 120px;width:120px;height:120px;border-radius:50%;background:#fff;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 18px rgba(0,40,100,.12);
+    transition:transform .35s ease;
+  }
+  .qs-row:hover .qs-icon{transform:scale(1.08) rotate(-4deg);}
+  .qs-icon img{width:66px;height:66px;object-fit:contain;}
+  .qs-row p{margin:0;color:var(--ink);line-height:1.75;font-size:19px;}
+  .qs-row b{color:var(--navy);}
+
+  @media (max-width:900px){
+    .qs-row{flex-direction:column;text-align:center;}
+    .qs-icon{margin:0 auto;}
+  }
+  @media (max-width:700px){
+    .qs-row{border-radius:28px;padding:26px 24px;}
+  }
+</style>
+
+<script>
+  AI27.reveal('#quienes-somos');
+</script>
+
+
+<!-- =====================================================================
+     6 · RESUMEN DEL MES
+     ===================================================================== -->
+<section id="resumen">
+  <div class="wrap" style="text-align:center;">
+    <h2 class="section-title reveal-title"><b>MONTH</b> <span>SUMMARY</span></h2>
+    <div class="bar-under"></div>
+  </div>
+
+  <div class="eyebrow-band"><h3 class="reveal-title">RESULTS <span>| OCTOBER 2026</span></h3></div>
+
+  <div class="wrap" style="max-width:1180px;">
+    <div class="rs2-list">
+      <div class="rs2-row">
+        <div class="rs2-num">01</div>
+        <div class="rs2-heading">PEAK THEFT<br>TIME WINDOW</div>
+        <p class="rs2-desc">The time range with the highest share of theft attempts during October was <b>05:01–11:00 hrs</b>, accounting for <b>31%</b> of all recorded events.</p>
+      </div>
+      <div class="rs2-row">
+        <div class="rs2-num">02</div>
+        <div class="rs2-heading">MOST TARGETED<br>CATEGORIES</div>
+        <p class="rs2-desc"><b>Groceries</b> was the category with the highest share of theft attempts during October, accounting for <b>55%</b> of all incidents, followed by <b>Transport units</b> at <b>28%</b>.</p>
+      </div>
+      <div class="rs2-row">
+        <div class="rs2-num">03</div>
+        <div class="rs2-heading">STATES WITH THE<br>HIGHEST THEFT ATTEMPTS</div>
+        <p class="rs2-desc">The states with the most theft attempts during October were <b>Puebla</b>, with <b>24%</b> of all incidents, followed by <b>Estado de México</b>, with <b>21%</b>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #resumen{padding-top:20px;}
+  .rs2-list{display:flex;flex-direction:column;}
+  .rs2-row{
+    display:grid;
+    grid-template-columns:84px 300px 1fr;
+    column-gap:26px;
+    align-items:start;
+    padding:34px 22px;
+    border-bottom:1px solid var(--line);
+  }
+  .rs2-row:first-child{border-top:1px solid var(--line);}
+  .rs2-num{font-family:'Poppins';font-weight:800;font-size:44px;line-height:1;color:var(--blue);}
+  .rs2-heading{
+    border-left:2px solid rgba(0,91,227,.45);
+    padding-left:20px;
+    font-family:'Poppins';font-weight:800;font-size:20.5px;line-height:1.3;
+    color:var(--navy);text-transform:uppercase;
+    overflow-wrap:break-word;word-break:break-word;
+  }
+  .rs2-desc{margin:0;color:var(--ink);font-size:19.5px;line-height:1.5;padding-top:6px;}
+  @media (max-width:760px){
+    .rs2-row{grid-template-columns:56px 1fr;row-gap:10px;}
+    .rs2-desc{grid-column:1 / -1;}
+  }
+</style>
+
+<script>
+  AI27.reveal('#resumen');
+</script>
+
+
+<!-- =====================================================================
+     7 · TRANSPORTE MÁS ROBADO POR TIPO DE VEHÍCULO (+ tasa de robo)
+     ===================================================================== -->
+<section id="transporte">
+  <div class="eyebrow-band"><h3 class="reveal-title"><b>MOST STOLEN TRANSPORT</b><br><span>BY VEHICLE TYPE</span></h3></div>
+
+  <div class="wrap" style="padding-top:56px;">
+    <p class="lead">During the month analyzed, private vehicles recorded 335 theft attempts per 10,000 units, a 49% decrease compared to September. In contrast, the Thorton and Trailer categories showed an increase in their incidence indicators, rising from 5 to 16 and from 4 to 8 attempts per 10,000 units, respectively, which represents increases of 220% and 100%.</p>
+    <p class="lead" style="margin-top:16px;">In addition, pickup trucks and/or vehicles up to 5 tons also showed an increase, going from 1 to 8 attempts per 10,000 units. Likewise, the Rabón truck category recorded 28 attempts per 10,000 units, while the 53-ft box trailer reported an indicator of 6,667, making it the category with the highest incidence reported during October. Overall, there is an increase in exposure across several cargo transport categories, in contrast to the decrease recorded for private vehicles.</p>
+
+    <div class="tp-table reveal">
+      <div class="tp-thead">
+        <div>UNIT TYPE</div>
+        <div>MONTHLY CHANGE</div>
+        <div>THEFT ATTEMPTS PER 10,000 UNITS</div>
+      </div>
+      <div id="tpBody"></div>
+    </div>
+
+    <div class="rate-compare reveal">
+      <div class="item"><b>In SEPTEMBER 2026, AI27 recorded a theft rate of</b><strong>0.0078%</strong></div>
+      <div class="divider"></div>
+      <div class="item now"><b>In OCTOBER 2026, AI27 recorded a theft rate of</b><strong>0.0202%</strong></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #transporte{padding:0;}
+  .tp-table{
+    max-width:1080px;margin:44px auto 0;border-radius:18px;overflow:hidden;
+    box-shadow:0 24px 50px -26px rgba(0,20,60,.35);background:#fff;
+    border:1px solid var(--line);
+  }
+  .tp-thead{
+    display:grid;grid-template-columns:1.6fr 1fr 1.4fr;
+    background:linear-gradient(120deg,var(--navy),var(--blue));color:#fff;
+  }
+  .tp-thead div{padding:16px 20px;font-size:15.5px;font-weight:700;letter-spacing:.6px;}
+  .tp-thead div:nth-child(2){text-align:center;}
+  .tp-thead div:nth-child(3){text-align:right;}
+  .tp-row{
+    display:grid;grid-template-columns:1.6fr 1fr 1.4fr;align-items:center;
+    border-top:1px solid var(--line);transition:background .25s ease, transform .25s ease;
+  }
+  .tp-row:hover{background:var(--mist);transform:translateX(4px);}
+  .tp-unit{padding:18px 20px;font-weight:700;color:var(--navy);font-size:19px;display:flex;align-items:center;gap:10px;}
+  .tp-unit::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--blue-soft);flex:0 0 auto;}
+  .tp-change{text-align:center;}
+  .tp-change span{
+    display:inline-block;padding:6px 16px;border-radius:20px;font-weight:800;font-size:17.5px;
+    background:rgba(15,194,160,.14);color:#0fa287;
+  }
+  .tp-change span.up{background:rgba(226,35,26,.12);color:#c4231a;}
+  .tp-change span.na{background:#eef1f6;color:#8a97a8;}
+  .tp-count{padding:14px 20px;display:flex;align-items:center;gap:12px;justify-content:flex-end;}
+  .tp-count .track{flex:1;max-width:160px;height:8px;background:#eef1f6;border-radius:6px;overflow:hidden;}
+  .tp-count .fill{height:100%;width:0%;border-radius:6px;background:linear-gradient(90deg,var(--blue-soft),var(--blue));transition:width 1.1s cubic-bezier(.2,.9,.25,1);}
+  .tp-count b{min-width:58px;text-align:right;color:var(--navy);font-family:'Poppins';font-weight:800;font-size:19px;}
+
+  /* Tasa de robo */
+  .rate-compare{
+    display:flex;justify-content:center;gap:60px;flex-wrap:wrap;
+    background:var(--mist);padding:44px 20px;border-radius:var(--radius);margin-top:56px;text-align:center;
+  }
+  .rate-compare .item b{display:block;color:var(--muted);font-size:18.5px;font-weight:700;}
+  .rate-compare .item strong{display:block;font-size:41px;color:var(--navy);margin-top:8px;font-family:'Poppins';font-weight:800;}
+  .rate-compare .item.now strong{color:var(--blue);}
+  .rate-compare .divider{width:1px;background:var(--line);}
+
+  @media (max-width:700px){
+    .tp-thead{display:none;}
+    .tp-table{border-radius:14px;}
+    .tp-row{grid-template-columns:1fr;gap:8px;padding:14px 16px;}
+    .tp-change,.tp-count{justify-content:flex-start;text-align:left;}
+    .tp-count .track{max-width:120px;}
+  }
+</style>
+
+<script>
+(function(){
+  const tpData = [
+    {name:"Van ≤ 5 tons", change:700, count:8},
+    {name:"Trailer", change:100, count:8},
+    {name:"Thorton", change:220, count:16},
+    {name:"Rabón truck", change:null, count:28},
+    {name:"Private", change:-49, count:335},
+    {name:"53-ft box trailer", change:null, count:6667},
+  ];
+
+  const body = document.getElementById('tpBody');
+  const max = Math.max(...tpData.map(d => d.count));
+  const bar = c => (Math.log10(1 + c) / Math.log10(1 + max) * 100).toFixed(0);   // escala log: 6,667 no aplasta al resto
+  tpData.forEach(d => {
+    const row = document.createElement('div');
+    row.className = 'tp-row';
+    row.innerHTML = `
+      <div class="tp-unit">${d.name}</div>
+      <div class="tp-change"><span class="${d.change == null ? 'na' : (d.change > 0 ? 'up' : 'down')}">${d.change == null ? '—' : (d.change > 0 ? '+' : '') + d.change + '%'}</span></div>
+      <div class="tp-count"><div class="track"><div class="fill" data-w="${bar(d.count)}"></div></div><b>${d.count.toLocaleString('en-US')}</b></div>`;
+    body.appendChild(row);
+  });
+
+  AI27.reveal('#transporte');
+  AI27.onView('transporte', () => {
+    body.querySelectorAll('.fill').forEach(f => { f.style.width = f.dataset.w + '%'; });
+  });
+})();
+</script>
+
+
+<!-- =====================================================================
+     8 · HORARIOS DE ROBOS (dona)
+     ===================================================================== -->
+<section id="horarios">
+  <div class="wrap" style="text-align:center;">
+    <h2 class="section-title reveal-title"><b>THEFT</b> <span>TIME RANGES</span></h2>
+    <div class="bar-under"></div>
+    <div class="donut-wrap reveal">
+      <div class="donut-labels">
+        <div class="donut" id="donut"></div>
+        <div class="dl" style="left:0px;top:60px;"><b>21%</b><span>11:01–17:00</span></div>
+        <div class="dl" style="right:0px;top:60px;"><b>31%</b><span>05:01–11:00</span></div>
+        <div class="dl" style="left:0px;bottom:60px;"><b>24%</b><span>23:01–05:00</span></div>
+        <div class="dl" style="right:0px;bottom:60px;"><b>24%</b><span>17:01–23:00</span></div>
+      </div>
+      <div class="donut-text" style="text-align:left;">
+        <p>Time of day is one of the variables with the greatest impact on the likelihood of a theft attempt on a shipment. The time range with the most theft attempts in October was <b>05:01–11:00</b>, with an incidence of <b>31%</b>.</p>
+        <p>The next two ranges, <b>17:01–23:00</b> and <b>23:01–05:00</b>, each accounted for <b>24%</b>, together representing <b>48%</b> of the period’s theft attempts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .donut-wrap{display:flex;align-items:center;gap:90px;flex-wrap:wrap;justify-content:center;margin-top:20px;}
+  .donut-labels{position:relative;width:460px;height:460px;margin:0 auto;}
+  .donut{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:270px;height:270px;border-radius:50%;
+    background:conic-gradient(#cdd8f7 0 0);
+    transition:background 1.4s ease;
+    box-shadow:0 20px 40px -18px rgba(0,40,100,.35);
+  }
+  .donut::after{content:"";position:absolute;inset:58px;background:#fff;border-radius:50%;}
+  @keyframes donutSpin{
+    from{transform:translate(-50%,-50%) rotate(-340deg) scale(.7);opacity:0;}
+    to{transform:translate(-50%,-50%) rotate(0deg) scale(1);opacity:1;}
+  }
+  .donut.spin{animation:donutSpin 1.3s cubic-bezier(.2,.85,.25,1);}
+  .dl{
+    position:absolute;text-align:center;background:#fff;border-radius:16px;
+    padding:12px 20px;box-shadow:0 10px 22px -14px rgba(0,40,100,.3);
+    border:1px solid var(--line);
+  }
+  .dl b{display:block;font-size:31px;color:var(--blue);font-family:'Poppins';}
+  .dl span{font-size:16px;color:var(--muted);white-space:nowrap;}
+  .donut-text{max-width:480px;color:var(--ink);font-size:19px;line-height:1.8;}
+  .donut-text p+p{margin-top:14px;}
+
+  @media (max-width:900px){
+    .donut-labels{width:320px;height:320px;}
+    .donut{width:190px;height:190px;}
+    .dl{padding:8px 12px;}
+    .dl b{font-size:20px;}
+  }
+</style>
+
+<script>
+(function(){
+  const segments = [
+    {pct:31, color:'#001f40'},   // 05:01–11:00
+    {pct:24, color:'#005be3'},   // 17:01–23:00
+    {pct:24, color:'#7c9ff0'},   // 23:01–05:00
+    {pct:21, color:'#b9cbf7'},   // 11:01–17:00
+  ];
+
+  function buildConic(){
+    let acc = 0;
+    const stops = segments.map(s => {
+      const stop = `${s.color} ${acc}% ${acc + s.pct}%`;
+      acc += s.pct;
+      return stop;
+    });
+    return `conic-gradient(${stops.join(',')})`;
+  }
+
+  AI27.reveal('#horarios');
+  AI27.onView('horarios', () => {
+    const d = document.getElementById('donut');
+    d.style.background = buildConic();
+    d.classList.add('spin');
+  });
+})();
+</script>
+
+
+<!-- =====================================================================
+     9 · PRODUCTO MÁS ROBADO (gráfica de barras)
+     ===================================================================== -->
+<section id="producto">
+  <div class="eyebrow-band"><h3 class="reveal-title"><b>MOST STOLEN</b><br><span>PRODUCT</span></h3></div>
+  <div class="wrap">
+    <div class="barchart" id="barchart"></div>
+  </div>
+</section>
+
+<style>
+  #producto{padding-top:0;}
+  .barchart{
+    display:flex;gap:8px;align-items:flex-end;justify-content:center;
+    height:440px;margin:56px auto 0;max-width:760px;padding:0 10px;
+  }
+  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;}
+  .bar-col .track{
+    width:100%;max-width:78px;flex:1 1 auto;min-height:0;background:#eef1f6;border-radius:10px 10px 0 0;
+    display:flex;align-items:flex-end;overflow:hidden;
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .bar-col:hover .track{transform:translateY(-4px);box-shadow:0 14px 26px -16px rgba(0,40,100,.4);}
+  .bar-col .fill{
+    width:100%;height:0%;background:linear-gradient(135deg,var(--blue-soft),var(--blue) 60%,var(--navy));
+    border-radius:10px 10px 0 0;transition:height 1.1s cubic-bezier(.2,.9,.25,1);
+  }
+  .bar-col .pct{margin-top:10px;font-weight:800;color:var(--blue);font-family:'Poppins';font-size:20px;flex:0 0 auto;}
+  .bar-col .lbl{font-size:16px;color:var(--muted);text-align:center;margin-top:14px;line-height:1.25;flex:0 0 auto;min-height:58px;}
+
+  @media (max-width:700px){
+    .barchart{
+      justify-content:flex-start;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      gap:14px;
+      height:360px;
+      padding:0 20px 14px;
+    }
+    .bar-col{flex:0 0 60px;}
+    .bar-col .track{max-width:52px;}
+    .bar-col .pct{font-size:15px;margin-top:8px;}
+    .bar-col .lbl{font-size:12px;line-height:1.15;margin-top:10px;min-height:36px;}
+  }
+</style>
+
+<script>
+(function(){
+  const productoData = [
+    {lbl:"Groceries", pct:55},
+    {lbl:"Transport Units", pct:28},
+    {lbl:"Wire & Steel", pct:7},
+    {lbl:"Wines & Spirits", pct:3},
+    {lbl:"Automotive", pct:3},
+    {lbl:"Parcel Service", pct:3},
+  ];
+
+  const chart = document.getElementById('barchart');
+  productoData.forEach(d => {
+    const col = document.createElement('div');
+    col.className = 'bar-col';
+    col.innerHTML = `<div class="pct">${d.pct}%</div><div class="track"><div class="fill" data-h="${d.pct}"></div></div><div class="lbl">${d.lbl}</div>`;
+    chart.appendChild(col);
+  });
+
+  AI27.reveal('#producto');
+  AI27.onView('producto', () => {
+    chart.querySelectorAll('.fill').forEach(f => { f.style.height = f.dataset.h + '%'; });
+  });
+})();
+</script>
+
+
+<!-- =====================================================================
+     10 · HORARIO DE MAYOR ROBO  (curvas azules por categoría · 6 gráficas)
+          Para actualizar el mes: editar solo los rangos (from / to) y el % en bellData.
+     ===================================================================== -->
+<section id="horario-mayor">
+  <div class="wrap" style="text-align:center;">
+    <h2 class="section-title reveal-title"><b>MOST STOLEN</b> <span>TIME FRAMES</span></h2>
+    <div class="bar-under"></div>
+    <p class="bell-sub reveal">Time frames with the highest concentration of thefts by category <span>(per 100 thefts)</span></p>
+    <div class="bell-grid" id="bellGrid" style="text-align:left;"></div>
+    <p class="bell-note reveal"><b>Note:</b> The highlighted time frames indicate the periods of the day with the highest concentration of thefts per 100 recorded thefts.</p>
+  </div>
+</section>
+
+<style>
+  #horario-mayor .bell-sub{margin:-14px auto 4px;max-width:760px;font:600 19px/1.4 'Poppins',sans-serif;color:var(--navy);}
+  #horario-mayor .bell-sub span{display:block;font-weight:300;color:#5b6b7d;font-size:16px;}
+  #horario-mayor .bell-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:26px;}
+  #horario-mayor .bell-card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;transition:box-shadow .3s ease, transform .3s ease;}
+  #horario-mayor .bell-card:hover{box-shadow:0 18px 32px -20px rgba(0,40,100,.4);transform:translateY(-3px);}
+  #horario-mayor .bell-head{background:var(--blue);color:#fff;font-weight:700;font-size:18px;padding:10px 20px;border-radius:0 30px 30px 0;display:inline-block;margin:16px 0 0;}
+  #horario-mayor .bell-body{padding:6px 12px 14px;}
+  #horario-mayor .bell-svg{width:100%;height:auto;display:block;}
+  #horario-mayor .bell-note{max-width:900px;margin:22px auto 0;font-size:14px;line-height:1.6;color:var(--muted);text-align:left;}
+  #horario-mayor .bell-note b{color:var(--navy);}
+  @media (max-width:860px){ #horario-mayor .bell-grid{grid-template-columns:1fr;} }
+  @media (max-width:700px){
+    #horario-mayor .bell-sub{font-size:16px;margin-top:-22px;}
+    #horario-mayor .bell-sub span{font-size:14px;}
+    #horario-mayor .bell-head{font-size:16px;}
+    #horario-mayor .bell-body{padding:4px 6px 10px;}
+    #horario-mayor .bell-note{font-size:12.5px;}
+  }
+</style>
+
+<script>
+(function(){
+
+  /* ---- Datos del mes (rangos horarios con mayor concentración de robos por cada 100 robos) ----
+     from / to = rango resaltado (hora decimal: 21.5 = 21:30) · pct = % por cada 100 robos
+     h = altura del pico (0–0.12) · s = ancho opcional · bumps = pequeñas elevaciones sin etiqueta  */
+  const bellData = [
+    {name:"Groceries", peaks:[
+      {from:3,  to:6,  pct:3, h:.054},
+      {from:7,  to:10, pct:3, h:.059},
+      {from:20, to:21, pct:2, h:.059},
+    ], bumps:[{t:14.6,h:.008,s:1.6}]},
+    {name:"Transport Units", peaks:[
+      {from:7,  to:8,    pct:2, h:.054, s:1.0},
+      {from:18, to:21.5, pct:2, h:.056, s:1.75},
+    ], bumps:[{t:4,h:.008,s:1.2},{t:13.7,h:.006,s:1}]},
+    {name:"Wire & Steel", peaks:[
+      {from:19, to:20, pct:1, h:.057},
+      {from:22, to:23, pct:1, h:.072},
+    ], bumps:[{t:0,h:.006,s:1.4},{t:6.5,h:.006,s:1.2},{t:12,h:.006,s:1.2}]},
+    {name:"Wines & Spirits", peaks:[
+      {from:5, to:6, pct:1, h:.060, s:1.05},
+    ], bumps:[{t:12,h:.007,s:1.4},{t:21.5,h:.005,s:1}]},
+    {name:"Automotive", peaks:[
+      {from:1, to:2, pct:1, h:.055, s:1.05},
+    ], bumps:[{t:8,h:.005,s:1.2},{t:12,h:.007,s:1.4},{t:20,h:.006,s:1.2}]},
+    {name:"Parcel Service", peaks:[
+      {from:20, to:21, pct:1, h:.066, s:1.1},
+    ], bumps:[{t:4,h:.006,s:1.2},{t:8,h:.006,s:1.2},{t:13.5,h:.004,s:1.2}]},
+  ];
+  const AX_Y = "Relative frequency", AX_X = "Hours";
+
+  const grid = document.getElementById('bellGrid');
+  const mqCompact = window.matchMedia('(max-width:700px)');
+  const YMAX = 0.12, BASE = 0.004;
+
+  const pad2 = n => String(n).padStart(2,'0');
+  function hhmm(v){ const h = Math.floor(v), m = Math.round((v-h)*60); return pad2(h) + ':' + pad2(m); }
+  function rangeLabel(pk, compact){
+    if(compact && Number.isInteger(pk.from) && Number.isInteger(pk.to)) return pad2(pk.from) + '–' + pad2(pk.to) + ' h';
+    return hhmm(pk.from) + '–' + hhmm(pk.to);
+  }
+  const center = pk => (pk.from + pk.to) / 2;
+  const sigma  = pk => pk.s || Math.max(0.9, (pk.to - pk.from) / 3);
+
+  function curveVal(hour, b){
+    let y = BASE;
+    b.peaks.forEach(pk => { const s = sigma(pk); y += pk.h * Math.exp(-Math.pow(hour-center(pk),2)/(2*s*s)); });
+    (b.bumps||[]).forEach(k => { y += k.h * Math.exp(-Math.pow(hour-k.t,2)/(2*k.s*k.s)); });
+    return y;
+  }
+
+  function chartSVG(b, idx, compact){
+    const W = compact ? 380 : 640, H = compact ? 250 : 300;
+    const PL = compact ? 50 : 66, PR = 14, PT = compact ? 40 : 52, PB = compact ? 44 : 48;
+    const PW = W - PL - PR, PH = H - PT - PB;
+    const X = h => PL + (h/24)*PW;
+    const Y = v => PT + PH - (v/YMAX)*PH;
+    const base = Y(0);
+    const fsT = compact ? 11 : 12, fsR = compact ? 10.5 : 10.5, fsP = compact ? 14 : 16;
+    let s = `<defs><linearGradient id="bg${idx}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#005be3" stop-opacity=".42"/><stop offset="1" stop-color="#005be3" stop-opacity=".03"/></linearGradient></defs>`;
+
+    // cuadrícula punteada (horizontal y vertical)
+    [0,0.02,0.04,0.06,0.08,0.10,0.12].forEach(t => {
+      const y = Y(t).toFixed(1);
+      s += `<line x1="${PL}" y1="${y}" x2="${W-PR}" y2="${y}" stroke="#dfe6f2" stroke-width="1" stroke-dasharray="3,4"/>`;
+      s += `<text x="${PL-8}" y="${(+y+4).toFixed(1)}" text-anchor="end" font-size="${fsT}" fill="#7a8aa0">${t.toFixed(2)}</text>`;
+    });
+    [0,4,8,12,16,20,24].forEach(h => {
+      const x = X(h).toFixed(1);
+      s += `<line x1="${x}" y1="${PT}" x2="${x}" y2="${base.toFixed(1)}" stroke="#e6ecf6" stroke-width="1" stroke-dasharray="3,4"/>`;
+      s += `<text x="${x}" y="${(base+19).toFixed(1)}" text-anchor="middle" font-size="${fsT}" fill="#5b6b7d">${h}</text>`;
+    });
+    // ejes y títulos de ejes
+    s += `<line x1="${PL}" y1="${PT}" x2="${PL}" y2="${base.toFixed(1)}" stroke="#aab7cb" stroke-width="1.2"/>`;
+    s += `<line x1="${PL}" y1="${base.toFixed(1)}" x2="${W-PR}" y2="${base.toFixed(1)}" stroke="#aab7cb" stroke-width="1.2"/>`;
+    s += `<text x="${(PL+PW/2).toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="${compact?12:13}" fill="#5b6b7d" font-weight="600">${AX_X}</text>`;
+    s += `<text transform="rotate(-90)" x="${(-(PT+PH/2)).toFixed(1)}" y="${compact?13:15}" text-anchor="middle" font-size="${compact?11:12}" fill="#5b6b7d" font-weight="600">${AX_Y}</text>`;
+
+    // curva con área degradada
+    let line = '', area = '';
+    for(let h=0; h<=24.0001; h+=0.1){
+      const x = X(h).toFixed(1), y = Y(Math.min(curveVal(h,b), YMAX)).toFixed(1);
+      line += (h===0 ? `M${x} ${y}` : ` L${x} ${y}`);
+    }
+    area = line + ` L${X(24).toFixed(1)} ${base.toFixed(1)} L${X(0).toFixed(1)} ${base.toFixed(1)} Z`;
+    s += `<path d="${area}" fill="url(#bg${idx})"/>`;
+    s += `<path d="${line}" fill="none" stroke="#005be3" stroke-width="${compact?2.4:2.8}" stroke-linejoin="round" stroke-linecap="round"/>`;
+
+    // punto, línea guía y etiquetas en cada pico resaltado
+    b.peaks.forEach(pk => {
+      const px = X(center(pk)), py = Y(curveVal(center(pk), b));
+      s += `<line x1="${px.toFixed(1)}" y1="${py.toFixed(1)}" x2="${px.toFixed(1)}" y2="${base.toFixed(1)}" stroke="#4d7adf" stroke-width="1.2" stroke-dasharray="3,3"/>`;
+      s += `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${compact?5.5:6.5}" fill="#005be3" stroke="#fff" stroke-width="2"/>`;
+      s += `<text x="${px.toFixed(1)}" y="${(py-(compact?30:34)).toFixed(1)}" text-anchor="middle" font-size="${fsR}" font-weight="700" fill="#005be3">${rangeLabel(pk, compact)}</text>`;
+      s += `<text x="${px.toFixed(1)}" y="${(py-12).toFixed(1)}" text-anchor="middle" font-size="${fsP}" font-weight="800" fill="#005be3">${pk.pct}%</text>`;
+    });
+    return {svg:s, W, H};
+  }
+
+  const cards = bellData.map((b,i) => {
+    const card = document.createElement('div');
+    card.className = 'bell-card reveal';
+    card.innerHTML = `<span class="bell-head">${b.name}</span><div class="bell-body"><div class="bell-plot"></div></div>`;
+    grid.appendChild(card);
+    return card;
+  });
+
+  function render(){
+    const compact = mqCompact.matches;
+    bellData.forEach((b,i) => {
+      const r = chartSVG(b, i, compact);
+      cards[i].querySelector('.bell-plot').innerHTML =
+        `<svg class="bell-svg" viewBox="0 0 ${r.W} ${r.H}" role="img" aria-label="${b.name}">${r.svg}</svg>`;
+    });
+  }
+  render();
+  mqCompact.addEventListener('change', render);
+
+  AI27.reveal('#horario-mayor');
+})();
+</script>
+
+
+<!-- =====================================================================
+     11 · ROBO POR TRAMO CARRETERO
+     ===================================================================== -->
+<section id="tramo">
+  <div class="eyebrow-band"><h3 class="reveal-title"><b>THEFTS BY</b><br><span>ROAD SECTION</span></h3></div>
+  <div class="wrap img-fade tramo-map reveal">
+    <img src="images/mapagris.png" alt="Map of road sections with the highest incidence">
+  </div>
+  <div class="wrap">
+    <div class="tramo-list" id="tramoList"></div>
+  </div>
+</section>
+
+<style>
+  .tramo-map{max-width:1080px;margin:0 auto 10px;}
+  .tramo-list{max-width:1080px;margin:30px auto 0;}
+  .tramo-row{
+    display:flex;align-items:center;gap:20px;padding:14px 12px;border-bottom:1px solid var(--line);
+    border-radius:10px;transition:background .3s ease, transform .3s ease;
+  }
+  .tramo-row:hover{background:var(--mist);transform:translateX(6px);}
+  .tramo-row img{width:58px;height:58px;object-fit:contain;flex:0 0 58px;}
+  .tramo-info{flex:1;min-width:0;}
+  .tramo-info b{display:block;font-size:19px;color:var(--navy);}
+  .tramo-info small{display:block;font-size:14px;color:var(--muted);line-height:1.15;margin-top:2px;}
+  .tramo-track{flex:1 1 200px;height:10px;background:#eef1f6;border-radius:6px;overflow:hidden;max-width:220px;}
+  .tramo-track .fill{height:100%;width:0%;border-radius:6px;transition:width 1s ease;}
+  .tramo-track .fill.hi{background:linear-gradient(90deg,#f7b1ab,var(--red));}
+  .tramo-track .fill.mid{background:linear-gradient(90deg,#f7dba6,var(--amber));}
+  .tramo-track .fill.lo{background:linear-gradient(90deg,#a9e6c4,var(--green));}
+  .tramo-pct{
+    flex:0 0 78px;text-align:center;font-weight:800;font-family:'Poppins';font-size:18.5px;
+    padding:6px 0;border-radius:20px;color:#fff;
+  }
+  .tramo-pct.hi{background:var(--red);}
+  .tramo-pct.mid{background:var(--amber);}
+  .tramo-pct.lo{background:var(--green);}
+
+  @media (max-width:900px){
+    .tramo-row img{width:44px;height:44px;flex-basis:44px;}
+  }
+  @media (max-width:700px){
+    .tramo-row{flex-wrap:wrap;}
+    .tramo-track{order:3;flex:1 1 100%;max-width:none;}
+    .tramo-info b{font-size:14.5px;line-height:1.15;}
+    .tramo-info small{font-size:12px;line-height:1.15;margin-top:1px;}
+  }
+</style>
+
+<script>
+(function(){
+  const tramoData = [
+    {name:"Puebla", road:"Autopista México-Puebla, San Rafael Tlanalapan · Calle Durango, Heroica Puebla de Zaragoza · Autopista Puebla-Orizaba, San Nicolás Tolentino · Carretera a Aeropuerto, Cholula-Puebla km 101 · San Lorenzo Almecatla, Puebla · Autopista Amozoc-Perote, Amozoc de Mota · Calle Mendoza, San Antonio Soledad", pct:24, img:"images/nw/puebla.png"},
+    {name:"Estado de México", road:"Autopista La Venta-Lechería · Calle Chapultepec Norte, San Francisco Putla · Av. José López Portillo, Ecatepec de Morelos · Autopista Lechería-Texcoco · Calle 2 de Abril, San Miguel Zinacantepec · Tepeji de Ocampo-Polotitlán de la Ilustración km 110", pct:21, img:"images/nw/estadodemexico.png"},
+    {name:"Jalisco", road:"Autopista León-Aguascalientes · Autopista Lagos de Moreno-San Luis Potosí · Carretera al Castillo km 12, El Salto · Autopista Lagos de Moreno-San Juan de los Lagos", pct:14, img:"images/nw/jalisco.png"},
+    {name:"San Luis Potosí", road:"Autopista Federal 57D, San Luis Potosí-Matehuala, La Campana · Autopista Matehuala-San Luis Potosí km 135 · Carretera San Luis Potosí-Matehuala", pct:10, img:"images/nw/sanluispotosi.png"},
+    {name:"Ciudad de México", road:"Calzada Ignacio Zaragoza, Venustiano Carranza · Av. Cuitláhuac, alcaldía Azcapotzalco", pct:7, img:"images/nw/cdmx.png"},
+    {name:"Guanajuato", road:"Autopista Lagos de Moreno-San Luis Potosí, Santa Teresa · Santiago de Querétaro-San Luis Potosí km 97", pct:7, img:"images/nw/guanajuato.png"},
+    {name:"Querétaro", road:"Autopista México-Querétaro", pct:7, img:"images/nw/queretaro.png"},
+    {name:"Veracruz", road:"Autopista Perote-Xalapa, El Fresno · Boca del Río-Córdoba, Piedra Herrada", pct:7, img:"images/nw/veracruz.png"},
+    {name:"Nuevo León", road:"Calle Mar de Tasmania, esquina con Océano Ártico", pct:3, img:"images/nw/nuevoleon.png"},
+  ];
+
+  // Semaforización: rojo ≥ 20%, ámbar ≥ 8%, verde el resto
+  function semLevel(pct){
+    if(pct >= 20) return 'hi';
+    if(pct >= 8) return 'mid';
+    return 'lo';
+  }
+
+  const list = document.getElementById('tramoList');
+  const max = Math.max(...tramoData.map(d => d.pct));
+  tramoData.forEach(d => {
+    const lvl = semLevel(d.pct);
+    const row = document.createElement('div');
+    row.className = 'tramo-row reveal';
+    row.innerHTML = `
+      <img src="${d.img}" alt="${d.name} map">
+      <div class="tramo-info"><b>${d.name}</b><small>${d.road}</small></div>
+      <div class="tramo-track"><div class="fill ${lvl}" data-w="${(d.pct/max*100).toFixed(0)}"></div></div>
+      <div class="tramo-pct ${lvl}">${d.pct}%</div>`;
+    list.appendChild(row);
+  });
+
+  AI27.reveal('#tramo');
+  AI27.onView('tramo', () => {
+    list.querySelectorAll('.tramo-track .fill').forEach(f => { f.style.width = f.dataset.w + '%'; });
+  });
+})();
+</script>
+
+
+<!-- =====================================================================
+     12 · MAPAS DE CALOR
+     ===================================================================== -->
+<section id="calor">
+  <div class="wrap" style="text-align:center;">
+    <h2 class="section-title reveal-title"><b>HOTSPOT</b> <span>MAPS</span></h2>
+    <div class="bar-under"></div>
+  </div>
+
+  <div class="wrap heat-cols">
+    <div>
+      <div class="heat-band"><b>SESNSP CARGO THEFT</b> · SEPTEMBER 2026</div>
+      <div class="img-fade heat-map-img reveal"><img src="images/MAPA_SESNSP_ESP.png" alt="SESNSP hotspot map"></div>
+      <div class="rank-list" id="sesnspList" style="margin-top:18px;"></div>
+    </div>
+    <div>
+      <div class="heat-band"><b>AI27 CARGO THEFT</b> · SEPTEMBER 2026</div>
+      <div class="img-fade heat-map-img reveal"><img src="images/MAPA_AI27_ESP.png" alt="AI27 hotspot map"></div>
+      <div class="rank-list" id="ai27List" style="margin-top:18px;"></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="analysis reveal">
+      <p>According to the SESNSP, Estado de México and Puebla remain the main cargo theft hotspots nationwide in September 2026, concentrating 43% and 29% of reported cases respectively, out of a total of 414 registered incidents. They are followed by Michoacán with 13%, while San Luis Potosí accounts for 6% and Tabasco for 3%, keeping these states among the areas of highest incidence for the period. Compared with August (392 thefts), September shows a 5.6% increase in total cases, rising from 392 to 414 incidents and maintaining the upward trend seen the previous month. Although Estado de México’s share fell from 50% to 43%, Puebla’s concentration rose from 24% to 29%, showing a territorial redistribution of events, with risk remaining concentrated in both states, which together account for 72% of national incidents.</p>
+      <p>In AI27’s records for September 2026, the risk distribution shows a greater concentration in the logistics corridors of central Mexico and the Bajío. Puebla leads with 33%, followed by Estado de México with 20%, while Guanajuato accounts for 12% of events. Jalisco and Veracruz account for 8% each, followed by Querétaro with 6% and San Luis Potosí with 4%. Compared with August, the rise in Puebla’s share stands out, going from 13% to 33% and becoming the state with the highest incidence in internal records, while Estado de México showed a slight decrease from 21% to 20%. Likewise, Guanajuato increased its share from 7% to 12%, while Jalisco fell from 15% to 8%. The distribution recorded during the period reflects a greater concentration of events in Puebla, Estado de México and Guanajuato, which together account for 65% of internal incidence, evidencing significant exposure in the main logistics corridors of central Mexico and the Bajío.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .rank-list{max-width:1080px;margin:44px auto 0;}
+  .heat-cols{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:10px;}
+  .heat-band{background:var(--mist-3);padding:14px;border-radius:10px;text-align:center;margin-bottom:18px;}
+  .heat-band b{color:var(--navy);}
+  .heat-map-img{border-radius:12px;overflow:hidden;box-shadow:0 18px 34px -20px rgba(0,40,100,.35);}
+  .heat-map-img img{width:100%;}
+
+  .rank-row{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);}
+  .rank-row .name{flex:0 0 200px;}
+  .rank-row .name b{display:block;font-size:19px;color:var(--navy);}
+  .rank-row .track{flex:1;height:10px;background:#eef1f6;border-radius:6px;overflow:hidden;}
+  .rank-row .fill{height:100%;width:0%;border-radius:6px;background:linear-gradient(90deg,#a9c3f5,var(--blue));transition:width 1s ease;}
+  .rank-row .pct{flex:0 0 70px;text-align:right;font-weight:800;font-family:'Poppins';font-size:19px;color:var(--blue);}
+
+  .analysis{max-width:1100px;margin:60px auto 0;background:var(--mist-2);padding:36px 40px;border-radius:var(--radius);}
+  .analysis p{font-size:19px;line-height:1.9;color:var(--ink);text-align:justify;}
+  .analysis p+p{margin-top:16px;}
+
+  @media (max-width:900px){
+    .rank-row .name{flex-basis:130px;}
+  }
+  @media (max-width:860px){
+    .heat-cols{grid-template-columns:1fr;}
+  }
+  @media (max-width:700px){
+    .analysis{padding:26px 24px;}
+    .analysis p{font-size:13px;line-height:1.45;}
+  }
+</style>
+
+<script>
+(function(){
+  const sesnspData = [
+    {name:"Estado de México", pct:43},
+    {name:"Puebla", pct:29},
+    {name:"Michoacán", pct:13},
+    {name:"San Luis Potosí", pct:6},
+    {name:"Tabasco", pct:3},
+    {name:"Jalisco", pct:2},
+    {name:"Oaxaca", pct:1},
+    {name:"Chihuahua", pct:1},
+    {name:"Guanajuato", pct:1},
+    {name:"Nuevo León", pct:0.4},
+    {name:"Morelos", pct:0.4},
+    {name:"Hidalgo", pct:0.4},
+    {name:"Coahuila", pct:0.4},
+    {name:"Tlaxcala", pct:0.2},
+    {name:"Colima", pct:0.2},
+    {name:"Mexico City", pct:0.2},
+  ];
+
+  const ai27Data = [
+    {name:"Puebla", pct:33},
+    {name:"Estado de México", pct:20},
+    {name:"Guanajuato", pct:12},
+    {name:"Jalisco", pct:8},
+    {name:"Veracruz", pct:8},
+    {name:"Querétaro", pct:6},
+    {name:"San Luis Potosí", pct:4},
+    {name:"Michoacán", pct:2},
+    {name:"Mexico City", pct:2},
+    {name:"Chihuahua", pct:2},
+    {name:"Tamaulipas", pct:2},
+  ];
+
+  function renderRank(containerId, data){
+    const el = document.getElementById(containerId);
+    const max = Math.max(...data.map(d => d.pct));
+    data.forEach(d => {
+      const row = document.createElement('div');
+      row.className = 'rank-row';
+      row.innerHTML = `
+        <div class="name"><b>${d.name}</b></div>
+        <div class="track"><div class="fill" data-w="${(d.pct/max*100).toFixed(0)}"></div></div>
+        <div class="pct">${d.pct}%</div>`;
+      el.appendChild(row);
+    });
+  }
+  renderRank('sesnspList', sesnspData);
+  renderRank('ai27List', ai27Data);
+
+  AI27.reveal('#calor');
+  AI27.onView('calor', () => {
+    document.querySelectorAll('#calor .rank-row .fill').forEach(f => { f.style.width = f.dataset.w + '%'; });
+  });
+})();
+</script>
+
+
+<!-- =====================================================================
+     13 · RECOMENDACIONES GENERALES
+     ===================================================================== -->
+<section id="recomendaciones">
+  <div class="wrap" style="text-align:center;">
+    <h2 class="section-title reveal-title"><b>GENERAL</b> <span>RECOMMENDATIONS</span></h2>
+    <div class="bar-under"></div>
+    <p class="lead">To improve cargo transportation security, it is recommended to:</p>
+
+    <div class="reco-list">
+      <div class="reco-item reveal">
+        <div class="reco-icon"><svg viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg></div>
+        <p><b>Use of predictive technology:</b> employ advanced systems that analyze real-time information to anticipate potential threats, providing early warnings and allowing companies to make preventive decisions about the routes to take.</p>
+      </div>
+      <div class="reco-item reveal">
+        <div class="reco-icon"><svg viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="8" r="3.2"></circle><path d="M5 20c1.2-4 4-6 7-6s5.8 2 7 6"></path></svg></div>
+        <p><b>Operator training:</b> train drivers in defensive driving techniques, recognizing danger signs, and knowing how to act in risky situations to protect both the cargo and their well-being.</p>
+      </div>
+      <div class="reco-item reveal">
+        <div class="reco-icon"><svg viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg></div>
+        <p><b>Monitoring and immediate response:</b> use constant monitoring systems to maintain visibility over the status of the units, allowing for a quick response to any incident and coordination with security forces.</p>
+      </div>
+      <div class="reco-item reveal">
+        <div class="reco-icon"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M4 17l4-8 4 5 3-4 5 7"></path></svg></div>
+        <p><b>Integration of digital security tools:</b> incorporate technological solutions that provide an additional layer of security in the transportation process, such as tracking systems and advanced monitoring for efficient risk management.</p>
+      </div>
+      <div class="reco-item reveal">
+        <div class="reco-icon"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 3l8 4v5c0 5-3.5 7.8-8 9-4.5-1.2-8-4-8-9V7z"></path></svg></div>
+        <p><b>Investment in security infrastructure:</b> invest in advanced technology such as surveillance cameras, load sensors, and GPS systems to strengthen the security infrastructure of transportation units and minimize the impact of any theft attempts.</p>
+      </div>
+    </div>
+
+    <div class="reco-closing">
+      At <b>AI27</b>, we specialize in providing technological solutions that protect companies in their logistics operations. Through advanced monitoring tools and predictive analysis, we work to mitigate risks on routes and enhance the security of goods in transit. Our comprehensive approach combines technological innovation with rapid response services, contributing to the safety of the logistics industry and ensuring the protection of both operators and cargo.
+    </div>
+  </div>
+</section>
+
+<style>
+  .reco-list{max-width:980px;margin:44px auto 0;display:flex;flex-direction:column;gap:26px;}
+  .reco-item{display:flex;gap:20px;align-items:flex-start;}
+  .reco-icon{
+    flex:0 0 52px;height:52px;border-radius:50%;background:var(--mist);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .reco-icon svg{width:24px;height:24px;stroke:var(--blue);fill:none;}
+  .reco-item p{margin:0;font-size:19px;line-height:1.8;color:var(--ink);}
+  .reco-item b{color:var(--navy);}
+  .reco-closing{
+    max-width:1100px;margin:44px auto 0;background:var(--navy);color:#eaf0ff;
+    padding:32px 38px;border-radius:var(--radius);font-size:19px;line-height:1.85;
+  }
+  .reco-closing b{color:#fff;}
+  @media (max-width:700px){
+    .reco-closing{padding:24px 22px;font-size:13px;line-height:1.45;}
+  }
+</style>
+
+<script>
+  AI27.reveal('#recomendaciones');
+</script>
+
+
+<!-- =====================================================================
+     14 · NOTICIAS (WhatsApp)
+     ===================================================================== -->
+<section class="news">
+  <div class="wrap">
+    <div class="news-pill">THE MOST <b>RELEVANT</b> INDUSTRY NEWS</div>
+    <h3>Transportation security</h3>
+
+    <div class="chat reveal" id="newsChat">
+      <div class="chat-head"><div class="chat-av">AI27</div><div><b>Transportation security</b><small>Secure Mobility · online</small></div></div>
+      <div class="chat-body">
+        <div class="msg ai"><span class="who">AI27 · Secure Mobility</span>📰 <b>Cargo theft · October 2026</b><br>31% of theft attempts happened between 05:01 and 11:00 hrs. Puebla (24%) and Estado de México (21%) account for almost half of all incidents.<time>11:12</time></div>
+        <div class="msg"><span class="who">Carlos · Logistics</span>Puebla and Edomex again 😟 How do you avoid these incidents?<time>11:13</time></div>
+        <div class="msg u2"><span class="who">Mariana · Fleets</span>We check routes and schedules before every trip, but I'm not sure which protection model suits us 🤔<time>11:14</time></div>
+        <div class="msg me">Which model do you recommend so this doesn't happen to us? And what hours are best to drive?<time>11:15</time></div>
+        <div class="msg ai"><span class="who">AI27 · Secure Mobility</span>The ideal is a <b>preventive</b> model: 24/7 monitoring, predictive route analysis, trained drivers and an immediate response to any alert.<time>11:15</time></div>
+        <div class="msg ai"><span class="who">AI27 · Secure Mobility</span>On schedules: the lowest-incidence window was <b>11:01–17:00 (21%)</b>; 17:01–23:00 and 23:01–05:00 had 24% each. No time slot is 100% safe: plan departures and stops route by route.<time>11:16</time></div>
+        <div class="msg"><span class="who">Luis · Carrier</span>And which units are the most affected?<time>11:17</time></div>
+        <div class="msg ai"><span class="who">AI27 · Secure Mobility</span><b>53-ft box trailers</b> have the highest incidence. Thorton went from 5 to 16 and Trailer from 4 to 8 attempts per 10,000 units.<time>11:17</time></div>
+        <div class="msg me">Thanks, I'll review my Puebla and Edomex routes 👍<time>11:18</time></div>
+        <div class="typing"><i></i><i></i><i></i></div>
+      </div>
+      <div class="chat-input"><div class="fake">Type a message…</div><div class="send"><svg viewBox="0 0 24 24"><path d="M3 20l18-8L3 4v6l12 2-12 2z"/></svg></div></div>
+    </div>
+
+    <div class="news-logo">AI<span>27</span><small>PREDICTIVE INTELLIGENCE</small></div>
+  </div>
+</section>
+
+<style>
+  .news{
+    background:linear-gradient(160deg,#eef1ff,#dfe6ff 60%,#fff);
+    text-align:center;padding:90px 0;
+  }
+  .news-pill{
+    display:inline-block;background:var(--navy);color:#fff;font-size:13px;font-weight:600;
+    padding:9px 20px;border-radius:30px;letter-spacing:.3px;
+  }
+  .news-pill b{color:var(--blue-soft);}
+  .news h3{margin-top:16px;font-size:clamp(23px,3.2vw,31px);color:var(--blue);font-weight:800;}
+  .phone-mock{position:relative;max-width:260px;margin:50px auto 0;}
+  .phone-frame{
+    border:10px solid var(--navy);border-radius:36px;background:#0b1e3d;
+    aspect-ratio:9/18;display:flex;flex-direction:column;overflow:hidden;
+    box-shadow:0 40px 60px -20px rgba(20,30,80,.35);
+  }
+  .phone-top{background:#0b1e3d;color:#fff;font-size:11px;padding:10px 16px;display:flex;justify-content:space-between;}
+  .phone-app{flex:1;background:#111b30;color:#dfe6ff;padding:14px;font-size:11px;text-align:left;}
+  .phone-app .h{font-weight:700;margin-bottom:8px;}
+  .wa-bubble{
+    position:absolute;right:-26px;top:36%;width:60px;height:60px;border-radius:50%;
+    background:#25D366;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 20px rgba(0,0,0,.2);
+  }
+  .wa-bubble svg{width:30px;height:30px;fill:#fff;}
+  .news-logo{margin-top:44px;font-family:'Poppins';font-weight:800;color:var(--navy);font-size:29px;}
+  .news-logo span{color:var(--blue-soft);}
+  .news-logo small{display:block;font-size:10px;font-weight:500;letter-spacing:2px;color:var(--muted);}
+</style>
+
+<script>
+  AI27.reveal('.news');
+</script>
+
+
+<!-- =====================================================================
+     15 · PIE DE PÁGINA / LEGAL
+     ===================================================================== -->
+<footer>
+  <div class="wrap">
+    <p class="legal">
+      This information is solely and exclusively for informational and non-profit purposes. AI27 respects and recognizes the intellectual and industrial property rights of the aforementioned holders. The mishandling of the information contained herein will be the responsibility of the person who reproduces it.
+      <br><br>
+      Statistics, data analysis, audits, evaluations and other informational documents generated by AI27 and contained herein are the intellectual property of AI27 and are considered confidential information. The recipient of this document accepts responsibility for making good use of the confidential information and undertakes not to disclose, reproduce and/or transmit it by any means to third parties or to the general public. Likewise, it may not be summarized, modified, altered, or used for commercial, informational, educational, or any other unauthorized purpose without the prior written consent of AI27 Predictive Intelligence S.A.P.I. de C.V.
+    </p>
+    <div class="foot-row">
+      <span>© 2026 AI27 Predictive Intelligence — Monthly Security Report</span>
+      <div class="foot-links">
+        <a href="index-spa.html">Spanish version</a>
+        <a class="dl-btn-2" href="pdf-ing.pdf" target="_blank">Download PDF</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer{background:var(--navy);color:#c9d5ec;padding:70px 0 30px;}
+  .legal{max-width:900px;margin:0 auto;font-size:13.5px;line-height:1.95;text-align:justify;color:#a9bad8;}
+  .foot-row{
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+    margin-top:50px;padding-top:26px;border-top:1px solid rgba(255,255,255,.12);
+    font-size:12.5px;color:#8ea0c2;
+  }
+  .foot-links{display:flex;gap:18px;align-items:center;}
+  .foot-links a{text-decoration:none;color:#c9d5ec;}
+  .dl-btn-2{
+    background:var(--blue);color:#fff;padding:10px 22px;border-radius:30px;
+    font-weight:600;font-size:13px;
+  }
+</style>
+
+
+<!-- =====================================================================
+     TIPOGRAFÍA RESPONSIVE (≤ 700 px): textos compactos, igual que el párrafo de "Mapas de calor"
+     ===================================================================== -->
+<style>
+  @media (max-width:700px){
+    .index-card{padding:26px 20px;}
+    .index-card h2{font-size:26px;}
+    .index-list li{padding:7px 0;font-size:14.5px;line-height:1.3;}
+    .index-list li.sub{font-size:13px;padding-left:24px;}
+    .qs-row{padding:20px 18px;gap:14px;}
+    .qs-icon{flex-basis:84px;width:84px;height:84px;}
+    .qs-icon img{width:46px;height:46px;}
+    .qs-row p{font-size:13px;line-height:1.45;}
+    .rs2-row{padding:22px 8px;row-gap:8px;}
+    .rs2-num{font-size:32px;}
+    .rs2-heading{font-size:14.5px;line-height:1.25;padding-left:14px;}
+    .rs2-desc{font-size:13px;line-height:1.45;padding-top:0;}
+    .lead{font-size:13px;line-height:1.45;}
+    .donut-text{font-size:13px;line-height:1.5;}
+    .reco-item p{font-size:13px;line-height:1.45;}
+    .reco-item{gap:14px;}
+    .reco-icon{flex-basis:42px;height:42px;}
+    .reco-closing,.analysis p{font-size:13px;line-height:1.45;}
+  }
+</style>
+
+<!-- AJUSTES RESPONSIVE -->
+<style>
+  /* Donut / horarios: menos alto, números más chicos, texto pegado a la gráfica (≤900) */
+  @media (max-width:900px){
+    .donut-wrap{gap:4px;margin-top:6px}
+    .donut-labels{width:100%;max-width:340px;height:250px}
+    .donut{width:150px;height:150px}
+    .donut::after{inset:34px}
+    .dl{padding:5px 10px;border-radius:12px}
+    .dl b{font-size:16px;line-height:1.2}
+    .dl span{font-size:11.5px}
+    .dl[style*="top:"]{top:4px !important}
+    .dl[style*="bottom:"]{bottom:4px !important}
+    .donut-text{width:100%;max-width:none;margin:0}
+  }
+  /* Resto de la página (≤700) */
+  @media (max-width:700px){
+    section{padding:40px 0}
+    .wrap{padding:0 16px}
+    .bar-under{margin-bottom:22px}
+    .eyebrow-band{padding:16px 0}
+    .lead{line-height:1.4}
+    .rs2-row{padding:14px 6px;row-gap:6px}
+
+    /* Tabla camioneta / tráiler / thorton: de 3 renglones a 2 compactos */
+    #transporte .wrap{padding-top:24px !important}
+    #transporte .lead + .lead{margin-top:10px !important}
+    .tp-table{margin-top:20px}
+    .tp-row{grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;padding:10px 14px;align-items:center}
+    .tp-unit{padding:0;font-size:15px;gap:8px;grid-column:1;grid-row:1}
+    .tp-change{grid-column:2;grid-row:1}
+    .tp-change span{padding:2px 10px;font-size:13px}
+    .tp-count{grid-column:1 / -1;grid-row:2;padding:0;gap:10px;justify-content:flex-start}
+    .tp-count .track{max-width:none;height:6px}
+    .tp-count b{min-width:46px;font-size:14px}
+    .rate-compare{margin-top:26px;padding:24px 16px;gap:16px}
+    .rate-compare .item b{font-size:14px}
+    .rate-compare .item strong{font-size:30px;margin-top:4px}
+    .rate-compare .divider{display:none}
+
+    /* Mapas de calor: listas 43% / 29% más juntas */
+    .heat-cols{gap:28px;margin-top:0}
+    .heat-band{padding:9px;margin-bottom:10px;font-size:13px}
+    .rank-list{margin-top:10px !important}
+    .rank-row{padding:6px 0;gap:10px}
+    .rank-row .name{flex-basis:108px}
+    .rank-row .name b{font-size:13.5px;line-height:1.2}
+    .rank-row .track{height:7px}
+    .rank-row .pct{flex-basis:44px;font-size:14px}
+    .analysis{margin-top:22px;padding:18px 16px}
+
+    /* Recomendaciones */
+    .reco-list{margin-top:22px;gap:14px}
+    .reco-closing{margin-top:24px;padding:18px 16px}
+  }
+</style>
+
+<!-- CHAT DE NOTICIAS (estilos + animación) -->
+<style>
+  .news{padding:64px 0 52px}
+  .chat{max-width:340px;margin:22px auto 0;border-radius:16px;overflow:hidden;background:#fff;
+    border:1px solid #d7def5;box-shadow:0 30px 60px -28px rgba(20,30,80,.4);text-align:left}
+  .chat-head{display:flex;align-items:center;gap:8px;background:var(--navy);color:#fff;padding:8px 11px}
+  .chat-av{flex:0 0 26px;height:26px;border-radius:50%;background:var(--blue);display:flex;align-items:center;
+    justify-content:center;font:800 9px 'Poppins',sans-serif}
+  .chat-head b{display:block;font-size:11.5px;line-height:1.2}
+  .chat-head small{font-size:9.5px;color:#9fb4e6}
+  .chat-head small::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:#25D366;margin-right:4px}
+  .chat-body{box-sizing:border-box;background:#e8ecf8;padding:9px 8px;display:flex;flex-direction:column;gap:5px}
+  .msg{align-self:flex-start;max-width:88%;padding:5px 8px 3px;border-radius:3px 10px 10px 10px;background:#fff;
+    font-size:11px;line-height:1.3;color:#1b2a41;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+  .msg.me{align-self:flex-end;background:#d9fdd3;border-radius:10px 3px 10px 10px}
+  .msg.ai{border-left:3px solid var(--blue)}
+  .msg .who{display:block;font-size:9.5px;font-weight:700;margin-bottom:1px;color:#c2410c}
+  .msg.u2 .who{color:#0f766e}
+  .msg.ai .who{color:var(--blue)}
+  .msg time{display:block;text-align:right;font-size:8.5px;color:#8a97a8;margin-top:1px}
+  .typing{display:none;align-self:flex-start;background:#fff;border-radius:14px;padding:7px 10px;gap:3px}
+  .typing.on{display:inline-flex}
+  .typing i{width:5px;height:5px;border-radius:50%;background:#9aa7bd;animation:tdot 1s infinite ease-in-out}
+  .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+  @keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+  @keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .chat.ready .msg{display:none}
+  .chat.ready .msg.show{display:block;animation:msgIn .35s ease both}
+  .chat-input{display:flex;gap:8px;align-items:center;padding:6px 8px;background:#f4f6fc;border-top:1px solid #dde3f5}
+  .chat-input .fake{flex:1;background:#fff;border-radius:20px;padding:6px 10px;font-size:10.5px;color:#8a97a8;border:1px solid #dde3f5}
+  .chat-input .send{flex:0 0 26px;height:26px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center}
+  .chat-input .send svg{width:12px;height:12px;fill:#fff}
+  @media (max-width:700px){
+    .news{padding:40px 0 36px}
+    .news-pill{font-size:11.5px;padding:7px 14px}
+    .news-logo{margin-top:28px}
+    .chat{margin-top:16px;max-width:320px}
+    .chat-body{padding:8px 7px;gap:5px}
+    .msg{font-size:10.5px;max-width:90%}
+  }
+</style>
+<script>
+(function(){
+  const chat = document.getElementById('newsChat'); if(!chat) return;
+  const body = chat.querySelector('.chat-body'),
+        msgs = [...body.querySelectorAll('.msg')],
+        typing = body.querySelector('.typing');
+
+  /* Reserva desde el inicio el alto total del chat (con todos los mensajes),
+     así no se va expandiendo mientras "escriben" */
+  function reserve(){
+    const c = body.cloneNode(true);
+    const t = c.querySelector('.typing'); if(t) t.remove();
+    c.style.cssText = 'position:absolute;left:-9999px;top:0;visibility:hidden;min-height:0;width:' + body.getBoundingClientRect().width + 'px';
+    document.body.appendChild(c);
+    body.style.minHeight = c.getBoundingClientRect().height + 'px';
+    c.remove();
+  }
+  reserve();
+  window.addEventListener('load', reserve);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(reserve);
+  let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(reserve, 150); });
+
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches) return;      // sin animación: todo visible
+  chat.classList.add('ready');
+
+  /* Ritmo más pausado: el tiempo de "escribiendo…" depende del largo del mensaje */
+  let i = 0;
+  function next(){
+    if(i >= msgs.length){ typing.classList.remove('on'); return; }
+    const m = msgs[i], mine = m.classList.contains('me'),
+          wait = 1100 + Math.min(m.textContent.length * 22, 2600);
+    if(!mine){ body.insertBefore(typing, m); typing.classList.add('on'); }
+    setTimeout(() => {
+      typing.classList.remove('on'); m.classList.add('show'); i++;
+      setTimeout(next, 1000);
+    }, i === 0 ? 900 : (mine ? 1500 : wait));
+  }
+  new IntersectionObserver((e, o) => { if(e[0].isIntersecting){ o.disconnect(); next(); } }, {threshold:.25}).observe(chat);
+})();
+</script>
+</body>
+</html>
